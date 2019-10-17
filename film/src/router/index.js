@@ -3,10 +3,18 @@ import Router from 'vue-router'
 import My from '../pages/My/My'
 import Home from '../pages/Home/Home'
 
+import MovieItem from '../components/MovieItem/MovieItem.vue'
+import MovieDetail from '../components/MovieDetail/MovieDetail.vue'
+import SearchAll from "../pages/Home/chidren/SearchAll.vue"
+import TabBar from '../components/TabBar/TabBar.vue'
+
+import Home from '../pages/Home/Home.vue'
+import Movie from '../pages/Movie/Movie.vue'
 Vue.use(Router)
 
 export default new Router({
   routes: [
+<<<<<<< HEAD
     { path: '/', redirect: '/home' },
     { path: '/home', name: 'home', component: Home, meta: { showTabBar: true } },
     // { path: '/movie', name: 'movie', component: Movie, meta: { showTabBar: true } },
@@ -24,5 +32,15 @@ export default new Router({
     // { path: '/movie_detail', name: 'movie_detail', component: MovieDetail },
     // { path: '/cinema_detail', component: CinemaDetail },
     // { path: '/select_cinema', component: SelectCinema },
+=======
+    { path: '/', component: Home},
+    { path: '/home', component: Home},
+    { path: '/movie',  component: Movie},
+
+    {path:'/movieitem',component: MovieItem},
+    {path:'/moviedetail',component: MovieDetail},
+    {path:'/searchall',component: SearchAll},
+    {path:'/tabbar',component: TabBar},
+>>>>>>> 787479d4d674b6249397c5139b6794c4c569b97e
   ]
 })
