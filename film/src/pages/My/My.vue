@@ -5,14 +5,14 @@
         <div class="avatar">
           <img src="./images/userIcon.png" alt="">
         </div>
-        <span class="go-login" v-if="login">登陆/注册</span>
+        <span class="go-login" v-if="login2==false" @click="isLogin">登陆/注册</span>
         <div v-else class="user-info">
           <span class="ellipsis" style="font-size:.375rem;line-height:.6rem;margin-bottom:.12rem">123123</span>
           <span class="ellipsis">同学有点懒，还没写下签名</span>
         </div>
       </div>
-      <div class="right" style="disblock:none">
-        <span v-if="!login" >个人信息</span>
+      <div class="right" v-if="!login2==false">
+        <span  >个人信息</span>
         <span class="icon-more"></span>
       </div>      
     </div>
@@ -28,11 +28,20 @@
 
 <script>
 import {Indicator} from 'mint-ui'
+
 export default {
   name:"My",
   data(){
-    return{}
+    return{
+      login2:false
+    }
   },
+  methods:{
+    isLogin(){
+      this.login2=true;
+      
+    }
+  }
 }
 </script>
 
