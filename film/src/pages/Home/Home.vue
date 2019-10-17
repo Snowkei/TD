@@ -4,7 +4,7 @@
       <!-- 城市 -->
       <span class="loaction">郑州</span>
       <!-- 搜索框 -->
-      <span class="search">
+      <span class="search" @click="$router.push('/searchall')">
         <span class="icon-search"></span>
         <input type="text" placeholder="找电影、影院">
       </span>
@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import {Indicator} from "mint-ui";
 export default {
   name:"Home",
   data () {

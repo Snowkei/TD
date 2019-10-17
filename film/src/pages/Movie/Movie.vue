@@ -5,7 +5,7 @@
       <span class="location">郑州</span>
       <span>正在热映</span>
       <span>即将上映</span>
-      <span class="icon-search"></span>
+      <span class="icon-search" @click="$router.push('/searchmovie')">搜索</span>
     </div>
 
     <div class="tab-content">
