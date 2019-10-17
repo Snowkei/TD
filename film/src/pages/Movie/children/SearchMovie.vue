@@ -1,43 +1,47 @@
 <template>
-  <div class="search-all">
+  <div class="search-movie">
+    <!-- 头部 -->
     <div class="header">
-      <!-- 搜索 -->
       <div class="search">
         <span class="icon-search"></span>
-        <input type="text" placeholder="搜影片、影院">
+        <input type="text" placeholder="搜影片" />
       </div>
-      <span class="cancel-btn" @click="$router.push('/home')">取消</span>
+      <!-- 返回上一步 -->
+      <span class="cancel-btn" @click="$router.push('/movie')">取消</span>
     </div>
-    <!-- 搜索列表 -->
+    <!-- 内容 -->
     <div class="content">
       <div class="movie-container">
         <div class="title">影片</div>
         <movie-item></movie-item>
+      </div>
+      <div class="tips">
+        <span class="icon icon-empty-content"></span>
+        <span class="text">暂时没有内容</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import MovieItem from '../../../components/MovieItem/MovieItem'
+import MovieItem from "../../../components/MovieItem/MovieItem.vue";
 export default {
-  name:"SearchAll",
-  components:{
+  name: "SearchMovie",
+  components: {
     MovieItem
   },
-  data () {
+  data() {
     return {
       name:'',
-      movieInfo:[],
-      // cinemaInfo:[],
-      server:'http://localhost:3000'
+      MovieInfo:[],
+      server:'http://localhost:3000',
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
-  .search-all
+  .search-movie
     width 100%
     background-color #f5f5f5
     .header
@@ -64,7 +68,7 @@ export default {
           outline none
           background-color #f5f5f5
           caret-color #dd2727
-          text-indent .125rem
+          margin-left .25rem
           font-size .3rem !important
       .cancel-btn
         flex 1
@@ -73,7 +77,7 @@ export default {
         text-align center
     .content
       width 100%
-      background #fff
+      background-color #fff
       .movie-container
         width 100%
         font-size .3125rem
@@ -81,14 +85,14 @@ export default {
         box-sizing border-box
         border-top .04rem solid #f1f1f1
         .title
-          font-size .3rem
+          font-size .28rem
           padding-bottom .25rem
           border-bottom .03rem solid #f1f1f1
         .item
           display flex
           justify-content space-around
           align-items center
-          padding .25rem
+          padding .25rem 0
           border-bottom .03rem solid #f1f1f1
           img
             display inline-block
@@ -131,53 +135,6 @@ export default {
             border-radius 20%
             font-size .25rem
             color #fff
-      .cinema-container
-        width 100%
-        font-size .3125rem
-        padding .3rem
-        box-sizing border-box
-        border-top .04rem solid #f1f1f1
-        .title
-          font-size .3rem
-          padding-bottom .25rem
-          border-bottom .03rem solid #f1f1f1
-        .item
-          display flex
-          justify-content center
-          align-items center
-          box-sizing border-box
-          padding .25rem
-          width 100%
-          border-bottom .03rem solid #f1f1f1
-          margin-bottom .25rem
-          .left
-            width 100%
-            .name
-              font-size .345rem
-              line-height .36rem
-              margin-bottom .25rem
-              font-weight 700
-            .address
-              font-size .28rem
-              line-height .3rem
-              color #666
-              margin-bottom .25rem
-            .label-block
-              display flex
-              span
-                padding .06rem
-                font-size .2rem
-                border .01rem solid #f90
-                margin-right .1rem
-                border-radius .04rem
-                color #f90
-          .right
-            width 20%
-            text-align center
-            .price-block
-              color #dd2727
-              .price
-                font-size .38rem
       .tips
         display flex
         justify-content center

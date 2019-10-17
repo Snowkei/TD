@@ -126,7 +126,7 @@ export default {
     }
   },
   created(){
-    // Indicator.open('Loading...');
+    Indicator.open('Loading...');
     // this.loadMovieDetail();
   },
   methods: {
