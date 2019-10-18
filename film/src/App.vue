@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import TabBar from './components/TabBar/TabBar'
-import 'mint-ui/lib/style.css'
+//import TabBar from './components/TabBar/TabBar'
+//import 'mint-ui/lib/style.css'
 export default {
   name: 'App',
-  components:{TabBar}
+  //components:{TabBar}
 }
 </script>
 
