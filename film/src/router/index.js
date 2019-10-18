@@ -7,24 +7,22 @@ import MovieItem from '../components/MovieItem/MovieItem.vue'
 import MovieDetail from '../components/MovieDetail/MovieDetail.vue'
 import SearchAll from "../pages/Home/chidren/SearchAll.vue"
 import TabBar from '../components/TabBar/TabBar.vue'
+import MyInfo from '../pages/My/children/MyInfo.vue'
+import ModifyUserName from '../pages/My/children/ModifyUserName.vue'
 
-import Home from '../pages/Home/Home.vue'
-import Movie from '../pages/Movie/Movie.vue'
 Vue.use(Router)
 
 export default new Router({
   routes: [
-<<<<<<< HEAD
     { path: '/', redirect: '/home' },
     { path: '/home', name: 'home', component: Home, meta: { showTabBar: true } },
     // { path: '/movie', name: 'movie', component: Movie, meta: { showTabBar: true } },
     // { path: '/cinema', name: 'cinema', component: Cinema, meta: { showTabBar: true } },
     { path: '/my', name: 'my', component: My, meta: { showTabBar: true } },
-
-    // { path: '/my_info', name: 'my_info', component: MyInfo },
+    { path: '/my_info', name: 'my_info', component: MyInfo },
     // { path: '/my_order', name: 'my_order', component: My_order },
     // { path: '/my_movie', name: 'my_movie', component: MyMovie },
-    // { path: '/modify_username', name: 'modify_username', component: ModifyUserSign },
+    { path: '/modify_username', name: 'modify_username', component: ModifyUserName },
 
     // { path: '/search_all', component: SearchAll },
     // { path: '/search_movie', component: SearchMovie },
@@ -32,15 +30,5 @@ export default new Router({
     // { path: '/movie_detail', name: 'movie_detail', component: MovieDetail },
     // { path: '/cinema_detail', component: CinemaDetail },
     // { path: '/select_cinema', component: SelectCinema },
-=======
-    { path: '/', component: Home},
-    { path: '/home', component: Home},
-    { path: '/movie',  component: Movie},
-
-    {path:'/movieitem',component: MovieItem},
-    {path:'/moviedetail',component: MovieDetail},
-    {path:'/searchall',component: SearchAll},
-    {path:'/tabbar',component: TabBar},
->>>>>>> 787479d4d674b6249397c5139b6794c4c569b97e
   ]
 })

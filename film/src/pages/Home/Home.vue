@@ -1,13 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <h4>画布</h4>
-</template>
-<script>
-export default {
-  
-}
-</script>
-=======
   <div id="home">
     <div>
       <!-- 城市 -->
@@ -444,4 +435,3 @@ export default {
   }
 }
 </style>
->>>>>>> 787479d4d674b6249397c5139b6794c4c569b97e

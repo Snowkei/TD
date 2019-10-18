@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="right" v-if="!login2==false">
-        <span  >个人信息</span>
+        <span @click="go_my_info">个人信息</span>
         <span class="icon-more"></span>
       </div>      
     </div>
@@ -38,8 +38,10 @@ export default {
   },
   methods:{
     isLogin(){
-      this.login2=true;
-      
+      this.login2=true;  
+    },
+    go_my_info(){
+      this.$router.push("/my_info")
     }
   }
 }

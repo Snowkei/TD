@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div id="tab-bar">
         <!-- <span class="tab-item">
             <img src="./images/home_light.svg" alt="">
@@ -53,29 +52,3 @@ export default {
         .on
           color red
 </style>
-=======
-  <!-- 底部组件 -->
-  <div id="tab-bar">
-    <!-- 首页 -->
-    <span class="tab-item">
-      <img src="" alt="">
-      <span>首页</span>
-    </span>
-    <!-- 电影 -->
-    <span class="tab-item">
-      <img src="" alt="">
-      <span>电影</span>
-    </span>
-    <!-- 影院 -->
-    <span class="tab-item">
-      <img src="" alt="">
-      <span>影院</span>
-    </span>
-    <!-- 我的 -->
-    <span class="tab-item">
-      <img src="" alt="">
-      <span>我的</span>
-    </span>
-  </div>
-</template>
->>>>>>> 787479d4d674b6249397c5139b6794c4c569b97e
