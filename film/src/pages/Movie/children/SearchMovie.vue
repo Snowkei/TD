@@ -7,7 +7,7 @@
         <input type="text" placeholder="搜影片" />
       </div>
       <!-- 返回上一步 -->
-      <span class="cancel-btn" @click="$router.push('/movie')">取消</span>
+      <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <!-- 内容 -->
     <div class="content">
