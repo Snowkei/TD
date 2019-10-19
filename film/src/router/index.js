@@ -6,7 +6,8 @@ import MovieDetail from '../components/MovieDetail/MovieDetail.vue'
 import TabBar from '../components/TabBar/TabBar.vue'
 import Login from '../components/Login/Login.vue'
 import Pay from '../components/Pay/Pay.vue'
-import CommenPanel from '../components/MovieDetail/children/CommenPanel'
+import CommentPanel from '../components/MovieDetail/children/CommentPanel.vue'
+import SubmitOrder from '../components/SubmitOrder/SubmitOrder.vue'
 
 import SearchAll from "../pages/Home/chidren/SearchAll.vue"
 import SearchMovie from '../pages/Movie/children/SearchMovie.vue'
@@ -41,6 +42,7 @@ export default new Router({
     
     {path:'/login',component: Login},
     {path:'/pay',component: Pay},
-    {path:'/comment_panel',component: CommenPanel},
+    {path:'/comment_panel',component: CommentPanel},
+    {path:'/submit_order',component: SubmitOrder},
   ]
 })

@@ -10,18 +10,23 @@
       <span class="score">
         <span class="number">{{score}}</span>分
       </span>
-      <span class="text">{{handleScoreText}}</span>
-      <el-rate @change="changeScore"/>
+      <!-- <span class="text">{{handleScoreText}}</span> -->
+      <el-rate 
+        v-model="starValue" 
+        allow-half 
+        @change="changeScore" 
+        show-text/>
     </div>
-    <textarea class="commit-text" placeholder="写出你的感受"></textarea>
+    <textarea class="commit-text" placeholder="写出你的感受" v-model="textarea" style="width:100%;height:400px;"></textarea>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-// import Vue from 'vue'
-import {Rate} from 'element-ui'
-// Vue.use(Rate)
+import Vue from 'vue';
+import {Rate} from 'element-ui';
+Vue.use(Rate);
+
 import {Toast,MessageBox} from 'mint-ui'
 export default {
   name:"CommentPanel",
@@ -29,7 +34,7 @@ export default {
     return {
       textarea:'',
       score:0,
-      startValue:0
+      starValue:0
     }
   },
   created () {
@@ -42,6 +47,21 @@ export default {
     // 发布评论
     commentBtnHandle(){
       MessageBox.alert('评论成功，待管理员审核！')
+    }
+  },
+  computed:{
+    handleScoreText(){
+      // if (this.score===1||this.score===2){
+      //   return '超烂啊'
+      // } else if(this.score===3||this.score===4){
+      //   return '比较差'
+      // } else if(this.score===5||this.score===6){
+      //   return '一般般'
+      // } else if(this.score===7||this.score===8){
+      //   return '还不错'
+      // } else if(this.score===9||this.score===10){
+      //   return '棒极了'
+      // }
     }
   }
 }
@@ -56,7 +76,7 @@ export default {
       display flex
       justify-content center
       align-items center
-      height 1rem
+      height 2rem
       background-color #f9f9f9
       position relative
       .icon-close
@@ -81,7 +101,7 @@ export default {
       width 100%
       height 100%
       padding .25rem
-      padding-bottom .5rem
+      padding-bottom 3.5rem
       box-sizing border-box
       display flex
       flex-flow column

@@ -13,13 +13,14 @@
         <!-- 剩余分钟 -->
         <div class="time">
           <div class="minute">
-            <span></span>
-            <span></span>
+            <span>{{countdown_m_b}}</span>
+            <span>{{countdown_m_s}}</span>
           </div>
+          <p>:</p>
           <!-- 剩余秒 -->
           <div class="second">
-            <span></span>
-            <span></span>
+            <span>{{countdown_s_b}}</span>
+            <span>{{countdown_s_s}}</span>
           </div>
         </div>
         <!-- order-num -->
@@ -47,7 +48,7 @@
         <span></span>
       </div>
       <div class="bottom">
-        <div class="pay-btn" @click="handle">确认支付</div>
+        <div class="pay-btn" @click="handlePay">确认支付</div>
       </div>
     </div>
   </div>
@@ -77,11 +78,12 @@ export default {
   methods: {
     back(){
       // 返回订单页面
-      // $router.push('/submitorder')
+      this.$router.push('/submit_order')
     },
     // 确认支付
-    handle(){
-
+    handlePay(){
+      alert("支付成功")
+      this.$router.go(-1)
     }
   }
 }
@@ -95,7 +97,7 @@ export default {
     font-size .3125rem
     .top
       width 100%
-      height 1rem
+      height 3rem
       display flex
       justify-content center
       align-items center
@@ -114,7 +116,8 @@ export default {
         text-align center
     .order-info
       margin-top 1rem
-      height 3rem
+      height 8rem
+      margin-bottom 2rem
       border-bottom .04rem dashed #f1f1f1
       .time-down
         display flex
@@ -172,12 +175,13 @@ export default {
       position fixed
       width 100%
       left 0
-      top 4rem
+      top 15rem
       bottom 0
       background-color #f1f1f1
       .type
         padding .25rem .3rem
         display flex
+        height 4rem
         justify-content space-between
         align-items center
         position relative
@@ -192,8 +196,9 @@ export default {
       border-top .02rem solid #f1f1f1
       position fixed
       width 100%
+      height 3rem
       left 0
-      bottom 0
+      bottom 40
       display flex
       justify-content center
       align-items center

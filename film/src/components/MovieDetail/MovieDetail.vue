@@ -17,11 +17,11 @@
     </div>
     <!-- 想看和看过 -->
     <div class="action">
-      <div class="btn">
+      <div class="btn" @click="wishBtnHandle">
         <span class="icon-like-fill"></span>
         <span>想看</span>
       </div>
-      <div class="btn">
+      <div class="btn" @click="watchedBtnHandle">
         <span class="icon-star-fill"></span>
         <span>看过</span>
       </div>
@@ -40,7 +40,7 @@
       <!-- 打分 -->
       <div class="mark">
         <div class="left">
-          <el-rate></el-rate>
+          <el-rate v-model="starValue" allow-half></el-rate>
         </div>
         <div class="right">
           <div class="score">2
@@ -69,7 +69,7 @@
         <!-- 头部 -->
         <div class="header">
           <span class="title">评论</span>
-          <span class="join" @click="$router.push('/commen_panel')">参与评论</span>
+          <span class="join" @click="$router.push('/comment_panel')">参与评论</span>
         </div>
         <!-- 内容 -->
         <div class="content">
@@ -104,11 +104,12 @@
 </template>
 
 <script>
-// import Vue from vue
-import {Indicator} from 'mint-ui'
-import {Rate} from 'element-ui'
-import moment from 'moment'
-// Vue.use(Rate)
+import Vue from 'vue';
+import {Rate} from 'element-ui';
+
+import {Indicator} from 'mint-ui';
+import moment from 'moment';
+Vue.use(Rate);
 export default {
   name:"MovieDetail",
   data(){
@@ -132,7 +133,19 @@ export default {
   methods: {
     // 电影详情
     // 想看按钮
+    wishBtnHandle(){
+      alert("想看")
+    },
     // 看过按钮
+    watchedBtnHandle(){
+      // //判断登录状态
+      // if (this.$cookies.get('user_id')){
+      //   this.$router.push({path:'/comment_panel',query:{movie_id:this.$route.query.movie_id}});
+      // } else{
+      //   this.$router.push('/login');
+      // }
+      alert("看过")
+    }
     // 是否点赞
     // 评论日期
   }

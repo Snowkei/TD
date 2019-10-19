@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div>
+    <div :class="['search-header',{'active':headerActive}]">
       <!-- 城市 -->
       <span class="loaction">郑州</span>
       <!-- 搜索框 -->
@@ -20,16 +20,16 @@
       <div class="swiper-wrapper">
         <!-- 轮播图片 -->
         <div class="swiper-slide">
-          <img src="./images/swiper/1.jpg" alt="" @click="$router.push('/movie_detail')">
+          <img src="./images/swiper/1.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:5}})">
         </div>
         <div class="swiper-slide">
-          <img src="./images/swiper/2.jpg" alt="" @click="$router.push('/movie_detail')">
+          <img src="./images/swiper/2.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:3}})">
         </div>
         <div class="swiper-slide">
-          <img src="./images/swiper/3.jpg" alt="" @click="$router.push('/movie_detail')">
+          <img src="./images/swiper/3.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:34}})">
         </div>
         <div class="swiper-slide">
-          <img src="./images/swiper/4.jpg" alt="" @click="$router.push('/movie_detail')">
+          <img src="./images/swiper/4.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:4}})">
         </div>
       </div>
       <!-- 如果需要分页器 -->
@@ -42,13 +42,13 @@
         <!-- 列表头部 -->
         <div class="header">
           <span class="red-name">正在热映</span>
-          <span class="more" @click="$router.push('/movie')">全部0部</span>
+          <span class="more" @click="$router.push({path:'/movie',query:{hotMovie:1}})">全部{{hotMovieList.length}}部</span>
           <span class="incon-more"></span>
         </div>
         <!-- 列表主体 -->
         <div class="body">
-          <!-- 电影影片图片 -->
-          <div class="item">
+          <!-- 电影影片列表 -->
+          <div class="item" v-for="(item,index) in hotMovieList.slice(0,6)" :key="index">
             <!-- 循环生成 -->
             <img src="" alt="" @click="$router.push('/movie_detail')">
             <div style="position:relative">
