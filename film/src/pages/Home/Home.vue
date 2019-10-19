@@ -1,12 +1,12 @@
 <template>
   <div id="home">
-    <div>
+    <div :class="['search-header',{'active':headerActive}]">
       <!-- 城市 -->
       <span class="loaction">郑州</span>
       <!-- 搜索框 -->
-      <span class="search" @click="$router.push('/searchall')">
+      <span class="search" >
         <span class="icon-search"></span>
-        <input type="text" placeholder="找电影、影院">
+        <input type="text" placeholder="找电影、影院" @click="$router.push('/search_all')">
       </span>
       <!-- 日期 -->
       <span class="date">
@@ -14,79 +14,78 @@
           <span class="day">10.16</span>
         </span>
       </span>
-      <!-- 轮播图 -->
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <!-- 轮播图片 -->
-          <div class="swiper-slide">
-            <img src="./images/swiper/1.jpg" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="./images/swiper/2.jpg" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="./images/swiper/3.jpg" alt="">
-          </div>
-          <div class="swiper-slide">
-            <img src="./images/swiper/4.jpg" alt="">
-          </div>
+    </div>
+    <!-- 轮播图 -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <!-- 轮播图片 -->
+        <div class="swiper-slide">
+          <img src="./images/swiper/1.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:5}})">
         </div>
-        <!-- 如果需要分页器 -->
-        <div class="swiper-pagination"></div>
+        <div class="swiper-slide">
+          <img src="./images/swiper/2.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:3}})">
+        </div>
+        <div class="swiper-slide">
+          <img src="./images/swiper/3.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:34}})">
+        </div>
+        <div class="swiper-slide">
+          <img src="./images/swiper/4.jpg" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:4}})">
+        </div>
       </div>
-      <!-- 首页列表 -->
-      <div class="main">
-        <!-- 正在热映 -->
-        <div class="panel">
-          <!-- 列表头部 -->
-          <div class="header">
-            <span class="red-name">正在热映</span>
-            <span class="more">全部66部</span>
-            <span class="incon-more"></span>
-          </div>
-          <!-- 列表主体 -->
-          <div class="body">
-            <!-- 电影影片图片 -->
-            <div class="item">
-              <!-- 循环生成 -->
-              <img src="" alt="">
-              <div style="position:relative">
-                <div class="describe">
-                  <span class="name ellipsis">名字省略</span>
-                  <span class="srore">
-                    <!-- 整数 -->
-                    <i class="interger"></i>
-                    <!-- 分数 -->
-                    <i class="fraction"></i>
-                  </span>
-                </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+    </div>
+    <!-- 首页列表 -->
+    <div class="main">
+      <!-- 正在热映 -->
+      <div class="panel">
+        <!-- 列表头部 -->
+        <div class="header">
+          <span class="red-name">正在热映</span>
+          <span class="more" @click="$router.push({path:'/movie',query:{hotMovie:1}})">全部{{hotMovieList.length}}部</span>
+          <span class="incon-more"></span>
+        </div>
+        <!-- 列表主体 -->
+        <div class="body">
+          <!-- 电影影片列表 -->
+          <div class="item" v-for="(item,index) in hotMovieList.slice(0,6)" :key="index">
+            <!-- 循环生成 -->
+            <img src="" alt="" @click="$router.push('/movie_detail')">
+            <div style="position:relative">
+              <div class="describe">
+                <span class="name ellipsis"></span>
+                <span class="srore">
+                  <!-- 月 -->
+                  <i class="interger"></i>
+                  <!-- 日 -->
+                  <i class="fraction"></i>
+                </span>
               </div>
             </div>
-          </div>
-          <!-- 点击购票 -->
-          <div class="buy">
-            购票
+            <!-- 购票 -->
+            <div class="buy" @click="$router.push('/select_cinema')">
+            </div>
           </div>
         </div>
-        <!-- 即将上映 -->
-        <div class="panel">
-          <!-- 即将上映头部 -->
-          <div class="header">
-            <span class="blue-name">即将上映</span>
-            <span class="more">全部12部</span>
-            <span class="icon-more"></span>
-          </div>
-          <!-- 即将上映主体 -->
-          <div class="body">
-            <!-- 列表 -->
-            <div class="item">
-              <!-- 循环生成 -->
-              <!-- <img src="" alt=""> -->
-            </div>
+      </div>
+      <!-- 即将上映 -->
+      <div class="panel">
+        <!-- 即将上映头部 -->
+        <div class="header">
+          <span class="blue-name">即将上映</span>
+          <span class="more" @click="$router.push('/movie')">全部12部</span>
+          <span class="icon-more"></span>
+        </div>
+        <!-- 即将上映主体 -->
+        <div class="body">
+          <!-- 列表 -->
+          <div class="item">
+            <!-- 循环生成 -->
+            <img src="./images/hot-movie/hot1.jpg" alt="" @click="$router.push('/movie_detail')">
             <!-- 观影人数 -->
             <div style="postion:relative">
               <div class="peopleNumber">
-                <span class="number">
+                <span class="number" style="font-size: .3rem;font-weight: 600">
                   12
                 </span>
                 <span>人想看</span>
@@ -116,6 +115,8 @@
 
 <script>
 import {Indicator} from "mint-ui";
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
 export default {
   name:"Home",
   data () {
@@ -137,15 +138,15 @@ export default {
   },
   mounted () {
     // 轮播
-    // new Swiper(".swiper-container",{
-    //   autoplay:true,
-    //   loop:true,
+    new Swiper(".swiper-container",{
+      autoplay:true,
+      loop:true,
       // 如果需要分页器
-      // pagination: {
-      //   el: '.swiper-pagination',
-      //   clickable:true
-      // }
-    // });
+      pagination: {
+        el: '.swiper-pagination',
+        clickable:true
+      }
+    });
     window.addEventListener("scroll",this.handleScroll);
   },
   methods: {
@@ -160,6 +161,7 @@ export default {
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
+*{margin:0;padding:0;}
 #home {
   width: 100%;
   height: 100%;
@@ -253,7 +255,8 @@ export default {
   // 轮播
   .swiper-container {
     width: 100%;
-    height: 3rem;
+    height: 100%;
+    // padding-top:5rem;
 
     // 轮播图片
     img {
@@ -329,9 +332,9 @@ export default {
             display: flex;
             align-items: center;
             padding: 0 0.08rem;
-            height: 0.4rem;
+            height: 0.6rem;
             box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.0);//
 
             .name {
               color: #fff;
@@ -343,7 +346,7 @@ export default {
             }
 
             .score {
-              color: #ffb400;
+              color: #00000;//
               flex: 2;
               font-family: PingFangSC-Regular, Hiragino Sans GB, sans-serif;
               font-weight: 700;
@@ -366,7 +369,7 @@ export default {
             justify-content: center;
             align-items: center;
             font-size: 0.25rem;
-            background-color: #dd2727;
+            background-color: #ffffff;//
             color: #fff;
           }
 
@@ -380,14 +383,14 @@ export default {
             display: flex;
             align-items: center;
             padding: 0 0.08rem;
-            height: 0.4rem;
-            background-color: rgba(0, 0, 0, 0.4);
+            height: 5.8rem;
+            background-color: rgba(0, 0, 0, 0.1);
             font-size: 0.25rem;
             box-sizing: border-box;
           }
 
           .presell {
-            height: 1rem;
+            height: 2rem;
             width: 100%;
             font-size: 0.25rem;
 
@@ -400,7 +403,7 @@ export default {
 
             .info {
               width: 100%;
-              height: 0.6rem;
+              height: 0.6rem;//
               font-size: 0.25rem;
               font-weight: lighter;
               display: flex;

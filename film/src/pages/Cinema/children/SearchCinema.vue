@@ -2,14 +2,14 @@
   <div class="search-cinema">
     <div class="header">
       <div class="search">
-        <span class="icon-search"></span>
-        <input type="text" placeholder="搜影院" v-model="name">
+        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
+        <input type="text" placeholder="搜影院">
       </div>
-      <span class="cancel-btn">取消</span>
+      <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <div class="content">
-      <div class="cinema-container" v-if="cinemaInfo.length">
-        <div class="item" v-for="(item,index) in cinemaInfo" :key="index">
+      <div class="cinema-container">
+        <div class="item">
           <div class="left">
             <div class="name ellipsis">糖豆影院</div>
             <div class="address ellipsis">金水区666号糖豆广场</div>
@@ -20,14 +20,14 @@
               <span>巨幕厅</span>
             </div>
           </div>
-          <!-- <div class="right">
+          <div class="right">
             <div class="price-block">
               <span class="price">23</span>元起
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
-      <div class="tips" v-else-if="name">
+      <div class="tips">
         <span class="icon icon-empty-content"></span>
         <span class="text">暂无其他内容</span>
       </div>
@@ -45,16 +45,16 @@ export default {
     }
   },
   watch:{
-    async name(){
-      if(this.name){
-        let json=await matchCinemaByName(this.name);
-        if(json.success_code===200){
-          this.cinemaInfo=json.data;
-        }
-      }else{
-        this.cinemaInfo=[];
-      }
-    }
+    // async name(){
+    //   if(this.name){
+    //     let json=await matchCinemaByName(this.name);
+    //     if(json.success_code===200){
+    //       this.cinemaInfo=json.data;
+    //     }
+    //   }else{
+    //     this.cinemaInfo=[];
+    //   }
+    // }
   }
 }
 </script>
