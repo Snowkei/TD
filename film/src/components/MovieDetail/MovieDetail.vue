@@ -1,29 +1,29 @@
 <template>
   <div id="movie-detail">
     <div class="top">
-      <span class="icon-back"></span>
+      <span class="icon-back" @click="$router.go(-1)"></span>
       <span class="name">变形金刚</span>
     </div>
     <!-- 电影接口 -->
     <div class="info">
-      <img src="" alt="">
+      <img src="images/hot1.png" alt="">
       <div class="describe">
         <div class="name">变形金刚</div>
         <div class="small type">类型:动作，爱情</div>
-        <div class="small ellipsis">主演:擎天柱</div>
+        <div class="small ellipsis">主演:汤姆</div>
         <div class="small play-time">片长:2.12.3</div>
         <div class="small show-time">上映:2015.6上映</div>
       </div>
     </div>
-    <!--  -->
+    <!-- 想看和看过 -->
     <div class="action">
-      <div class="btn">
+      <div class="btn" @click="wishBtnHandle">
         <span class="icon-like-fill"></span>
         <span>想看</span>
-        <div class="btn">
-          <span class="icon-star-fill"></span>
-          <span>看过</span>
-        </div>
+      </div>
+      <div class="btn" @click="watchedBtnHandle">
+        <span class="icon-star-fill"></span>
+        <span>看过</span>
       </div>
     </div>
     <!--  -->
@@ -40,7 +40,7 @@
       <!-- 打分 -->
       <div class="mark">
         <div class="left">
-          <!-- <el-rate></el-rate> -->
+          <el-rate v-model="starValue" allow-half></el-rate>
         </div>
         <div class="right">
           <div class="score">2
@@ -69,7 +69,7 @@
         <!-- 头部 -->
         <div class="header">
           <span class="title">评论</span>
-          <span class="join">参与评论</span>
+          <span class="join" @click="$router.push('/comment_panel')">参与评论</span>
         </div>
         <!-- 内容 -->
         <div class="content">
@@ -80,7 +80,7 @@
                 <img src="" alt="">
               </div>
               <div class="right">
-                <div class="user-name">复仇者联盟4</div>
+                <div class="user-name">变形金刚</div>
                 <div class="scored">给这部作品打了12分</div>
                 <div class="comment-content">评论内容</div>
                 <div class="bottom">
@@ -94,7 +94,7 @@
             </div>
           </div>
         </div>
-        <!-- buy -->
+        <!-- 特惠购票 -->
         <div class="buy">
           <div class="btn">特惠购票</div>
         </div>
@@ -104,11 +104,12 @@
 </template>
 
 <script>
-// import Vue from vue
-import {Indicator} from 'mint-ui'
-import {Rate} from 'element-ui'
-import moment from 'moment'
-// Vue.use(Rate)
+import Vue from 'vue';
+import {Rate} from 'element-ui';
+
+import {Indicator} from 'mint-ui';
+import moment from 'moment';
+Vue.use(Rate);
 export default {
   name:"MovieDetail",
   data(){
@@ -126,13 +127,25 @@ export default {
     }
   },
   created(){
-    Indicator.open('Loading...');
+    // Indicator.open('Loading...');
     // this.loadMovieDetail();
   },
   methods: {
     // 电影详情
     // 想看按钮
+    wishBtnHandle(){
+      alert("想看")
+    },
     // 看过按钮
+    watchedBtnHandle(){
+      // //判断登录状态
+      // if (this.$cookies.get('user_id')){
+      //   this.$router.push({path:'/comment_panel',query:{movie_id:this.$route.query.movie_id}});
+      // } else{
+      //   this.$router.push('/login');
+      // }
+      alert("看过")
+    }
     // 是否点赞
     // 评论日期
   }
@@ -140,6 +153,7 @@ export default {
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
+*{padding:0; margin:0;}
   #movie-detail
     width 100%
     height 100%
@@ -148,7 +162,7 @@ export default {
     font-size .3125rem
     .top
       width 100%
-      height 1rem
+      height 2rem
       display flex
       justify-content center
       align-items center
@@ -166,8 +180,8 @@ export default {
       width 90%
       padding .2rem
       box-sizing border-box
-      height 3rem
-      margin 1rem auto 0
+      height 10rem
+      margin 2rem auto 0
       background-color #fff
       display flex
       justify-content space-around
@@ -178,6 +192,7 @@ export default {
         width 28%
         box-sizing border-box
         border-radius .05rem
+        z-index 1
       .describe
         width 62%
         .name
@@ -189,7 +204,7 @@ export default {
           margin-bottom .12rem
     .action
       width 90%
-      height 1rem
+      height 2rem
       margin 0 auto
       background-color #fff
       display flex
@@ -199,7 +214,7 @@ export default {
       .btn
         font-size .4rem
         width 36%
-        height .6rem
+        height 1.6rem
         border-radius .3rem
         background-color #ffb400
         display flex

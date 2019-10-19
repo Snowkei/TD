@@ -7,13 +7,13 @@
         <input type="text" placeholder="搜影片" />
       </div>
       <!-- 返回上一步 -->
-      <span class="cancel-btn" @click="$router.push('/movie')">取消</span>
+      <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <!-- 内容 -->
     <div class="content">
       <div class="movie-container">
         <div class="title">影片</div>
-        <movie-item></movie-item>
+        <movie-item :movie-list="MovieInfo"></movie-item>
       </div>
       <div class="tips">
         <span class="icon icon-empty-content"></span>
@@ -36,6 +36,19 @@ export default {
       MovieInfo:[],
       server:'http://localhost:3000',
     }
+  },
+  watch:{
+    // name(){
+    //   if (this.name){
+    //     let json =await matchMovieByName(this.name);
+    //     if (json.success_code===200){
+    //       this.movieInfo = json.data;
+    //     }
+    //   }else{
+    //     this.movieInfo = [];
+    //   }
+    // }
+    
   }
 };
 </script>
