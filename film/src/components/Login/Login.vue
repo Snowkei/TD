@@ -35,24 +35,55 @@
                 <span>立即注册</span>
               </section>
             </div>
-            <!-- 账号登录部分 -->
-            <div v-show="!loginType" class="login-password">
-              <section class="login-info">
-                  <input type="text" placeholder="用户名" v-model="userName">
-              </section>
-              <section class="login-info login-verification">
-                  <input type="password" placeholder="密码" v-show="!isShowPassword" v-model="password">
-                  <input type="text" placeholder="密码" v-show="isShowPassword" v-model="password">
-                  <div class="switch-show">
-                      <span class="icon-eye-close-fill" v-show="!isShowPassword" @click="changePwdShow"></span>
-                      <span class="icon-eye-open-fill" v-show="isShowPassword"
-                      @click="changePwdShow"></span>
-                  </div>
-              </section>
-              <section class="login-info">
-                  <input type="text" placeholder="验证码" v-model="captcha">
-                  <img src="./images/yanzheng.png" alt="#">
-              </section>
+            <div class="login-content">
+                <div class="login-type">
+                    <span>验证码登录</span>
+                    <span>密码登录</span>
+                </div>
+                <div class="login-main">
+                    <form>
+                        <!-- 手机验证码登录部分 -->
+                        <div v-show="loginType" class="login-phone">
+                            <section class="login-info">
+                                <input type="tel" placeholder="手机号" v-model="phone">
+                                <button v-if="countDown===0">获取验证码</button>
+                                <button v-else class="phone_right">重新获取</button>
+                            </section>
+                            <section class="login-info login-verification">
+                                <input type="tel" placeholder="验证码" v-model="phoneCode">
+                                
+                            </section>
+                            <section class="login-info login-hint">温馨提示：未注册的手机号，验证后将自动注册账号，且代表已同意
+                                <a href="javascript:;">《服务协议与隐私政策》</a>
+                            </section>
+                            <section class="register">
+                              <span>找回密码?</span>
+                              <span>|</span>
+                              <span>立即注册</span>
+                            </section>
+                        </div>
+                        <!-- 账号登录部分 -->
+                        <div v-show="!loginType" class="login-password">
+                            <section class="login-info">
+                                <input type="text" placeholder="用户名" v-model="userName">
+                            </section>
+                            <section class="login-info login-verification">
+                                <input type="password" placeholder="密码" v-show="!isShowPassword" v-model="password">
+                                <input type="text" placeholder="密码" v-show="isShowPassword" v-model="password">
+                                <div class="switch-show">
+                                    <span class="icon-eye-close-fill" v-show="!isShowPassword" @click="changePwdShow"></span>
+                                    <span class="icon-eye-open-fill" v-show="isShowPassword"
+                                    @click="changePwdShow"></span>
+                                </div>
+                            </section>
+                            <section class="login-info">
+                                <input type="text" placeholder="验证码" v-model="captcha">
+                                <img src="./images/yanzheng.png" alt="#">
+                            </section>
+                        </div>
+                        <button class="login-submit">登录</button>
+                    </form>
+                </div>
             </div>
             <button class="login-submit" @click="$router.push('/home')">登录</button>
           </form>
@@ -62,7 +93,7 @@
   </div>
 </template>
 <script>
-// import {Indicator} from 'mint-ui'
+import {Toast,mwssageBox} from 'mint-ui'
 export default {
     data(){
         return{

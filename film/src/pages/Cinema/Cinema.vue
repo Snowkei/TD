@@ -88,7 +88,7 @@ export default {
           line-height .38rem
         .icon-search
           width 20%
-          font-size .48rem
+          font-size 1.5rem
           text-align center
       .select
         width 100%
@@ -138,6 +138,7 @@ export default {
         margin-bottom .25rem
         .left
           width 100%
+          margin-top 3rem
           .name
             font-size 1.345rem
             line-height 2.36rem
@@ -147,7 +148,11 @@ export default {
             font-size 1.28rem
             line-height 1.3rem
             color #666
-            margin-bottom .25rem
+            margin-top 2.25rem
+            margin-left .1rem
+          .ellipsis
+            margin-top .25rem
+
           .label-block
             display flex
             span

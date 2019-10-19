@@ -14,6 +14,9 @@ import SearchMovie from '../pages/Movie/children/SearchMovie.vue'
 import SearchCinema from '../pages/Cinema/children/SearchCinema.vue'
 
 
+import Login from '../components/Login/Login.vue'
+import CinemaDetail from '../components/CinemaDetail/CinemaDetail.vue'
+import Cinema from '../pages/Cinema/Cinema.vue'
 import Home from '../pages/Home/Home.vue'
 import Movie from '../pages/Movie/Movie.vue'
 import Cinema from '../pages/Cinema/Cinema.vue'
