@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import cookies from 'vue-cookies'
 
 import cookies from 'vue-cookies'
 // 配置字体图标
