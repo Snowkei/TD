@@ -28,7 +28,7 @@
   height: 100%;
   background: url('./images/bg_admin.png');
   background-size: cover;/*按照图片的比例放大或者缩小至充满容器，*/
-  display: flex;
+  display: flex;/*弹性布局 水平居中 垂直居中*/
   justify-content: center;
   align-items: center;
   flex-flow: column;
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-flow: column;
+  flex-flow: column;/*默认flex都是x轴布局，声明为column后变成y轴布局*/
   border-radius: 4px;
   box-shadow: 0 0 8px 8px #ccc;
 }
