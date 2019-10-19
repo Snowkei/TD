@@ -12,7 +12,7 @@
     <!-- 主体 -->
     <div class="content">
       <!-- 每个item -->
-      <div class="item">
+      <div class="item" @click="$router.push('/cinema_detail')">
         <!-- 左侧消息 -->
         <div class="left">
           <div class="name ellipsis">糖豆影院</div>

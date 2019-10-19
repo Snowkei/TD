@@ -103,7 +103,7 @@
                   12月31日
                 </span>
                 <!-- 预售按钮 select_cinema-->
-                <span class="btn">预售</span>
+                <span class="btn" @click="$router.push('/cinema_detail')">预售</span>
               </div>
             </div>
           </div>
