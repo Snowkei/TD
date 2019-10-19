@@ -4,11 +4,11 @@
         <div class="nav">
           <span class="location">郑州</span>
           <span class="title">影院</span>
-          <span class=" icon-search" >搜索</span>
+          <span class=" icon-search" @click="$router.push('./search_cinema')"></span>
         </div>
       </div>
       <div class="content">
-        <div class="item">
+        <div class="item" @click="$router.push('/Cinema_Detail')">
           <div class="left">
             <div class="name ellipsis">糖豆影院</div>
             <div class="address">金水区666号糖豆广场</div>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="content">
-        <div class="item">
+        <div class="item" @click="$router.push('/CinemaDetail')">
           <div class="left">
             <div class="name ellipsis">怪咖影院</div>
             <div class="address">金水区888号怪咖广场</div>
@@ -53,7 +53,7 @@ export default {
     }
   },
   created() {
-     Indicator.open('Loading...');
+     //Indicator.open('Loading...');
     // this.loadCinemaList();
   },
   methods:{
@@ -98,7 +98,7 @@ export default {
           line-height .38rem
         .icon-search
           width 20%
-          font-size 1.1rem
+          font-size 1.5rem
           text-align center
       .select
         width 100%
@@ -147,6 +147,7 @@ export default {
         margin-bottom .25rem
         .left
           width 100%
+          margin-top 3rem
           .name
             font-size 1.3rem
             line-height .36rem
@@ -158,7 +159,7 @@ export default {
             line-height .3rem
             color #666
             margin-top 2.25rem
-            margin-left -12rem
+            margin-left .1rem
           .ellipsis
             margin-top .25rem
           .label-block

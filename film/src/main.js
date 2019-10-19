@@ -3,9 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import cookies from 'vue-cookies'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
+Vue.use(cookies);
+
+import "./common/css/style.css";
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

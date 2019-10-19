@@ -1,7 +1,7 @@
 <template>
     <div id="login">
         <div class="top">
-            <span class="icon-close"></span>
+            <span class="icon-close" @click="$router.go(-1)"></span>
         </div>
         <div class="login-container">
             <div class="login-header logo">
@@ -32,6 +32,7 @@
                             </section>
                             <section class="register">
                               <span>找回密码?</span>
+                              <span>|</span>
                               <span>立即注册</span>
                             </section>
                         </div>
@@ -62,7 +63,7 @@
     </div>
 </template>
 <script>
-// import {Indicator} from 'mint-ui'
+import {Toast,mwssageBox} from 'mint-ui'
 export default {
     data(){
         return{
