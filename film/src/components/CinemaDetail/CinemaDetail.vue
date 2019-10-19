@@ -56,7 +56,7 @@
             <div class="price">56.00元</div>
           </div>
           <div class="right">
-            <span class="buy-btn" @click="$router.push({path:'/select_seat',query:{cinema_id:item.cinema_id,movie_id:item.movie_id,schedule_id:item.schedule_id,}})">购票</span>
+            <span class="buy-btn" @click="$router.push('/selectseat')">购票</span>
           </div>
         </div>
       </div>

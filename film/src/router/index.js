@@ -7,6 +7,10 @@ import SearchAll from "../pages/Home/chidren/SearchAll.vue"
 import TabBar from '../components/TabBar/TabBar.vue'
 import SearchMovie from '../pages/Movie/children/SearchMovie.vue'
 
+
+
+
+import SelectSeat from '../components/SelectSeat/SelectSeat.vue'
 import Login from '../components/Login/Login.vue'
 import CinemaDetail from '../components/CinemaDetail/CinemaDetail.vue'
 import Cinema from '../pages/Cinema/Cinema.vue'
@@ -31,6 +35,7 @@ export default new Router({
     {path:'/searchmovie',component: SearchMovie},
     {path:'/Cinema',component:Cinema},
     {path:'/CinemaDetail',component:CinemaDetail},
-    {path:'/Login',component:Login}
+    {path:'/Login',component:Login},
+    {path:'/SelectSeat',component:SelectSeat}
   ]
 })
