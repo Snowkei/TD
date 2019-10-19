@@ -3,9 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import cookies from 'vue-cookies'
+import MintUI from "mint-ui"
+// 配置字体图标
+import "./common/css/style.css"
 Vue.config.productionTip = false
-
+Vue.use(MintUI)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
