@@ -5,7 +5,7 @@
       <span class="location">郑州</span>
       <span>正在热映</span>
       <span>即将上映</span>
-      <span class="icon-search" @click="$router.push('/searchmovie')">搜索</span>
+      <span class="icon-search" @click="$router.push('/search_movie')"></span>
     </div>
 
     <div class="tab-content">
@@ -54,7 +54,7 @@ export default {
       display flex
       justify-content space-around
       align-items center
-      height 1rem
+      height 2rem
       width 100%
       font-size .3125rem
       background-color #dd2727
@@ -76,7 +76,7 @@ export default {
       .icon-search
         font-size .48rem
     .tab-content
-      margin-top 1rem
+      margin-top 2rem
       font-size .3125rem
       padding 0 .3rem
       padding-bottom 1rem
