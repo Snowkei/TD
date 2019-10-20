@@ -56,7 +56,7 @@
             <div class="price">56.00元</div>
           </div>
           <div class="right">
-            <span class="buy-btn" @click="$router.push('/selectseat')">购票</span>
+            <span class="buy-btn" @click="$router.push('/select_seat')">购票</span>
           </div>
         </div>
       </div>
@@ -64,162 +64,162 @@
 </template>
 
 <script>
-    //import {getCurrentCinemaDetail,getCurrentCinemaMovieSchedule} from '../../api/index'
-    import Vue from 'vue'
-    import {Indicator} from 'mint-ui';
-    import {Carousel,CarouselItem} from 'element-ui'
-    import LyTab from 'ly-tab'
-    //import { formatDate } from '../../common/util/util';
-    Vue.use(Carousel);
-    Vue.use(CarouselItem);
-    Vue.use(LyTab);
-    export default {
-        name: "CinemaDetail",
-        data(){
-          return{
-            initMovieId:0,
-            //当前影院信息
-            currentCinemaInfo:{},
-            //影院的电影信息
-            hasMovieInfo:[],
-            //所有的电影安排
-            allMovieSchedule:[],
-            //电影某天的安排
-            movieDaySchedule:[],
-            hackReset:false,
-            carouselReset:true,
-            movieIndex:0,
-            //服务器地址
-            server:'http://localhost:3000',
-            selectedId:0,
-            items:[],
-            options:{
-              activeColor: '#dd2727',
-            },
+  //import {getCurrentCinemaDetail,getCurrentCinemaMovieSchedule} from '../../api/index'
+  import Vue from 'vue'
+  import {Indicator} from 'mint-ui';
+  import {Carousel,CarouselItem} from 'element-ui'
+  import LyTab from 'ly-tab'
+  //import { formatDate } from '../../common/util/util';
+  Vue.use(Carousel);
+  Vue.use(CarouselItem);
+  Vue.use(LyTab);
+  export default {
+    name: "CinemaDetail",
+    data(){
+      return{
+        initMovieId:0,
+        //当前影院信息
+        currentCinemaInfo:{},
+        //影院的电影信息
+        hasMovieInfo:[],
+        //所有的电影安排
+        allMovieSchedule:[],
+        //电影某天的安排
+        movieDaySchedule:[],
+        hackReset:false,
+        carouselReset:true,
+        movieIndex:0,
+        //服务器地址
+        server:'http://localhost:3000',
+        selectedId:0,
+        items:[],
+        options:{
+          activeColor: '#dd2727',
+        },
+      }
+    },
+    created() {
+      //Indicator.open('Loading...');
+      //this.loadCinemaDetail();
+    },
+    methods:{
+      async loadCinemaDetail(){
+        if (this.$route.query.cinema_id) {
+          let json = await getCurrentCinemaDetail(this.$route.query.cinema_id);
+          if (json.success_code===200){
+            this.currentCinemaInfo = json.data;
           }
-        },
-        created() {
-          //Indicator.open('Loading...');
-          //this.loadCinemaDetail();
-        },
-        methods:{
-          async loadCinemaDetail(){
-            if (this.$route.query.cinema_id) {
-              let json = await getCurrentCinemaDetail(this.$route.query.cinema_id);
-              if (json.success_code===200){
-                this.currentCinemaInfo = json.data;
-              }
-              json = await getCurrentCinemaMovieSchedule(this.$route.query.cinema_id);
-              if (json.success_code===200){
-                this.hasMovieInfo = json.data.hasMovieInfo;
-                if(this.$route.query.movie_id){
-                  this.hasMovieInfo.forEach((val,index)=>{
-                    if (this.$route.query.movie_id==val.movie_id) {
-                      this.initMovieId = index;
-                      this.carouselReset = false;
-                      this.$nextTick(() => {
-                        this.carouselReset = true;
-                      });
-                    }
+          json = await getCurrentCinemaMovieSchedule(this.$route.query.cinema_id);
+          if (json.success_code===200){
+            this.hasMovieInfo = json.data.hasMovieInfo;
+            if(this.$route.query.movie_id){
+              this.hasMovieInfo.forEach((val,index)=>{
+                if (this.$route.query.movie_id==val.movie_id) {
+                  this.initMovieId = index;
+                  this.carouselReset = false;
+                  this.$nextTick(() => {
+                    this.carouselReset = true;
                   });
                 }
-                let movieScheduleInfo = json.data.movieScheduleInfo;
-                let allMovieSchedule = [];
-                movieScheduleInfo.forEach((value,index)=>{
-                  let movieDate = [];
-                  let movieInfo = [];
-                  value.forEach((val)=>{
-                    if(new Date()-new Date(val.show_date+','+val.show_time)<=0){
-                      let flag = true;
-                      movieDate.forEach((value)=>{
-                        if (value.label===val.show_date) {
-                          flag = false;
-                        }
-                      });
-                      if (flag){
-                        movieDate.push({label:formatDate(new Date(val.show_date),true),date:val.show_date});
-                      }
-                      movieInfo.push({
-                        cinema_id:val.cinema_id,
-                        movie_id:val.movie_id,
-                        schedule_id:val.schedule_id,
-                        show_date:val.show_date,
-                        show_time:val.show_time,
-                        language:val.language,
-                        movie_long:val.movie_long,
-                        hall_name:val.hall_name,
-                        price:val.price
-                      });
+              });
+            }
+            let movieScheduleInfo = json.data.movieScheduleInfo;
+            let allMovieSchedule = [];
+            movieScheduleInfo.forEach((value,index)=>{
+              let movieDate = [];
+              let movieInfo = [];
+              value.forEach((val)=>{
+                if(new Date()-new Date(val.show_date+','+val.show_time)<=0){
+                  let flag = true;
+                  movieDate.forEach((value)=>{
+                    if (value.label===val.show_date) {
+                      flag = false;
                     }
                   });
-                  movieDate.sort((a,b)=>{
-                    return a.date-b.date;
-                  });
-                  movieInfo.sort((a,b)=>{
-                    return a.date-b.date;
-                  });
-                  this.allMovieSchedule[index]={movieDate,movieInfo};
-                });
-                this.items = this.allMovieSchedule[0].movieDate;
-                this.hackReset = false;
-                this.$nextTick(() => {
-                  this.hackReset = true;
-                });
-                this.allMovieSchedule[0].movieInfo.forEach((value)=>{
-                  if (value.show_date === this.allMovieSchedule[0].movieDate[0].date){
-                    this.movieDaySchedule.push(value);
+                  if (flag){
+                    movieDate.push({label:formatDate(new Date(val.show_date),true),date:val.show_date});
                   }
-                });
-                this.movieDaySchedule.sort((a,b)=>{
-                  return new Date(a.show_date+','+a.show_time)-new Date(b.show_date+','+b.show_time);
-                });
-              }
-            }
-            Indicator.close();
-          },
-          //切换轮播图
-          changeCarousel(index){
-            this.movieIndex = index;
-            this.items = this.allMovieSchedule[index].movieDate;
+                  movieInfo.push({
+                    cinema_id:val.cinema_id,
+                    movie_id:val.movie_id,
+                    schedule_id:val.schedule_id,
+                    show_date:val.show_date,
+                    show_time:val.show_time,
+                    language:val.language,
+                    movie_long:val.movie_long,
+                    hall_name:val.hall_name,
+                    price:val.price
+                  });
+                }
+              });
+              movieDate.sort((a,b)=>{
+                return a.date-b.date;
+              });
+              movieInfo.sort((a,b)=>{
+                return a.date-b.date;
+              });
+              this.allMovieSchedule[index]={movieDate,movieInfo};
+            });
+            this.items = this.allMovieSchedule[0].movieDate;
             this.hackReset = false;
             this.$nextTick(() => {
               this.hackReset = true;
             });
-            this.selectedId = 0;
-            this.movieDaySchedule = [];
-            this.allMovieSchedule[index].movieInfo.forEach((value)=>{
-              if (value.show_date === this.allMovieSchedule[index].movieDate[0].date){
+            this.allMovieSchedule[0].movieInfo.forEach((value)=>{
+              if (value.show_date === this.allMovieSchedule[0].movieDate[0].date){
                 this.movieDaySchedule.push(value);
               }
             });
             this.movieDaySchedule.sort((a,b)=>{
               return new Date(a.show_date+','+a.show_time)-new Date(b.show_date+','+b.show_time);
             });
-          },
-          //切换日期
-          changeLyTabItem(item){
-            this.movieDaySchedule = [];
-            this.allMovieSchedule[this.movieIndex].movieInfo.forEach((value)=>{
-              if (value.show_date === item.date){
-                this.movieDaySchedule.push(value);
-              }
-            });
-            this.movieDaySchedule.sort((a,b)=>{
-              return new Date(a.show_date+','+a.show_time)-new Date(b.show_date+','+b.show_time);
-            });
-          },
-          //影片结束时间
-          endDate(item){
-            let h = parseInt(Number(item.show_time.split(':')[0])+(parseInt(item.movie_long)/60));
-            let m = Number(item.show_time.split(':')[1])+parseInt(item.movie_long)%60;
-            if (m>59){
-              return ((h+parseInt(m/60))<10?'0'+(h+parseInt(m/60)):(h+parseInt(m/60)))+':'+((m%60)<10?'0'+(m%60):(m%60));
-            } else{
-              return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m);
-            }
           }
-        },
-    }
+        }
+        Indicator.close();
+      },
+      //切换轮播图
+      changeCarousel(index){
+        this.movieIndex = index;
+        this.items = this.allMovieSchedule[index].movieDate;
+        this.hackReset = false;
+        this.$nextTick(() => {
+          this.hackReset = true;
+        });
+        this.selectedId = 0;
+        this.movieDaySchedule = [];
+        this.allMovieSchedule[index].movieInfo.forEach((value)=>{
+          if (value.show_date === this.allMovieSchedule[index].movieDate[0].date){
+            this.movieDaySchedule.push(value);
+          }
+        });
+        this.movieDaySchedule.sort((a,b)=>{
+          return new Date(a.show_date+','+a.show_time)-new Date(b.show_date+','+b.show_time);
+        });
+      },
+      //切换日期
+      changeLyTabItem(item){
+        this.movieDaySchedule = [];
+        this.allMovieSchedule[this.movieIndex].movieInfo.forEach((value)=>{
+          if (value.show_date === item.date){
+            this.movieDaySchedule.push(value);
+          }
+        });
+        this.movieDaySchedule.sort((a,b)=>{
+          return new Date(a.show_date+','+a.show_time)-new Date(b.show_date+','+b.show_time);
+        });
+      },
+      //影片结束时间
+      endDate(item){
+        let h = parseInt(Number(item.show_time.split(':')[0])+(parseInt(item.movie_long)/60));
+        let m = Number(item.show_time.split(':')[1])+parseInt(item.movie_long)%60;
+        if (m>59){
+          return ((h+parseInt(m/60))<10?'0'+(h+parseInt(m/60)):(h+parseInt(m/60)))+':'+((m%60)<10?'0'+(m%60):(m%60));
+        } else{
+          return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m);
+        }
+      }
+    },
+  }
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
@@ -230,7 +230,7 @@
     font-size .3125rem
     .top
       width 100%
-      height 2.5rem
+      height 1rem
       display flex
       justify-content center
       align-items center
@@ -246,19 +246,18 @@
         left .3rem
       .name
         width 60%
-        font-size 1.2rem
+        font-size .375rem
         text-align center
         line-height .375rem
-        margin-left 0.9rem
     .cinema-info
-      margin-top 2.8rem
+      margin-top 1rem
       color #888
       display flex
       flex-flow column
       padding .25rem
       .name
         color #000
-        font-size 1.2rem
+        font-size .345rem
         font-weight 700
         margin-bottom .25rem
       .address,.tel
@@ -268,15 +267,9 @@
         display flex
         letter-spacing .02rem
         align-items flex-start
-    .bei
-      background #404086
-      width 100%
-      height 15rem
-      img 
-        width 8rem
-        height 14rem
-        margin-top .5rem
-        margin-left 7.2rem
+        .icon
+          font-size .375rem
+          margin-right .08rem
     .movie-info
       height 1.4rem
       display flex
