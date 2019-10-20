@@ -153,7 +153,6 @@ export default {
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
-*{padding:0; margin:0;}
   #movie-detail
     width 100%
     height 100%
@@ -162,7 +161,7 @@ export default {
     font-size .3125rem
     .top
       width 100%
-      height 2rem
+      height 1rem
       display flex
       justify-content center
       align-items center
@@ -180,8 +179,8 @@ export default {
       width 90%
       padding .2rem
       box-sizing border-box
-      height 10rem
-      margin 2rem auto 0
+      height 3rem
+      margin 1rem auto 0
       background-color #fff
       display flex
       justify-content space-around
@@ -192,7 +191,6 @@ export default {
         width 28%
         box-sizing border-box
         border-radius .05rem
-        z-index 1
       .describe
         width 62%
         .name
@@ -204,7 +202,7 @@ export default {
           margin-bottom .12rem
     .action
       width 90%
-      height 2rem
+      height 1rem
       margin 0 auto
       background-color #fff
       display flex
@@ -214,7 +212,7 @@ export default {
       .btn
         font-size .4rem
         width 36%
-        height 1.6rem
+        height .6rem
         border-radius .3rem
         background-color #ffb400
         display flex

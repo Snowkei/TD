@@ -54,7 +54,7 @@ export default {
       display flex
       justify-content space-around
       align-items center
-      height 2rem
+      height 1rem
       width 100%
       font-size .3125rem
       background-color #dd2727
@@ -76,7 +76,7 @@ export default {
       .icon-search
         font-size .48rem
     .tab-content
-      margin-top 2rem
+      margin-top 1rem
       font-size .3125rem
       padding 0 .3rem
       padding-bottom 1rem
