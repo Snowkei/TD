@@ -132,9 +132,6 @@ export default {
         margin-bottom .2rem
         .icon
           font-size 2rem
-        .icon-film-logo
-          width 50%
-          height 50%
         .title , .eng-title
           font-size .3125rem
           font-weight bolder
@@ -177,27 +174,29 @@ export default {
               justify-content center
               align-items center
               flex-flow column
-              .register
-                color blue
               .login-info
                 position relative
                 margin-bottom .25rem
                 width 70%
-              .login-info > input 
-                width: 95%;
-                height: 1.9rem;
-                border: .1rem solid #07f4ff;
-                border-radius: .4rem;
-                margin-top .6rem
+                input
+                  width 100%
+                  height .8rem
+                  padding-left .2rem
+                  box-sizing border-box
+                  border .02rem solid #888
+                  border-radius .12rem
+                  outline 0
+                  &:focus
+                    border: 0.02rem solid #dd2727;
               .login-info > button
                 position absolute
-                top 60%
+                top 50%
                 right .2rem
                 height 80%
                 transform translateY(-50%)
                 border 0
-                color #aaa
-                font-size .5rem
+                color #ccc
+                font-size .25rem
                 background transparent
                 outline none
                 &.phone_right
@@ -218,14 +217,13 @@ export default {
             .login-submit
               display block
               width 70%
-              height 2rem
+              height .8rem
               margin .16rem auto
-              border-radius .3rem
+              border-radius .12rem
               background #dd2727
               color #fff
               text-align center
               font-size .3125rem
               line-height .8rem
               border 0
-
 </style>

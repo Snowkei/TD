@@ -74,7 +74,7 @@ export default {
         display flex
         justify-content space-between
         align-items center
-        height 2rem
+        height 1rem
         background-color #dd2727
         color white
         position relative
@@ -88,7 +88,7 @@ export default {
           line-height .38rem
         .icon-search
           width 20%
-          font-size 1.5rem
+          font-size .48rem
           text-align center
       .select
         width 100%
@@ -125,7 +125,7 @@ export default {
               border-color #888 transparent transparent transparent
     .content
       font-size .3125rem
-      margin-top 3rem
+      margin-top 1rem
       padding-bottom .8rem
       .item
         display flex
@@ -134,25 +134,19 @@ export default {
         box-sizing border-box
         padding .25rem .3rem
         width 100%
-        height 100px
         margin-bottom .25rem
         .left
           width 100%
-          margin-top 3rem
           .name
-            font-size 1.345rem
-            line-height 2.36rem
-            margin-bottom 0.25rem
+            font-size .345rem
+            line-height .36rem
+            margin-bottom .25rem
             font-weight 700
           .address
-            font-size 1.28rem
-            line-height 1.3rem
+            font-size .28rem
+            line-height .3rem
             color #666
-            margin-top 2.25rem
-            margin-left .1rem
-          .ellipsis
-            margin-top .25rem
-
+            margin-bottom .25rem
           .label-block
             display flex
             span
@@ -168,5 +162,5 @@ export default {
           .price-block
             color #dd2727
             .price
-              font-size 1.2rem
+              font-size .38rem
 </style>

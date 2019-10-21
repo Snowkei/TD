@@ -19,10 +19,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 //  将element-ui注册vue实例
 Vue.use(ElementUI);
 
-
-Vue.use(cookies);
-
-import "./common/css/style.css";
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

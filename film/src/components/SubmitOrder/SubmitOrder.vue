@@ -127,15 +127,13 @@ export default {
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
   #submit-order
-    margin 0
-    padding 0
     width 100%
     height 100%
     color #000
     font-size .3125rem
     .top
       width 100%
-      height 2.5rem
+      height 1rem
       display flex
       justify-content center
       align-items center
@@ -162,11 +160,11 @@ export default {
           font-size .4rem
           margin-right .08rem
     .order-info
-      margin-top 2.5rem
+      margin-top 1rem
       background-color #779db0
       color #fff
       padding .3rem
-      height 6rem
+      height 2rem
       .info
         margin-bottom .25rem
         font-size .28rem
@@ -179,7 +177,7 @@ export default {
       background-color #f1f1f1
       width 100%
       position fixed
-      top 8.6rem
+      top 3.6rem
       left 0
       bottom 0
       .phone-container
@@ -190,7 +188,7 @@ export default {
         /deep/ .phone
           width 100%
           box-sizing border-box
-          height 2rem
+          height 1rem
           line-height 1rem
           display flex
           border-bottom .02rem solid #f1f1f1
@@ -220,14 +218,13 @@ export default {
       .tips
         display flex
         flex-flow column
-        height 20rem
         background-color #fff
         padding .3rem
         p
           margin-bottom .12rem
-          font-size 1.25rem
+          font-size .25rem
           color #888
-          line-height 1.2rem
+          line-height .4rem
           letter-spacing .02rem
           text-align justify
         .title
@@ -252,7 +249,7 @@ export default {
       background-color #fff
       .intro
         width 100%
-        margin-bottom 2.25rem
+        margin-bottom .25rem
         display flex
         justify-content space-between
         font-size .28rem
@@ -273,8 +270,7 @@ export default {
         width 100%
         background-color #fe9900
         color #fff
-        height 1.8rem
-        margin-bottom 5rem
+        height .8rem
         display flex
         justify-content center
         align-items center

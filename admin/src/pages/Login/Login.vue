@@ -1,26 +1,65 @@
 <template>
-<!-- 最外层父元素 -->
   <div id="login">
-    <!-- 父元素 -->
     <div class="box">
-      <!-- 表单 -->
-      <el-form label-width="50px">
+      <el-form 
+      :label-position="labelPosition" 
+       label-width="50px">
         <h3>影院售票管理系统</h3>
         <el-form-item label="用户">
-          <el-input placeholder="请输入用户名"></el-input>
+          <el-input v-model="adminName" clearable placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input placeholder="请输入密码"></el-input>
+          <el-input placeholder="请输入密码" v-model="password" show-password></el-input>
         </el-form-item>
-        <!-- 按钮 -->
-        <el-form-item style="margin-top:30px">
-          <el-button>重置</el-button>
-          <el-button type="primary" size="medium">登录</el-button>
+        <el-form-item style="margin-top: 30px">
+          <el-button @click="reset">重置</el-button>
+          <el-button type="primary" size="medium" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
+
+<script>
+
+import Vue from "vue";//引入vue
+//导入自己需要的组件
+import { Input,Button,Message,Form,FormItem} from "element-ui";
+export default {
+  data(){
+    return{
+        labelPosition: "right",
+      adminName:"",
+      password:""
+    }
+  },
+  methods:{
+    // 重置
+     reset() {
+      //  测试console.log(87878999)
+      this.adminName = "";
+      this.password = "";
+    },
+    login(){
+      // 测试console.log(123456)
+      var reg = /^[a-z0-9]{3,5}$/i;
+      
+      var adminName = this.adminName;
+      var password = this.password;
+      
+      if(reg.test(adminName)==false){
+        Message.error("用户名格式不正确")
+        return;
+      }else if(reg.test(password)==false){
+        Message.error("密码格式不正确")
+        return;
+      }
+
+    }
+  }
+}
+</script>
+
 
 <style>
 #login{
