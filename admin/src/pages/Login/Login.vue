@@ -21,44 +21,45 @@
 </template>
 
 <script>
-
-import Vue from "vue";//引入vue
-//导入自己需要的组件
-import { Input,Button,Message,Form,FormItem} from "element-ui";
+import {login} from "../../api";
+import Vue from "vue";
+import { Input, Button, Message, Form, FormItem } from "element-ui";
+Vue.use(Input);
+Vue.use(Button);
 export default {
-  data(){
-    return{
-        labelPosition: "right",
-      adminName:"",
-      password:""
-    }
+  name: "Login",
+  data() {
+    return {
+      labelPosition: "right",
+      adminName: "",
+      password: ""
+    };
   },
-  methods:{
-    // 重置
-     reset() {
-      //  测试console.log(87878999)
+  methods: {
+    reset() {
       this.adminName = "";
       this.password = "";
     },
-    login(){
-      // 测试console.log(123456)
-      var reg = /^[a-z0-9]{3,5}$/i;
-      
-      var adminName = this.adminName;
-      var password = this.password;
-      
-      if(reg.test(adminName)==false){
-        Message.error("用户名格式不正确")
-        return;
-      }else if(reg.test(password)==false){
-        Message.error("密码格式不正确")
-        return;
+   
+    async login() {
+      if (!this.adminName) {
+        Message.error("请输入用户名！");
+      } else if (!this.password) {
+        Message.error("请输入密码！");
+      } else {
+        let json = await login(this.adminName, this.password);
+        if (json.success_code === 200) {
+          this.$router.push({ path: "/home" });
+          Message.success("登录成功!");
+        } else {
+          Message.error(json.message);
+        }
       }
-
     }
   }
-}
+};
 </script>
+
 
 
 <style>

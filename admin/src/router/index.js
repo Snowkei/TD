@@ -32,7 +32,7 @@ export default new Router({
         {path:'hall_manage',component:HallManage},
         {path:'comment_manage',component:CommentManage},
         {path:'order_manage',component:OrderManage},
-        // {path:'/home',redirect: '/home/user_manage'}
+        // {path:'/home',redirect: '/home/user_manage'}//重定向 直接跳转到user_manage界面
       ]
     }
   
