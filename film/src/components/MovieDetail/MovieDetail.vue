@@ -188,13 +188,14 @@ export default {
     },
     // 看过按钮
     watchedBtnHandle(){
+      this.$router.push('/comment_panel')
       // //判断登录状态
       // if (this.$cookies.get('user_id')){
       //   this.$router.push({path:'/comment_panel',query:{movie_id:this.$route.query.movie_id}});
       // } else{
       //   this.$router.push('/login');
       // }
-      alert("看过")
+      // alert("看过")
     },
     // 是否点赞
     // 评论日期
@@ -441,7 +442,6 @@ export default {
       background-color #fff
       color #fff
       display flex
-      margin-left -48px
       justify-content center
       align-items center
       .btn

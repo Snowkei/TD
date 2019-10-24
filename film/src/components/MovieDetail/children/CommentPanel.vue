@@ -10,7 +10,7 @@
       <span class="score">
         <span class="number">{{score}}</span>分
       </span>
-      <span class="text">{{handleScoreText}}</span>
+      <!-- <span class="text">{{handleScoreText}}</span> -->
       <el-rate 
         v-model="starValue" 
         allow-half 
@@ -64,6 +64,9 @@ export default {
           duration: 2000
         });
       }
+    },
+    async loadUserComment(){
+      // alert('123')
     }
   }
 }
