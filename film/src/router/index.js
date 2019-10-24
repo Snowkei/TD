@@ -11,8 +11,6 @@ import SubmitOrder from '../components/SubmitOrder/SubmitOrder.vue'
 
 import SearchAll from "../pages/Home/chidren/SearchAll.vue"
 import SearchMovie from '../pages/Movie/children/SearchMovie.vue'
-import Home from '../pages/Home/Home.vue'
-import Movie from '../pages/Movie/Movie.vue'
 import My from '../pages/My/My.vue'
 import MyInfo from '../pages/My/children/MyInfo.vue'
 import MyOrder from '../pages/My/children/MyOrder.vue'
@@ -20,8 +18,6 @@ import MyMovie from '../pages/My/children/MyMovie.vue'
 import ModifyUserName from '../pages/My/children/ModifyUserName.vue'
 import ModifyUserSign from '../pages/My/children/ModifyUserSign.vue'
 import SearchCinema from '../pages/Cinema/children/SearchCinema.vue'
-
-
 import CinemaDetail from '../components/CinemaDetail/CinemaDetail.vue'
 import Home from '../pages/Home/Home.vue'
 import Movie from '../pages/Movie/Movie.vue'
