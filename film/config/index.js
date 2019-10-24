@@ -7,14 +7,23 @@ const path = require('path')
 module.exports = {
   dev: {
 
-    // Paths
+    // Paths 路径
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/':{
+        target:"http://localhost:3000",//源地址
+        changeOrigin:true,//改变源
+        pathRewrite:{
+          '^/':'' //路径重写
+        }
+      }
+    },
 
-    // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    // Various Dev Server settings 各种开发服务器设置
+    host: 'localhost', // can be overwritten by process.env.HOST 可以被进程覆盖
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    // 可以被process.env覆盖。端口，如果端口正在使用，将确定一个空闲端口
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
