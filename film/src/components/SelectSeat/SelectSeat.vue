@@ -58,7 +58,8 @@
         </div>
       </div>
       <span class="btn">请先选座</span>
-      <span class="btn active" @click="ensureSeatBtn">确认选座</span>
+      <span class="btn active" @click="$router.push('/submit_order')">确认选座</span>
+      <!-- <span class="btn active" @click="ensureSeatBtn">确认选座</span> -->
       <!-- <mt-button size="large" type="warning">确认选座</mt-button> -->
     </div>
   </div>
