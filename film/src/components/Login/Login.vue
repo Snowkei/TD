@@ -19,12 +19,12 @@
             <!-- 手机验证码登录部分 -->
             <div v-show="loginType" class="login-phone">
               <section class="login-info">
-                <input type="tel" placeholder="手机号" v-model="phone">
+                <input type="tel" placeholder="手机号      15967897897" v-model="phone">
                 <button v-if="countDown===0">获取验证码</button>
                 <button v-else class="phone_right">重新获取</button>
               </section>
               <section class="login-info login-verification">
-                <input type="tel" placeholder="验证码" v-model="phoneCode">
+                <input type="tel" placeholder="验证码      9527" v-model="phoneCode">
               </section>
               <section class="login-info login-hint">温馨提示：未注册的手机号，验证后将自动注册账号，且代表已同意
                 <a href="javascript:;">《服务协议与隐私政策》</a>
