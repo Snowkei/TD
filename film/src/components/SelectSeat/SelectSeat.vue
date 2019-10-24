@@ -90,119 +90,119 @@ export default {
     }
   },
   created() {
-          // Indicator.open('Loading...');
-          //this.loadInfo();
-        },
-        methods:{
-          //加载信息
-          async loadInfo(){
-            if (this.$route.query.cinema_id&&this.$route.query.movie_id&&this.$route.query.schedule_id){
-              let json = await getCurrentCinemaDetail(this.$route.query.cinema_id);
-              if (json.success_code===200) {
-                this.cinemaInfo = json.data;
-              }
-              json = await getMovieDetail(this.$route.query.movie_id);
-              if (json.success_code===200) {
-                this.movieInfo = json.data[0];
-              }
-              json = await getScheduleById(this.$route.query.schedule_id);
-              if (json.success_code===200) {
-                this.scheduleInfo = json.data;
-                this.seatInfo = this.scheduleInfo.seat_info;
-                if (this.seatInfo){
-                  this.seatInfo = JSON.parse(this.seatInfo);
-                  this.seatInfo.forEach((value)=>{
-                    if (value%10!==0){
-                      this.seatIJ[parseInt(value/10)][value%10-1] = 1;
-                    } else{
-                      this.seatIJ[parseInt(value/10)-1][9] = 1;
-                    }
-                  });
-                }
-              }
-            }
-            Indicator.close();
-          },
-          //选择座位
-          handleSelectSeat(indexI,indexJ){
-            if (this.seatCount===4&&this.seatIJ[indexI][indexJ]===0){
-              MessageBox.alert('一次最多选择4个座位哦！');
-            } else{
-              if (this.seatIJ[indexI][indexJ]===0){
-                this.seatIJ[indexI][indexJ]=2;
-                this.selectedSeatInfo.push([indexI,indexJ]);
-                this.seatCount+=1;
-                if (!this.selectedSeat){
-                  this.selectedSeat = true;
-                }
-              }
-              else if (this.seatIJ[indexI][indexJ]===2){
-                this.seatIJ[indexI][indexJ]=0;
-                this.seatCount-=1;
-                let currentIndex;
-                this.selectedSeatInfo.forEach((value,index)=>{
-                  if (indexI===value[0]&&indexJ===value[1]){
-                    currentIndex = index;
-                  }
-                });
-                this.selectedSeatInfo.splice(currentIndex,1);
-                if (this.seatCount===0){
-                  this.selectedSeat = false;
-                }
-              }
-              this.hackReset = false;
-              this.$nextTick(() => {
-                this.hackReset = true;
-              });
-            }
-          },
-          //取消选座
-          cancelSelectedSeat(indexI,indexJ){
-            this.seatIJ[indexI][indexJ]=0;
-            this.seatCount-=1;
-            let currentIndex;
-            this.selectedSeatInfo.forEach((value,index)=>{
-              if (indexI===value[0]&&indexJ===value[1]){
-                currentIndex = index;
+    // Indicator.open('Loading...');
+    //this.loadInfo();
+  },
+  methods:{
+    //加载信息
+    async loadInfo(){
+      if (this.$route.query.cinema_id&&this.$route.query.movie_id&&this.$route.query.schedule_id){
+        let json = await getCurrentCinemaDetail(this.$route.query.cinema_id);
+        if (json.success_code===200) {
+          this.cinemaInfo = json.data;
+        }
+        json = await getMovieDetail(this.$route.query.movie_id);
+        if (json.success_code===200) {
+          this.movieInfo = json.data[0];
+        }
+        json = await getScheduleById(this.$route.query.schedule_id);
+        if (json.success_code===200) {
+          this.scheduleInfo = json.data;
+          this.seatInfo = this.scheduleInfo.seat_info;
+          if (this.seatInfo){
+            this.seatInfo = JSON.parse(this.seatInfo);
+            this.seatInfo.forEach((value)=>{
+              if (value%10!==0){
+                this.seatIJ[parseInt(value/10)][value%10-1] = 1;
+              } else{
+                this.seatIJ[parseInt(value/10)-1][9] = 1;
               }
             });
-            this.selectedSeatInfo.splice(currentIndex,1);
-            if (this.seatCount===0){
-              this.selectedSeat = false;
-            }
-          },
-          //确认选座
-          async ensureSeatBtn(){
-            if (this.$cookies.get('user_id')){
-              if (!this.seatInfo) {
-                this.seatInfo = [];
-              }
-              this.selectedSeatInfo.forEach((value,index)=>{
-                this.seatInfo.push(value[0]*10+value[1]+1);
-                this.$cookies.set('seat_'+(index+1),value[0]*10+value[1]+1);
-              });
-              this.$cookies.set('seat_count',this.selectedSeatInfo.length);
-              this.seatInfo = JSON.stringify(this.seatInfo);
-              let json = await updateScheduleSeat(this.$route.query.schedule_id,this.seatInfo);
-              if (json.success_code===200){
-                Toast({
-                  message: '锁定座位成功',
-                  position: 'middle',
-                  duration: 2000
-                });
-                this.$router.push({path:'/submit_order',query:{cinema_id:this.$route.query.cinema_id,movie_id:this.$route.query.movie_id,schedule_id:this.$route.query.schedule_id,}});
-              }
-            } else{
-              this.$router.push('./login');
-            }
-          }
-        },
-        filters:{
-          dateFilter(props){
-            props = props+'';
-            return props.split('-')[0]+'年'+props.split('-')[1]+'月'+props.split('-')[2]+'日';
           }
         }
+      }
+      Indicator.close();
+    },
+    //选择座位
+    handleSelectSeat(indexI,indexJ){
+      if (this.seatCount===4&&this.seatIJ[indexI][indexJ]===0){
+        MessageBox.alert('一次最多选择4个座位哦！');
+      } else{
+        if (this.seatIJ[indexI][indexJ]===0){
+          this.seatIJ[indexI][indexJ]=2;
+          this.selectedSeatInfo.push([indexI,indexJ]);
+          this.seatCount+=1;
+          if (!this.selectedSeat){
+            this.selectedSeat = true;
+          }
+        }
+        else if (this.seatIJ[indexI][indexJ]===2){
+          this.seatIJ[indexI][indexJ]=0;
+          this.seatCount-=1;
+          let currentIndex;
+          this.selectedSeatInfo.forEach((value,index)=>{
+            if (indexI===value[0]&&indexJ===value[1]){
+              currentIndex = index;
+            }
+          });
+          this.selectedSeatInfo.splice(currentIndex,1);
+          if (this.seatCount===0){
+            this.selectedSeat = false;
+          }
+        }
+        this.hackReset = false;
+        this.$nextTick(() => {
+          this.hackReset = true;
+        });
+      }
+    },
+    //取消选座
+    cancelSelectedSeat(indexI,indexJ){
+      this.seatIJ[indexI][indexJ]=0;
+      this.seatCount-=1;
+      let currentIndex;
+      this.selectedSeatInfo.forEach((value,index)=>{
+        if (indexI===value[0]&&indexJ===value[1]){
+          currentIndex = index;
+        }
+      });
+      this.selectedSeatInfo.splice(currentIndex,1);
+      if (this.seatCount===0){
+        this.selectedSeat = false;
+      }
+    },
+    //确认选座
+    async ensureSeatBtn(){
+      if (this.$cookies.get('user_id')){
+        if (!this.seatInfo) {
+          this.seatInfo = [];
+        }
+        this.selectedSeatInfo.forEach((value,index)=>{
+          this.seatInfo.push(value[0]*10+value[1]+1);
+          this.$cookies.set('seat_'+(index+1),value[0]*10+value[1]+1);
+        });
+        this.$cookies.set('seat_count',this.selectedSeatInfo.length);
+        this.seatInfo = JSON.stringify(this.seatInfo);
+        let json = await updateScheduleSeat(this.$route.query.schedule_id,this.seatInfo);
+        if (json.success_code===200){
+          Toast({
+            message: '锁定座位成功',
+            position: 'middle',
+            duration: 2000
+          });
+          this.$router.push({path:'/submit_order',query:{cinema_id:this.$route.query.cinema_id,movie_id:this.$route.query.movie_id,schedule_id:this.$route.query.schedule_id,}});
+        }
+      } else{
+        this.$router.push('./login');
+      }
+    }
+  },
+  filters:{
+    dateFilter(props){
+      props = props+'';
+      return props.split('-')[0]+'年'+props.split('-')[1]+'月'+props.split('-')[2]+'日';
+    }
+  }
 }
 </script>
 
@@ -214,7 +214,7 @@ export default {
     font-size .3125rem
     .top
       width 100%
-      height 2.3rem
+      height 1rem
       display flex
       justify-content center
       align-items center
@@ -230,7 +230,7 @@ export default {
       .name
         width 60%
         text-align center
-        font-size 1.3rem
+        font-size .375rem
     .movie-info
       margin-top 1rem
       display flex
@@ -238,8 +238,7 @@ export default {
       padding .25rem
       .name
         margin-bottom .25rem
-        margin-top 1.5rem
-        font-size 1rem
+        font-size .345rem
         font-weight 700
       .intro
         font-size .28rem
@@ -252,10 +251,10 @@ export default {
       background: #f1f1f1
       position absolute
       left 0
-      top 6.5rem
+      top 2.5rem
       bottom 0
       .screen
-        width 8rem
+        width 4rem
         margin 0 auto
         text-align center
         background #dcdcdc
@@ -267,33 +266,31 @@ export default {
         left .28rem
       .center
         font-size .2rem
-        width 3rem
+        width 1rem
         position absolute
         text-align center
         padding .08rem .1rem
         top 1.2rem
         left 50%
-        margin-left -1.3rem
-        margin-top 2rem
+        margin-left -.3125rem
         letter-spacing .02rem
         background-color #fff
         color #888
         border-radius .12rem
       .screen-line
         width 0
-        height 13rem
+        height 4.8rem
         border .02rem dashed #dcdcdc
         position absolute
         top 1.6rem
         left 50%
         margin-left .28rem
-        margin-top 3.8rem
       .row-container
         position absolute
-        top 2rem
+        top 1.4rem
         left .25rem
-        width 1.3rem
-        height 13rem
+        width .4rem
+        height 4rem
         padding .6rem 0
         background-color rgba(168,168,168,.8)
         display flex
@@ -302,12 +299,8 @@ export default {
         justify-content space-between
         align-items center
         color #fff
-        border-radius 1rem
+        border-radius .2rem
         font-size .25rem
-        margin-top 3rem
-      .zuo
-        margin-top 4.2rem
-        margin-left 2.2rem
       .seat-container
         padding .12rem 0
         position absolute
@@ -323,11 +316,9 @@ export default {
         top .6rem
         width 80%
         margin-left 10%
-        margin-top 1rem
         display flex
         justify-content center
         align-items center
-    
         .example
           font-size .25rem
           color #888
@@ -351,23 +342,22 @@ export default {
       padding-top .32rem
       box-sizing border-box
       .title
-        font-size .8rem
+        font-size .28rem
         font-weight 700
         margin-bottom .25rem
       .btn
-        height 2.5rem
+        height .8rem
         line-height .8rem
         background-color #f7dbb3
         color #fff
         text-align center
         border-radius .12rem
-        font-size 1.2rem
+        font-size .28rem
         &.active
           background-color #fe9900
       .selected-seat
-        height 2rem
+        height 1rem
         display flex
-        margin-top 5rem
         .seat-item
           width 25%
           height .8rem
@@ -377,7 +367,6 @@ export default {
           align-items center
           border 0.02rem solid #f1f1f1
           margin-right .25rem
-          margin-top -3.2rem
           &:last-child
             margin-right 0
           .left

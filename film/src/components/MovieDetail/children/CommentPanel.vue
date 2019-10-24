@@ -76,7 +76,7 @@ export default {
       display flex
       justify-content center
       align-items center
-      height 2rem
+      height 1rem
       background-color #f9f9f9
       position relative
       .icon-close
@@ -101,7 +101,7 @@ export default {
       width 100%
       height 100%
       padding .25rem
-      padding-bottom 3.5rem
+      padding-bottom .5rem
       box-sizing border-box
       display flex
       flex-flow column
@@ -135,3 +135,4 @@ export default {
       outline none
       resize none
 </style>
+

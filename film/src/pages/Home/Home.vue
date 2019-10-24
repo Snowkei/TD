@@ -103,7 +103,7 @@
                   12月31日
                 </span>
                 <!-- 预售按钮 select_cinema-->
-                <span class="btn">预售</span>
+                <span class="btn" @click="$router.push('/cinema_detail')">预售</span>
               </div>
             </div>
           </div>
@@ -161,281 +161,201 @@ export default {
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
-*{margin:0;padding:0;}
-#home {
-  width: 100%;
-  height: 100%;
-
-  .search-header {
-    font-size: 0.3125rem;
-    position: fixed;
-    left: 0;
-    z-index: 999;
-    width: 100%;
-    height: 1rem;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    &.active {
-      background-color: #dd2727;
-      transition: all 0.2s;
-    }
-    
-    // 城市
-    .location {
-      border: 0.0125rem solid #f1f1f1;
-      border-radius: 0.2rem;
-      text-align: center;
-      padding: 0.1rem 0.18rem;
-      color: #fff;
-      background-color: rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 0.25rem;
-    }
-    
-    //搜索
-    .search {
-      border: 0.0125rem solid #f1f1f1;
-      border-radius: 0.3125rem;
-      padding: 0.1rem 0.125rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #fff;
-
-      // 搜索图标
-      .icon-search {
-        font-size: 0.375rem;
-      }
-
-      // 搜索输入框
-      input {
-        border: none;
-        outline: none;
-        font-size: 0.3rem;
-        margin-left: 0.125rem;
-      }
-    }
-
-    // 日期
-    .date {
-      width: 0.6rem;
-      height: 0.6rem;
-      border: 0.0125rem solid #f1f1f1;
-      border-radius: 0.425rem;
-      background-color: rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .calender {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 76%;
-        height: 76%;
-        background: url('./images/calender/calender.svg') no-repeat;
-        -webkit-background-size: cover;
-        background-size: cover;
-
-        // 当前日期
-        .day {
-          position: relative;
-          top: 0.45em;
-          color: #fff;
-          font-size: 0.6em;
-        }
-      }
-    }
-  }
-
-  // 轮播
-  .swiper-container {
-    width: 100%;
-    height: 100%;
-    // padding-top:5rem;
-
-    // 轮播图片
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  // 首页主体
-  .main {
-    width: 100%;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.8rem;
-    position: relative;
-    top: -0.25rem;
-    background-color: #fff;
-    z-index: 998;
-
-    .panel {
-      font-size: 0.3125rem;
-      padding: 0.1rem 0.25rem;
-      border-bottom: 0.08rem solid #f5f5f5;
-
-      .header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 0.125rem 0.2rem;
-
-        .red-name {
-          flex: 1;
-          color: #dd2727;
-          font-weight: 600;
-        }
-
-        .blue-name {
-          flex: 1;
-          color: #2d98f3;
-          font-weight: 600;
-        }
-
-        .more {
-          flex: 1;
-          text-align: right;
-          vertical-align: middle;
-          font-size: 0.25rem;
-        }
-      }
-
-      .body {
-        display: flex;
-        flex-wrap: wrap;
-
-        .item {
-          width: 33.33%;
-          padding: 0.125rem;
-          box-sizing: border-box;
-          position: relative;
-          overflow: hidden;
-
-          img {
-            width: 100%;
-            vertical-align: bottom;
-          }
-
-          .describe {
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            padding: 0 0.08rem;
-            height: 0.6rem;
-            box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.0);//
-
-            .name {
-              color: #fff;
-              font-size: 0.25rem;
-              flex: 6;
-              box-sizing: border-box;
-              width: 100%;
-              font-weight: 600;
-            }
-
-            .score {
-              color: #00000;//
-              flex: 2;
-              font-family: PingFangSC-Regular, Hiragino Sans GB, sans-serif;
-              font-weight: 700;
-
-              .interger {
-                font-size: 0.3rem;
-              }
-
-              .fraction {
-                font-size: 0.25rem;
-              }
-            }
-          }
-
-          // 购票
-          .buy {
-            height: 0.6rem;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.25rem;
-            background-color: #ffffff;//
-            color: #fff;
-          }
-
-          // 观影人数
-          .peopleNumber {
-            color: #ffb400;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            padding: 0 0.08rem;
-            height: 5.8rem;
-            background-color: rgba(0, 0, 0, 0.1);
-            font-size: 0.25rem;
-            box-sizing: border-box;
-          }
-
-          .presell {
-            height: 2rem;
-            width: 100%;
-            font-size: 0.25rem;
-
-            .name {
-              font-weight: 600;
-              font-size: 0.25rem;
-              padding: 0.1rem 0;
-              width: 100%;
-            }
-
-            .info {
-              width: 100%;
-              height: 0.6rem;//
-              font-size: 0.25rem;
-              font-weight: lighter;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              text-align: center;
-
-              .date {
-                flex: 1;
-              }
-
-              .btn {
-                text-align: center;
-                font-size: 0.25rem;
-                flex: 1;
-                color: #fff;
-                width: 100%;
-                box-sizing: border-box;
-                padding: 0.12rem 0;
-                background-color: #2d98f3;
-                border-radius: 0.2rem;
-                box-shadow: 0.02rem 0.02rem 0.08rem #2d98f3;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .panel + .panel {
-      padding-top: 0.25rem;
-    }
-  }
-}
+  #home
+    width 100%
+    height 100%
+    .search-header
+      font-size 0.3125rem
+      position fixed
+      left 0
+      z-index 999
+      width 100%
+      height 1rem
+      display flex
+      justify-content space-around
+      align-items center
+      &.active
+        background-color #dd2727
+        transition all .2s
+      .location
+        border 0.0125rem solid #f1f1f1
+        border-radius 0.2rem
+        text-align center
+        padding .1rem 0.18rem
+        color #fff
+        background-color rgba(255,255,255,.1)
+        display flex
+        justify-content center
+        align-items center
+        font-size .25rem
+      .search
+        border 0.0125rem solid #f1f1f1
+        border-radius 0.3125rem
+        padding 0.1rem .125rem
+        display flex
+        justify-content center
+        align-items center
+        background-color #fff
+        .icon-search
+          font-size 0.375rem
+        input
+          border none
+          outline none
+          font-size 0.3rem
+          margin-left 0.125rem
+      .date
+        width .6rem
+        height .6rem
+        border .0125rem solid #f1f1f1
+        border-radius .425rem
+        background-color rgba(255,255,255,.1)
+        display flex
+        justify-content center
+        align-items center
+        .calender
+          display flex
+          justify-content center
+          align-items center
+          width 76%
+          height 76%
+          background url('./images/calender/calender.svg') no-repeat
+          -webkit-background-size: cover
+          background-size: cover
+          .day
+            position relative
+            top .45em
+            color #fff
+            font-size .6em
+    .swiper-container
+      width 100%
+      height 3rem
+      img
+        width 100%
+        height 100%
+    .main
+      width 100%
+      border-top-left-radius .25rem
+      border-top-right-radius .25rem
+      padding-top .25rem
+      padding-bottom .8rem
+      position relative
+      top -0.25rem
+      background-color #fff
+      z-index 998
+      .panel
+        font-size .3125rem
+        padding .1rem .25rem
+        border-bottom .08rem solid #f5f5f5
+        .header
+          display flex
+          justify-content center
+          align-items center
+          padding 0 .125rem .2rem
+          .red-name
+            flex 1
+            color #dd2727
+            font-weight 600
+          .blue-name
+            flex 1
+            color #2d98f3
+            font-weight 600
+          .more
+            flex 1
+            text-align right
+            vertical-align middle
+            font-size .25rem
+        .body
+          display flex
+          flex-wrap wrap
+          .item
+            width 33.33%
+            padding .125rem
+            box-sizing border-box
+            position relative
+            overflow hidden
+            img
+              width 100%
+              vertical-align bottom
+            .describe
+              position absolute
+              left 0
+              bottom 0
+              width 100%
+              display flex
+              align-items center
+              padding 0 .08rem
+              height .4rem;
+              box-sizing border-box
+              background-color rgba(0,0,0,.4)
+              .name
+                color #fff
+                font-size .25rem
+                flex 6
+                box-sizing border-box
+                width 100%
+                font-weight 600
+              .score
+                color #ffb400
+                flex 2
+                font-family  PingFangSC-Regular,Hiragino Sans GB,sans-serif
+                font-weight 700
+                .interger
+                  font-size .3rem
+                .fraction
+                  font-size .25rem
+            .buy
+              height .6rem
+              width 100%
+              display flex
+              justify-content center
+              align-items center
+              font-size .25rem
+              background-color #dd2727
+              color #fff
+            .peopleNumber
+              color #ffb400
+              position absolute
+              left 0
+              bottom 0
+              width 100%
+              display flex
+              align-items center
+              padding 0 .08rem
+              height .4rem
+              background-color rgba(0,0,0,.4)
+              font-size .25rem
+              box-sizing border-box
+            .presell
+              height 1rem
+              width 100%
+              font-size .25rem
+              .name
+               font-weight 600
+               font-size .25rem
+               padding .1rem 0
+               width 100%
+              .info
+                width 100%
+                height .6rem
+                font-size .25rem
+                font-weight lighter
+                display flex
+                justify-content center
+                align-items center
+                text-align center
+                .date
+                  flex 1
+                .btn
+                  text-align center
+                  font-size .25rem
+                  flex 1
+                  color #fff
+                  width 100%
+                  box-sizing border-box
+                  padding .12rem 0
+                  background-color #2d98f3
+                  border-radius .2rem
+                  box-shadow .02rem .02rem .08rem #2d98f3
+      .panel + .panel
+        padding-top .25rem
 </style>
