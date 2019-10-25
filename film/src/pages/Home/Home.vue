@@ -11,7 +11,8 @@
       <!-- 日期 -->
       <span class="date">
         <span class="calender">
-          <span class="day">10.16</span>
+          <!-- 获取当前日期 -->
+          <span class="day">{{new Date().getDate()<10?'0'+new Date().getDate():new Date().getDate()}}</span>
         </span>
       </span>
     </div>
@@ -50,11 +51,11 @@
           <!-- 电影影片列表 -->
           <div class="item" v-for="(item,index) in hotMovieList.slice(0,6)" :key="index">
             <!-- 循环生成 -->
-            <img src="" alt="" @click="$router.push('/movie_detail')">
+            <img :src="server+item.poster" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:item.movie_id}})">
             <div style="position:relative">
               <div class="describe">
-                <span class="name ellipsis"></span>
-                <span class="srore">
+                <span class="name ellipsis">{{item.name}}</span>
+                <span class="srore" v-if="item.score">
                   <!-- 月 -->
                   <i class="interger"></i>
                   <!-- 日 -->
@@ -81,7 +82,7 @@
           <!-- 列表 -->
           <div class="item">
             <!-- 循环生成 -->
-            <img src="./images/hot-movie/hot1.jpg" alt="" @click="$router.push('/movie_detail')">
+            <img src="./images/hot-movie/hot1.jpg" alt="">
             <!-- 观影人数 -->
             <div style="postion:relative">
               <div class="peopleNumber">
@@ -134,7 +135,7 @@ export default {
   },
   created () {
     // 等待加载
-    // Indicator.open("Loading...");
+    Indicator.open("Loading...");
     this.loadMovieList()
   },
   mounted () {
@@ -173,7 +174,7 @@ export default {
       this.notShowMovieList.sort((a,b)=>{
         return b.wish_num -a.wish_num;
       });
-      
+      Indicator.close();
     }
   }
 }
