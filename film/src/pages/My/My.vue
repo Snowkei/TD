@@ -3,59 +3,112 @@
     <div class="header">
       <div class="left">
         <div class="avatar">
-          <img src="./images/userIcon.png" alt="">
+          <!-- 动态头像 -->
+          <img :src="avatar" alt="">
         </div>
-        <span class="go-login" v-if="login2==false" @click="isLogin">登陆/注册</span>
+        <!-- 未登陆的状态下显示 -->
+        <span class="go-login" v-if="!jsonData.user_id" @click="$router.push('login')">登陆/注册</span>
         <div v-else class="user-info">
-          <span class="ellipsis" style="font-size:.375rem;line-height:.6rem;margin-bottom:.12rem">123123</span>
-          <span class="ellipsis">同学有点懒，还没写下签名</span>
+          <span class="ellipsis" style="font-size:.375rem;line-height:.6rem;margin-bottom:.12rem">
+            {{jsonData.user_name}}</span>
+          <span class="ellipsis">{{jsonData.sign?jsonData.sign:'同学有点懒，还没写下签名'}}</span>
         </div>
       </div>
-      <div class="right" v-if="!login2==false">
-        <span @click="go_my_info">个人信息</span>
+      <div class="right" v-if="jsonData.user_name" @click="viewUserInfo">
+        <span>个人信息</span>
         <span class="icon-more"></span>
       </div>      
     </div>
     <div class="content">
         <div class="list">
-          <div class="item" @click="GoOrder">我的订单<span class="icon-more"></span></div>
-          <div class="item" @click="GoMovie">想看的电影<span class="icon-more"></span></div>
-          <div class="item" @click="GoMovie">看过的电影<span class="icon-more"></span></div>
+          <!-- 订单页按钮 -->
+          <div class="item" @click="viewMyOrder">我的订单<span class="icon-more"></span></div>
+          <!-- 想看电影页 -->
+          <div class="item" @click="viewMyMovie(1)">想看的电影<span class="icon-more"></span></div>
+          <!-- 看过电影页 -->
+          <div class="item" @click="viewMyMovie(0)">看过的电影<span class="icon-more"></span></div>
         </div>
       </div>    
   </div>
 </template>
 
 <script>
+// 引入局部组件
 import {Indicator} from 'mint-ui'
-
+//引入封装好的函数
+import {getUserInfo} from '../../api/index'
 export default {
-  name:"My",
+  name:"My",//给组建一个名字，报错的时候更明显容易理解
   data(){
     return{
-      login2:false
+      jsonData:{},//创建一个对象保存服务器获取的数据
+      avatar:'http://localhost:3000/images/avatar/userIcon.png'
     }
   },
-  created(){
-    //判断登陆状态
-    // if(){
-    //   如果未登陆，隐藏tabbar
-    // }
+  created(){//生命周期 渲染完后请求数据
+    this.loadUserInfo();
   },
   methods:{
-    isLogin(){
-      this.login2=true;  
+    // 获取用户头像
+    userAvatar(){
+      if(this.jsonData){
+        //获取动态头像
+        this.avatar='http://localhost:3000'
+        +this.jsonData.avatar
+      }else{
+        //如果未登录显示为为登陆头像
+        this.avatar='http://localhost:3000/images/avatar/userIcon.png'
+      }
     },
-    go_my_info(){
-      this.$router.push("/my_info")
+    // 异步加载用户信息
+    //async 表示函数异步操作
+    //await 等待前边异步函数执行完再接着执行
+    async loadUserInfo(){
+      //$cookies储存客户登录信息
+      if(this.$cookies.get('user_id')){
+        //加载提示
+        Indicator.open('Loading...');
+        //
+        let json =await getUserInfo(this.$cookies.get('user_id'));
+        if(json.success_code===200){
+          this.jsonData=json.data;
+          this.userAvatar();
+        }else{
+          //用户登录未填写信息数据为空
+          this.jsonData={};
+        }
+        //加载完毕 清除加载提示
+        Indicator.close();
+      }else{
+        //用户未登录数据为空
+        this.jsonData={};
+         //加载完毕 清除加载提示
+        Indicator.close();
+      }
     },
-    GoOrder(){
-      this.$router.push("/my_order")
+    //查看个人信息
+    viewUserInfo(){
+      if(this.$cookies.get('user_id')){
+        this.$router.push('my_info')
+      }
     },
-    GoMovie(){
-      this.$router.push("/my_movie")
+    //查看个人订单
+    viewMyOrder(flag){
+      if(this.$cookies.get('user_id')){
+        this.$router.push({path:'my_order',query:{'user_id':this.$cookies.get('user_id')}});
+      }else{
+        this.$router.push('login');
+      }
+    },
+    //查看个人电影
+    viewMyMovie(flag){
+      if(this.$cookies.get('user_id')){
+        this.$router.push({path:'my_movie',query:{'user_id':this.$cookies.get('user_id'),'wish_movie':flag}});
+      }else{
+        this.$router.push('login');
+      }
     }
-  }
+  },
 }
 </script>
 
