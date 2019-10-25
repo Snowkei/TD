@@ -26,7 +26,7 @@
       <div class="order-num">
         <span class="left icon-shop"></span>
         <div class="right">
-          <div class="total">￥1988</div>
+          <div class="total">￥19</div>
           <div class="num">订单编号:10086</div>
         </div>
       </div>

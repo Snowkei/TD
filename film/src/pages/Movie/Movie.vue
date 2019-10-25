@@ -34,9 +34,9 @@ export default {
   created () {
     Indicator.open("Loading...");
     // 优化列表数据
-    if(this.$router.query.hotMovie==0){
-      this.isHotMovie=false;
-    }
+    // if(this.$router.query.hotMovie==0){
+    //   this.isHotMovie=false;
+    // }
     this.loadMovieList();
   },
   data(){
@@ -51,8 +51,6 @@ export default {
       notShowMovieList:[],
     }
   },
-  
-  
   methods: {
     //加载电影列表
     async loadMovieList(){
