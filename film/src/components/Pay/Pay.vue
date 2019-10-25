@@ -26,7 +26,7 @@
       <div class="order-num">
         <span class="left icon-shop"></span>
         <div class="right">
-          <div class="total">￥1988</div>
+          <div class="total">￥19</div>
           <div class="num">订单编号:10086</div>
         </div>
       </div>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import {order,getScheduleById,updateScheduleSeat} from '../../api/index'
 import {Indicator,MessageBox,Toast} from 'mint-ui'
 export default {
   name:"Pay",
@@ -70,8 +71,8 @@ export default {
   },
   // 加载
   created(){
-    // Indicator.open('Loading...');
-    // this.loadInfo();
+    Indicator.open('Loading...');
+    this.loadInfo();
     if (this.$cookies.get('countdown_m')&&this.$cookies.get('countdown_m')){
       if (!this.$cookies.get('countdown_m')[1]) {
         this.countdown_m_s = Number(this.$cookies.get('countdown_m')[0]);
