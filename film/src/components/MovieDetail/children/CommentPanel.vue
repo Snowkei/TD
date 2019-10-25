@@ -47,6 +47,15 @@ export default {
     changeScore(score){
       this.score=score*2;
     },
+    async loadUserComment(){
+      // 获取用户的评论
+      let json = await getUserComment(this.$cookies.get('user_id'),this.$route.query.movie_id);
+      if (json.success_code===200){
+        this.starValue = json.data.user_score*0.5;
+        this.score = json.data.user_score;
+        this.textarea = json.data.comment_content;
+      }
+    },
     // 发布评论
     async commentBtnHandle(){
       if (this.textarea){
@@ -65,9 +74,7 @@ export default {
         });
       }
     },
-    async loadUserComment(){
-      // alert('123')
-    }
+    
   }
 }
 </script>
