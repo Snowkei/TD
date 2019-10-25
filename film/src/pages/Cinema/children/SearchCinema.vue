@@ -3,12 +3,12 @@
     <div class="header">
       <div class="search">
         <span class="icon-search" @click="$router.push('/search_cinema')"></span>
-        <input type="text" placeholder="搜影院" >
+        <input type="text" placeholder="搜影院" v-model="name">
       </div>
       <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <div class="content">
-      <div class="cinema-container">
+      <div class="cinema-container" v-if="cinemaInfo.length">
         <div class="item" @click="$router.push('/cinema_detail')">
           <div class="left">
             <div class="name ellipsis">糖豆影院</div>
