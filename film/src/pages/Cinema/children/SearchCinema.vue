@@ -2,14 +2,14 @@
   <div class="search-cinema">
     <div class="header">
       <div class="search">
-        <span class="icon-search"></span>
+        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
         <input type="text" placeholder="搜影院" v-model="name">
       </div>
       <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <div class="content">
-      <div class="cinema-container">
-        <div class="item" v-for="(item,index) in cinemaInfo" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
+      <div class="cinema-container" v-if="cinemaInfo.length">
+        <div class="item" @click="$router.push('/cinema_detail')">
           <div class="left">
             <div class="name ellipsis">糖豆影院</div>
             <div class="address ellipsis">金水区666号糖豆广场</div>

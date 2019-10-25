@@ -61,7 +61,7 @@
 
 
 <script>
-    // import {getPhoneCode,phoneLogin,pwdLogin} from '../../api/index'
+    import {getPhoneCode,phoneLogin,pwdLogin} from '../../api/index'
     import {Toast,MessageBox} from 'mint-ui'
     export default {
         name: "Login",

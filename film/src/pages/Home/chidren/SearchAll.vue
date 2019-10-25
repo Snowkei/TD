@@ -4,7 +4,7 @@
       <!-- 搜索 -->
       <div class="search">
         <span class="icon-search"></span>
-        <input type="text" placeholder="搜影片、影院">
+        <input type="text" placeholder="搜影片、影院" >
       </div>
       <span class="cancel-btn" @click="$router.push('/home')">取消</span>
     </div>
@@ -12,7 +12,29 @@
     <div class="content">
       <div class="movie-container">
         <div class="title">影片</div>
-        <movie-item></movie-item>
+        <movie-item ></movie-item>
+      </div>
+      <div class="cinema-container" >
+        <div class="title">影院</div>
+        <div class="item" @click="$router.push('/cinema_detail')">
+          <div class="left">
+            <div class="name ellipsis">变形金刚</div>
+            <div class="address ellipsis"></div>
+            <div class="label-block">
+              <span>小吃</span>
+              <span>4D厅</span>
+              <span>杜比全景声厅</span>
+              <span>巨幕厅</span>
+            </div>
+            <div class="right">
+              <div class="price-block"><span class="price">23</span>元起</div>
+            </div>
+          </div>
+        </div>
+        <div class="tips">
+          <span class="icon icon-empty-content"></span>
+          <span class="text">暂时木有内容</span>
+        </div>
       </div>
     </div>
   </div>
@@ -29,9 +51,26 @@ export default {
     return {
       name:'',
       movieInfo:[],
-      // cinemaInfo:[],
+      cinemaInfo:[],
       server:'http://localhost:3000'
     }
+  },
+  watch: {
+    // async name(){
+    //   if (this.name){
+    //     let json = await matchMovieByName(this.name);
+    //     if (json.success_code===200){
+    //       this.movieInfo = json.data;
+    //     }
+    //     json = await matchCinemaByName(this.name);
+    //     if (json.success_code===200){
+    //       this.cinemaInfo = json.data;
+    //     }
+    //   }else{
+    //     this.movieInfo = [];
+    //     this.cinemaInfo = [];
+    //   }
+    // }
   }
 }
 </script>

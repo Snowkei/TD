@@ -1,23 +1,24 @@
 <template>
-<!-- 最外层父元素 -->
-  <div id="home"> 
-    <!-- 顶部信息 -->
+  <div id="home"><!--最外层父元素-->
     <el-row class="header">
-      <div class="head-bar">
-        <!-- 左部分 -->
+      <div class="head-bar" v-if="adminInfo.name">
         <div class="left">
-          <!-- 电影图片 -->
-          <i class="icon-film-logo" style="font-size:48px; margin-right:5px;"></i>
-          <!-- slot可以父子传参 -->
-          <span slot="title" style="font-size:16px;font-weight:bolder">糖豆电影</span>
+          <i class="icon-film-logo" style="font-size: 48px;margin-right: 5px;"></i>
+           <!-- slot可以父子传参 -->
+          <span slot="title" style="font-size: 16px;
+          font-weight: bolder">糖豆电影</span>
         </div>
-        <!-- 右  管理员信息 -->
         <div class="right">
-          <!-- 头像 -->
-          <img src="./images/admin.gif" class="user-avatar" width="40px" height="40px" style="border-radius:20px">
+          <img
+            :src="server+adminInfo.avatar"
+            class="user-avatar"
+            width="40px"
+            height="40px"
+            style="border-radius: 20px"
+          />
           <el-dropdown style="margin-left:12px">
             <span class="el-dropdown-link">
-             admin
+              {{adminInfo.name}}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -28,51 +29,42 @@
         </div>
       </div>
     </el-row>
-    <!-- 外层 -->
     <el-row class="container">
       <div class="section">
         <div class="nav-bar">
-         <!-- 导航菜单 -->
-          <el-menu class="el-menu-vertical">
-            <!-- 用户管理 -->
-            <el-menu-item index="/user_manage" @click="handleMenuItemClick('/user_manage')">
-              <i class="el-icon-user-solid"></i>
-              <span slot="title">用户管理</span>
-            </el-menu-item>
-            <!-- 电影管理 -->
-             <el-menu-item index="/movie_manage" @click="handleMenuItemClick('/movie_manage')">
-              <i class="el-icon-s-flag"> </i>
-              <span slot="title">电影管理</span>  
+          <el-menu :default-active="currentMenuIndex" class="el-menu-vertical">
+            
+              <el-menu-item index="/user_manage" @click="handleMenuItemClick('/user_manage')">
+                <i class="el-icon-user-solid"></i>
+                <span slot="title">用户管理</span>
               </el-menu-item>
-            <!-- 影院管理 -->
-            <el-menu-item index="/cinema_manage" @click="handleMenuItemClick('/cinema_manage')">
-              <i class="el-icon-video-camera-solid"></i>
-              <span slot="title">影院管理</span>
-            </el-menu-item>
-            <!-- 影厅管理 -->
-            <el-menu-item index="/hall_manage" @click="handleMenuItemClick('/hall_manage')">
-              <i class="el-icon-bangzhu"></i>
-              <span slot="title">影厅管理</span>
-            </el-menu-item>
-            <!-- 电影排片 -->
-            <el-menu-item index="/movie_schedule" @click="handleMenuItemClick('/movie_schedule')">
-              <i class="el-icon-s-fold"></i>
-              <span slot="title">电影排片</span>
-            </el-menu-item>
-            <!-- 评论管理 -->
-            <el-menu-item index="/comment_manage" @click="handleMenuItemClick('/comment_manage')">
-              <i class="el-icon-s-comment"></i>
-              <span slot="title">评论管理</span>
-            </el-menu-item>
-             <!-- 订单管理 -->
-            <el-menu-item index="/order_manage" @click="handleMenuItemClick('/order_manage')">
-              <i class="el-icon-s-ticket"></i>
-              <span slot="title">订单管理</span>
-            </el-menu-item>
+              <el-menu-item index="/movie_manage" @click="handleMenuItemClick('/movie_manage')">
+                <i class="el-icon-s-kpi"></i>
+                <span slot="title">电影管理</span>
+              </el-menu-item>
+              <el-menu-item index="/cinema_manage" @click="handleMenuItemClick('/cinema_manage')">
+                <i class="el-icon-video-camera-solid"></i>
+                <span slot="title">影院管理</span>
+              </el-menu-item>
+              <el-menu-item index="/hall_manage" @click="handleMenuItemClick('/hall_manage')">
+                <i class="el-icon-bangzhu"></i>
+                <span slot="title">影厅管理</span>
+              </el-menu-item>
+              <el-menu-item index="/movie_schedule" @click="handleMenuItemClick('/movie_schedule')">
+                <i class="el-icon-s-fold"></i>
+                <span slot="title">电影排片</span>
+              </el-menu-item>
+              <el-menu-item index="/comment_manage" @click="handleMenuItemClick('/comment_manage')">
+                <i class="el-icon-s-comment"></i>
+                <span slot="title">评论管理</span>
+              </el-menu-item>
+              <el-menu-item index="/order_manage" @click="handleMenuItemClick('/order_manage')">
+                <i class="el-icon-s-ticket"></i>
+                <span slot="title">订单管理</span>
+              </el-menu-item>
           </el-menu>
         </div>
-        <!-- 路由匹配到的组件将显示在这里 -->
-         <router-view class="content"></router-view>
+        <router-view class="content" />
       </div>
     </el-row>
   </div>
@@ -82,9 +74,9 @@
 import Vue from "vue";/*引入vue文件*/
 import { getAdminInfo } from "../../api";/*获取管理员信息*/
 import {
-  Message,//消息提示
-  Dropdown,//下拉菜单
-  DropdownMenu,//多条件选择界面
+  Message,
+  Dropdown,
+  DropdownMenu,
   DropdownItem,
   RadioGroup,
   RadioButton
@@ -95,26 +87,44 @@ Vue.component(DropdownItem.name, DropdownItem);
 Vue.component(RadioGroup.name, RadioGroup);
 Vue.component(RadioButton.name, RadioButton);
 export default {
-  name:"Home",
-  data(){
-    return{}
+  name: "Home",
+  data() {
+    return {
+      //服务器地址
+      server: "http://localhost:3000",
+      adminInfo: {},
+      currentMenuIndex:'/user_manage'
+    };
   },
-  methods:{
-    // 创建一个点击事件
+  created() {
+    this.loadAdminInfo();
+  },
+  methods: {
+    async loadAdminInfo() {
+      if (this.$cookies.get("admin_id")) {
+        let json = await getAdminInfo(this.$cookies.get("admin_id"));
+        if (json.success_code === 200) {
+          this.adminInfo = json.data;
+          console.log(this.adminInfo);
+        }
+      } else {
+        this.$router.push({ path: "/login" });
+        Message.error("请先登录！");
+      }
+    },
+     // 创建一个点击事件
     logout(){
       this.$cookies.remove("admin_id");//发送删除admin_id指令
       this.$router.push("/login");//路由传值跳到登录界面
       Message.success("退出成功！");//弹出消息框 提示"退出成功！"
     },
-    
     handleMenuItemClick(path){
       this.$router.push('/home'+path);
-      this.currenMenuIndex = path;
+      this.currentMenuIndex= path;
     }
   }
-}
+};
 </script>
-
 
 <style scoped>
 #home {
