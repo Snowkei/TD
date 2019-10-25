@@ -39,10 +39,10 @@
           <span class="icon icon-empty-seat"></span>可选
         </div>
         <div class="example empty-example">
-          <span class="icon icon-empty-seat"></span>不可选
+          <span class="icon icon-sold-seat"></span>不可选
         </div>
         <div class="example empty-example">
-          <span class="icon icon-empty-seat"></span>已选
+          <span class="icon icon-selected-seat"></span>已选
         </div>
       </div>
     </div>
@@ -301,6 +301,10 @@ export default {
         color #fff
         border-radius .2rem
         font-size .25rem
+      .zuo
+        img 
+          margin-top 1.5rem
+          margin-left .9rem
       .seat-container
         padding .12rem 0
         position absolute

@@ -249,6 +249,7 @@
         font-size .375rem
         text-align center
         line-height .375rem
+        margin-left -1.5rem
     .cinema-info
       margin-top 1rem
       color #888

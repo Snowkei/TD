@@ -390,6 +390,7 @@ export default {
       display flex
       justify-content center
       align-items center
+      margin-left -.88rem
       .btn
         width 90%
         height .8rem

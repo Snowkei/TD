@@ -4,7 +4,7 @@
     <div class="tab-header">
       <span class="location">郑州</span>
       <span>正在热映</span>
-      <span>即将上映</span>
+      <span @click="$router.push('/select_cinema')">即将上映</span>
       <span class="icon-search" @click="$router.push('/search_movie')"></span>
     </div>
 

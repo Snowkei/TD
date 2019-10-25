@@ -3,9 +3,9 @@
     <div class="header">
       <div class="left">
         <div class="avatar">
-          <img src="./images/userIcon.png" alt="">
+          <img  @click="$router.push('/login')" src="./images/userIcon.png" alt="">
         </div>
-        <span class="go-login" v-if="login2==false" @click="isLogin">登陆/注册</span>
+        <span class="go-login" v-if="login2==false">登陆/注册</span>
         <div v-else class="user-info">
           <span class="ellipsis" style="font-size:.375rem;line-height:.6rem;margin-bottom:.12rem">123123</span>
           <span class="ellipsis">同学有点懒，还没写下签名</span>

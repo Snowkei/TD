@@ -10,6 +10,7 @@ import CommentPanel from '../components/MovieDetail/children/CommentPanel.vue'
 import SubmitOrder from '../components/SubmitOrder/SubmitOrder.vue'
 import SelectSeat from '../components/SelectSeat/SelectSeat.vue'
 
+
 import SearchAll from "../pages/Home/chidren/SearchAll.vue"
 import SearchMovie from '../pages/Movie/children/SearchMovie.vue'
 import Home from '../pages/Home/Home.vue'
@@ -21,7 +22,7 @@ import MyMovie from '../pages/My/children/MyMovie.vue'
 import ModifyUserName from '../pages/My/children/ModifyUserName.vue'
 import ModifyUserSign from '../pages/My/children/ModifyUserSign.vue'
 import SearchCinema from '../pages/Cinema/children/SearchCinema.vue'
-
+import SelectCinema from '../components/SelectCinema/SelectCinema'
 
 import CinemaDetail from '../components/CinemaDetail/CinemaDetail.vue'
 import Cinema from '../pages/Cinema/Cinema.vue'
@@ -55,5 +56,6 @@ export default new Router({
     { path: '/submit_order', component: SubmitOrder },
     { path: '/cinema_detail', component: CinemaDetail },
     { path: '/select_seat', component: SelectSeat },
+    { path:'/select_cinema', component:SelectCinema },
   ]
 })

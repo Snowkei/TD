@@ -1,63 +1,52 @@
 <template>
-  <div id="cinema">
-    <!-- 头部 -->
-    <div class="header">
-      <div class="nav">
-        <span class="location">郑州</span>
-        <span class="title">影院</span>
-        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
-      </div>
-    </div>
-    
-    <!-- 主体 -->
-    <div class="content">
-      <!-- 每个item -->
-      <div class="item" @click="$router.push('/cinema_detail')">
-        <!-- 左侧消息 -->
-        <div class="left">
-          <div class="name ellipsis">糖豆影院</div>
-          <div class="address">金水区666号糖豆广场</div>
-          <div class="label-block">
-            <span>小吃</span>
-            <span>4D厅</span>
-            <span>巨幕厅</span>
-            <span>杜比全景声厅</span>
-          </div>
+    <div id="cinema">
+      <div class="header">
+        <div class="nav">
+          <span class="location">郑州</span>
+          <span class="title">影院</span>
+          <span class=" icon-search" @click="$router.push('search_cinema')"></span>
         </div>
-        <!-- 右侧价钱 -->
-        <div class="right">
-          <div class="price-block">
-            <span class="price">23元起</span>
+      </div>
+      <div class="content">
+        <div class="item" @click="$router.push('cinema_cinema')"> 
+          <div class="left">
+            <div class="name ellipsis">糖豆影院</div>
+            <div class="address ellipsis">金水区666号糖豆广场</div>
+            <div class="label-block"><span>小吃</span><span>4D厅</span><span>巨幕厅</span><span>杜比全景声厅</span></div>
           </div>
+          <!--<div class="right">-->
+            <!--<div class="price-block"><span class="price">23</span>元起</div>-->
+          <!--</div>-->
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
-import {Indicator} from 'mint-ui'
-export default {
-  data(){
-    return{
-      jsonData:[]
+    // import {getCinemaList} from '../../api/index'
+    import {Indicator} from 'mint-ui'
+    export default {
+        name: "Cinema",
+        data(){
+          return{
+            jsonData:[]
+          }
+        },
+        created() {
+          //Indicator.open('Loading...');
+          this.loadCinemaList();
+        },
+        methods:{   
+          //加载电影列表
+          async loadCinemaList(){
+            let json = await getCinemaList();
+            if (json.success_code===200){
+              this.jsonData = json.data;
+            }
+            Indicator.close();
+          }
+        }
     }
-  },
-  created() {
-    //  Indicator.open('Loading...');
-    // this.loadCinemaList();
-  },
-  methods:{
-    //加载电影列表
-    async loadCinemaList(){
-      let json=await getCinemaList();
-      if(json.success_code===200){
-        this.jsonData=json.data;
-      }
-      Indicator.close();
-    }
-  }
-}
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
