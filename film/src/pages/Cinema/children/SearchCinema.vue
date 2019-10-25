@@ -2,7 +2,7 @@
   <div class="search-cinema">
     <div class="header">
       <div class="search">
-        <span class="icon-search"></span>
+        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
         <input type="text" placeholder="搜影院" v-model="name">
       </div>
       <span class="cancel-btn" @click="$router.go(-1)">取消</span>
