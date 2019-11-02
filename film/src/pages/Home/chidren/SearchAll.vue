@@ -4,22 +4,22 @@
       <!-- 搜索 -->
       <div class="search">
         <span class="icon-search"></span>
-        <input type="text" placeholder="搜影片、影院" >
+        <input type="text" placeholder="搜影片、影院" v-model="name">
       </div>
-      <span class="cancel-btn" @click="$router.push('/home')">取消</span>
+      <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <!-- 搜索列表 -->
     <div class="content">
-      <div class="movie-container">
+      <div class="movie-container" v-if="movieInfo.length">
         <div class="title">影片</div>
-        <movie-item ></movie-item>
+        <movie-item :movie-list="movieInfo"></movie-item>
       </div>
-      <div class="cinema-container" >
+      <div class="cinema-container" v-if="cinemaInfo.length">
         <div class="title">影院</div>
-        <div class="item" @click="$router.push('/cinema_detail')">
+        <div class="item"  v-for="(item,index) in cinemaInfo" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
           <div class="left">
-            <div class="name ellipsis">变形金刚</div>
-            <div class="address ellipsis"></div>
+            <div class="name ellipsis">{{item.cinema_name}}</div>
+            <div class="address ellipsis">{{item.specified_address}}</div>
             <div class="label-block">
               <span>小吃</span>
               <span>4D厅</span>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import {matchCinemaByName,matchMovieByName} from '../../../api/index'
 import MovieItem from '../../../components/MovieItem/MovieItem'
 export default {
   name:"SearchAll",
@@ -56,21 +57,24 @@ export default {
     }
   },
   watch: {
-    // async name(){
-    //   if (this.name){
-    //     let json = await matchMovieByName(this.name);
-    //     if (json.success_code===200){
-    //       this.movieInfo = json.data;
-    //     }
-    //     json = await matchCinemaByName(this.name);
-    //     if (json.success_code===200){
-    //       this.cinemaInfo = json.data;
-    //     }
-    //   }else{
-    //     this.movieInfo = [];
-    //     this.cinemaInfo = [];
-    //   }
-    // }
+    // 监听函数
+    async name(){
+      if (this.name){
+        // 根据输入名字匹配电影
+        let json = await matchMovieByName(this.name);
+        if (json.success_code===200){
+          this.movieInfo = json.data;
+        }
+        // 根据名称匹配影院
+        json = await matchCinemaByName(this.name);
+        if (json.success_code===200){
+          this.cinemaInfo = json.data;
+        }
+      }else{
+        this.movieInfo = [];
+        this.cinemaInfo = [];
+      }
+    }
   }
 }
 </script>

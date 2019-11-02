@@ -9,7 +9,7 @@
     </div>
     <div class="content">
       <div class="cinema-container" v-if="cinemaInfo.length">
-        <div class="item" v-for="(item,index) in cinemaInfo" :key="index" @click="$router.push({path:'/cinema_datail',query:{cinema_id:item.cinema_id}})">
+        <div class="item" v-for="(item,index) in cinemaInfo" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
           <div class="left">
             <div class="name ellipsis">{{item.cinema_name}}</div>
             <div class="address ellipsis">{{item.specified_address}}</div>
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <div class="tips">
+      <div class="tips" v-else-if="name">
         <span class="icon icon-empty-content"></span>
         <span class="text">暂无其他内容</span>
       </div>
@@ -48,6 +48,7 @@ export default {
   watch:{
     async name(){
       if(this.name){
+        // 根据名字匹配电影
         let json=await matchCinemaByName(this.name);
         if(json.success_code===200){
           this.cinemaInfo=json.data;

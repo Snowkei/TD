@@ -7,12 +7,21 @@
           <span class=" icon-search" @click="$router.push('search_cinema')"></span>
         </div>
       </div>
-      <div class="content">
-        <div class="item" v-for="(item,index) in jsonData" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
-          <div class="left">
-            <div class="name ellipsis">糖豆影院</div>
-            <div class="address ellipsis">金水区566号糖豆广场</div>
-            <div class="label-block"><span>小吃</span><span>4D厅</span><span>巨幕厅</span><span>杜比全景声厅</span></div>
+    </div>
+    
+    <!-- 主体 -->
+    <div class="content">
+      <!-- 每个item -->
+      <div class="item" v-for="(item,index) in jsonData" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
+        <!-- 左侧消息 -->
+        <div class="left">
+          <div class="name ellipsis">糖豆影院</div>
+          <div class="address">金水区666号糖豆广场</div>
+          <div class="label-block">
+            <span>小吃</span>
+            <span>4D厅</span>
+            <span>巨幕厅</span>
+            <span>杜比全景声厅</span>
           </div>
           <div class="right">
             <div class="price-block"><span class="price">23</span>元起</div>
@@ -23,29 +32,26 @@
 </template>
 
 <script>
-    import {getCinemaList} from '../../api/index'
-    import {Indicator} from 'mint-ui'
-    export default {
-        name: "Cinema",
-        data(){
-          return{
-            jsonData:[]
-          }
-        },
-        created() {
-          Indicator.open('Loading...');
-          this.loadCinemaList();
-        },
-        methods:{   
-          //加载电影列表
-          async loadCinemaList(){
-            let json = await getCinemaList();
-            if (json.success_code===200){
-              this.jsonData = json.data;
-            }
-            Indicator.close();
-          }
-        }
+import {getCinemaList} from '../../api/index'
+import {Indicator} from 'mint-ui'
+export default {
+  data(){
+    return{
+      jsonData:[]
+    }
+  },
+  created() {
+     Indicator.open('Loading...');
+    this.loadCinemaList();
+  },
+  methods:{
+    //加载电影列表
+    async loadCinemaList(){
+      let json=await getCinemaList();
+      if(json.success_code===200){
+        this.jsonData=json.data;
+      }
+      Indicator.close();
     }
 </script>
 

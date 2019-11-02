@@ -102,7 +102,8 @@
       </div>
     </div>
     <div class="buy">
-      <div class="btn" @click="$router.push({path:'/select_cinema',query:{movie_id:$route.query.movie_id}})">特惠购票</div>
+      <!-- <div class="btn" @click="$router.push({path:'/select_cinema',query:{movie_id:$route.query.movie_id}})">特惠购票</div> -->
+      <div class="btn" @click="$router.push({path:'/cinema_detail',query:{movie_id:$route.query.movie_id}})">特惠购票</div>
     </div>
   </div>
 </template>
@@ -125,7 +126,7 @@ import moment from 'moment';
 import {formatDate} from '../../common/util/util'
 Vue.use(Rate);
 export default {
-  name:"MovieDetail",
+  name: "MovieDetail",
   data(){
     return{
       starValue:0,
@@ -141,12 +142,11 @@ export default {
     }
   },
   created(){
-    // 加载中
     Indicator.open('Loading...');
     this.loadMovieDetail();
   },
-  methods: {
-    // 加载电影详情
+  methods:{
+    //加载电影详细信息
     async loadMovieDetail(){
       if(this.$route.query.movie_id){
         let json = await getMovieDetail(this.$route.query.movie_id);
@@ -165,6 +165,7 @@ export default {
             } else{
               this.notWishMovie = true;
             }
+            //
           }
           //获取所有用户通过审核的评论
           let commentJson = await getAllUserPassComment(this.$route.query.movie_id);
@@ -196,46 +197,39 @@ export default {
       }
       Indicator.close();
     },
-    // 想看按钮
+    //想看按钮处理
     async wishBtnHandle(){
-      //  判断用户id
-      if(this.$cookies.get('user_id')){
-        // 不想看
-        if(this.notWishMovie){
-          let json=await wishMovie(this.$cookies.get('user_id'),this.$router.query.movie_id);
-          if(jsonl.success_code===200){
-            this.notWishMovie=false;
-            // 重新加载
+      if (this.$cookies.get('user_id')){
+        //不想看
+        if (this.notWishMovie){
+          let json = await wishMovie(this.$cookies.get('user_id'),this.$route.query.movie_id);
+          if (json.success_code===200){
+            this.notWishMovie = false;
             this.loadMovieDetail();
           }
-        }else{
-          // 取消想看电影
-          let json =await cancelWishMovie(this.$cookies.get('user_id'),this.$route.query.movie_id);
-          if(json.success_code===200){
-            this.notWishMovie=true;
+        } else {
+          let json = await cancelWishMovie(this.$cookies.get('user_id'),this.$route.query.movie_id);
+          if (json.success_code===200){
+            this.notWishMovie = true;
             this.loadMovieDetail();
           }
         }
+      } else{
+        this.$router.push('/login');
       }
-        // else{
-        //   this.$router.push('/login');
-        // }
     },
-    // 看过按钮
+    //看过按钮处理
     watchedBtnHandle(){
-      this.$router.push('/comment_panel')
-      // //判断登录状态
+      //用户已登录
       if (this.$cookies.get('user_id')){
         this.$router.push({path:'/comment_panel',query:{movie_id:this.$route.query.movie_id}});
       } else{
-        // this.$router.push('/login');
-        console.log("denglu")
+        this.$router.push('/login');
       }
     },
-    // 点赞按钮
+    //点赞按钮处理
     async supportBtnHandle(commentId){
       if (this.$cookies.get('user_id')){
-        // 获取当前评论
         let json = await getCommentById(commentId);
         let supportUser,supportNum;
         //请求成功
@@ -297,15 +291,15 @@ export default {
         this.$router.push('/login');
       }
     },
-    // 判断用户是否点赞
+    //判断用户是否点赞
     userIsSupportComment(supportStrArr){
-      if(supportStrArr&&JSON.parse(supportStrArr).indexOf(Number(this.$cookies.get('user_id')))>-1){
+      if (supportStrArr&&JSON.parse(supportStrArr).indexOf(Number(this.$cookies.get('user_id')))>-1) {
         return true;
-      }else{
+      } else {
         return false;
       }
     },
-    // 处理评论日期
+    //处理评论日期
     formatCommentDate(date){
       return formatDate(new Date(moment(date).format('YYYY-MM-DD HH:mm:ss')),false);
     }

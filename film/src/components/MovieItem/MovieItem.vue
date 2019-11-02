@@ -15,7 +15,8 @@
       <div class="descInfo">类型：{{item.type}}</div>
       <div class="descInfo ellipsis">主演：<span>{{item.actor}}</span></div>
     </div>
-    <span class="buy" :class="{pre_sell: new Date(item.public_date)-new Date()>0}" @click="$router.push({path:'/select_cinema',query:{movie_id:item.movie_id}})">{{new Date(item.public_date)-new Date()>0?'预售':'购票'}}</span>
+    <!-- <span class="buy" :class="{pre_sell: new Date(item.public_date)-new Date()>0}" @click="$router.push({path:'/select_cinema',query:{movie_id:item.movie_id}})">{{new Date(item.public_date)-new Date()>0?'预售':'购票'}}</span> -->
+    <span class="buy" :class="{pre_sell: new Date(item.public_date)-new Date()>0}" @click="$router.push({path:'/cinema_detail',query:{movie_id:item.movie_id}})">{{new Date(item.public_date)-new Date()>0?'预售':'购票'}}</span>
   </div>
 </div>
 </template>

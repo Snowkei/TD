@@ -18,20 +18,46 @@
 </template>
 
 <script>
-    import {getMovieList} from '../../api/index'
-    import {Indicator} from 'mint-ui'
-    import Index from "element-ui/lib/utils/popup"
-    import MovieItem from '../../components/MovieItem/MovieItem'
-    export default {
-      name: "Movie",
-      components: {
-        Index,
-        MovieItem
-      },
-      created(){
-        //Indicator.open('Loading...');
-        if(this.$route.query.hotMovie==0){
-          this.isHotMovie = false;
+// 加载电影列表
+import {getMovieList} from '../../api/index'
+import {Indicator} from 'mint-ui'
+import Index from "element-ui/lib/utils/popup"
+import MovieItem from '../../components/MovieItem/MovieItem'
+export default {
+  name:"Movie",
+  components: {
+    Index,
+    MovieItem
+  },
+  created () {
+    Indicator.open("Loading...");
+    // 优化列表数据
+    // if(this.$router.query.hotMovie==0){
+    //   this.isHotMovie=false;
+    // }
+    this.loadMovieList();
+  },
+  data(){
+    return{
+      //切换电影选项
+      isHotMovie:true,
+      //服务器地址
+      server:'http://localhost:3000',
+      //热门电影列表
+      hotMovieList:[],
+      //未上映电影列表
+      notShowMovieList:[],
+    }
+  },
+  methods: {
+    //加载电影列表
+    async loadMovieList(){
+      let json = await getMovieList();
+      json.data.forEach((value,index)=>{
+        if (new Date()-new Date(value.public_date)>=0){
+          this.hotMovieList.push(value);
+        } else{
+          this.notShowMovieList.push(value);
         }
         this.loadMovieList();
       },
