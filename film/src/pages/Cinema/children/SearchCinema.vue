@@ -2,17 +2,17 @@
   <div class="search-cinema">
     <div class="header">
       <div class="search">
-        <span class="icon-search"></span>
-        <input type="text" placeholder="搜影院" v-model="name">
+        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
+        <input type="text" placeholder="搜影院">
       </div>
       <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <div class="content">
-      <div class="cinema-container" v-if="cinemaInfo.length">
-        <div class="item" v-for="(item,index) in cinemaInfo" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
+      <div class="cinema-container">
+        <div class="item">
           <div class="left">
-            <div class="name ellipsis">{{item.cinema_name}}</div>
-            <div class="address ellipsis">{{item.specified_address}}</div>
+            <div class="name ellipsis">糖豆影院</div>
+            <div class="address ellipsis">金水区666号糖豆广场</div>
             <div class="label-block">
               <span>小吃</span>
               <span>4D厅</span>
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <div class="tips" v-else-if="name">
+      <div class="tips">
         <span class="icon icon-empty-content"></span>
         <span class="text">暂无其他内容</span>
       </div>
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import {matchCinemaByName} from '../../../api'
 export default {
   name:"SearchCinema",
   data(){
@@ -46,17 +45,16 @@ export default {
     }
   },
   watch:{
-    async name(){
-      if(this.name){
-        // 根据名字匹配电影
-        let json=await matchCinemaByName(this.name);
-        if(json.success_code===200){
-          this.cinemaInfo=json.data;
-        }
-      }else{
-        this.cinemaInfo=[];
-      }
-    }
+    // async name(){
+    //   if(this.name){
+    //     let json=await matchCinemaByName(this.name);
+    //     if(json.success_code===200){
+    //       this.cinemaInfo=json.data;
+    //     }
+    //   }else{
+    //     this.cinemaInfo=[];
+    //   }
+    // }
   }
 }
 </script>

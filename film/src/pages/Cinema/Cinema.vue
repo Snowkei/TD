@@ -1,18 +1,18 @@
 <template>
-    <div id="cinema">
-      <div class="header">
-        <div class="nav">
-          <span class="location">郑州</span>
-          <span class="title">影院</span>
-          <span class=" icon-search" @click="$router.push('search_cinema')"></span>
-        </div>
+  <div id="cinema">
+    <!-- 头部 -->
+    <div class="header">
+      <div class="nav">
+        <span class="location">郑州</span>
+        <span class="title">影院</span>
+        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
       </div>
     </div>
     
     <!-- 主体 -->
     <div class="content">
       <!-- 每个item -->
-      <div class="item" v-for="(item,index) in jsonData" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
+      <div class="item" @click="$router.push('/cinema_detail')">
         <!-- 左侧消息 -->
         <div class="left">
           <div class="name ellipsis">糖豆影院</div>
@@ -23,16 +23,19 @@
             <span>巨幕厅</span>
             <span>杜比全景声厅</span>
           </div>
-          <div class="right">
-            <div class="price-block"><span class="price">23</span>元起</div>
+        </div>
+        <!-- 右侧价钱 -->
+        <div class="right">
+          <div class="price-block">
+            <span class="price">23元起</span>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
-import {getCinemaList} from '../../api/index'
 import {Indicator} from 'mint-ui'
 export default {
   data(){
@@ -41,8 +44,8 @@ export default {
     }
   },
   created() {
-     Indicator.open('Loading...');
-    this.loadCinemaList();
+    //  Indicator.open('Loading...');
+    // this.loadCinemaList();
   },
   methods:{
     //加载电影列表
@@ -53,6 +56,8 @@ export default {
       }
       Indicator.close();
     }
+  }
+}
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
