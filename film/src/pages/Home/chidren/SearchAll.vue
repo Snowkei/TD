@@ -4,44 +4,21 @@
       <!-- 搜索 -->
       <div class="search">
         <span class="icon-search"></span>
-        <input type="text" placeholder="搜影片、影院" v-model="name">
+        <input type="text" placeholder="搜影片、影院">
       </div>
-      <span class="cancel-btn" @click="$router.go(-1)">取消</span>
+      <span class="cancel-btn" @click="$router.push('/home')">取消</span>
     </div>
     <!-- 搜索列表 -->
     <div class="content">
-      <div class="movie-container" v-if="movieInfo.length">
+      <div class="movie-container">
         <div class="title">影片</div>
-        <movie-item :movie-list="movieInfo"></movie-item>
-      </div>
-      <div class="cinema-container" v-if="cinemaInfo.length">
-        <div class="title">影院</div>
-        <div class="item"  v-for="(item,index) in cinemaInfo" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
-          <div class="left">
-            <div class="name ellipsis">{{item.cinema_name}}</div>
-            <div class="address ellipsis">{{item.specified_address}}</div>
-            <div class="label-block">
-              <span>小吃</span>
-              <span>4D厅</span>
-              <span>杜比全景声厅</span>
-              <span>巨幕厅</span>
-            </div>
-            <div class="right">
-              <div class="price-block"><span class="price">23</span>元起</div>
-            </div>
-          </div>
-        </div>
-        <div class="tips">
-          <span class="icon icon-empty-content"></span>
-          <span class="text">暂时木有内容</span>
-        </div>
+        <movie-item></movie-item>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {matchCinemaByName,matchMovieByName} from '../../../api/index'
 import MovieItem from '../../../components/MovieItem/MovieItem'
 export default {
   name:"SearchAll",
@@ -52,28 +29,8 @@ export default {
     return {
       name:'',
       movieInfo:[],
-      cinemaInfo:[],
+      // cinemaInfo:[],
       server:'http://localhost:3000'
-    }
-  },
-  watch: {
-    // 监听函数
-    async name(){
-      if (this.name){
-        // 根据输入名字匹配电影
-        let json = await matchMovieByName(this.name);
-        if (json.success_code===200){
-          this.movieInfo = json.data;
-        }
-        // 根据名称匹配影院
-        json = await matchCinemaByName(this.name);
-        if (json.success_code===200){
-          this.cinemaInfo = json.data;
-        }
-      }else{
-        this.movieInfo = [];
-        this.cinemaInfo = [];
-      }
     }
   }
 }

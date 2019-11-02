@@ -6,68 +6,60 @@
             <span class="sure-btn" @click="modifyUserName">确定</span>
         </div>
         <div class="container">
-            <el-input
-                class="input"
-                placeholder="4-12个字符支持中英文、数字"
-                v-model="input"
-                spellcheck="false"
-                clearable>
-            </el-input>
+            <input class="input" placeholder="4-12个字符支持中英文、数字" v-model="input" spellcheck="false" clearable>
             <p>添加昵称，获取更多关注</p>
         </div>
     </div>
 </template>
 
 <script>
-import {Input, Form} from 'element-ui'
+import {Input} from 'element-ui'
 import {Toast} from 'mint-ui'
-import {updateUserName} from '../../../api/index'
 export default {
     name:"ModifyUserName",
     components:{
-        Input,
+        Input
     },
     data(){
         return{
-            input:"",
+            input:null,
+            userName:"13938927157"
         }
     },
     created(){
-        this.input=this.$route.params.userName
-        console.log(this.input)
+        this.input=this.userName;
     },
     methods:{
-         async modifyUserName(){
-            if (!this.input){
-              Toast({
-                message: '用户名不能为空！',
-                position: 'bottom',
-                duration: 2000
-              });
-              return;
-            }else if (!(/^[a-zA-Z\u4e00-\u9fa5][0-9a-zA-Z\u4e00-\u9fa5]*$/.test(this.input))) {
-              Toast({
+        modifyUserName(){
+            if(!this.input){
+                Toast({
+                    message:'用户名不能为空！',
+                    position:'bottom',
+                    duration:2000
+                });
+                return;
+            }else if(!(/^[/^[a-zA-Z\u4e00-\u9fa5][0-9a-zA-Z\u4e00-\u9fa5]*$/.test(this.input))){
+                Toast({
                 message: '用户名应为中文或字母开头！',
                 position: 'bottom',
                 duration: 2000
               });
-              return;
-            }else if (!(/^[a-zA-Z\u4e00-\u9fa5]{1}[0-9a-zA-Z\u4e00-\u9fa5]{3,11}$/.test(this.input))) {
-              Toast({
+              return; 
+            }else if (!(/^[a-zA-Z\u4e00-\u9fa5]{1}[0-9a-zA-Z\u4e00-\u9fa5]{3,11}$/.test(this.input))){
+                Toast({
                 message: '用户名应为4到12个字符！',
                 position: 'bottom',
                 duration: 2000
               });
               return;
-            } else{
-              if(this.$cookies.get('user_id')){
-                let json = await updateUserName(this.$cookies.get('user_id'),this.input);
-                if(json.success_code==200){
-                  this.$router.go(-1);
-                }
-              }
+            }else{
+                Toast({
+                message: '用户名可以使用！',
+                position: 'bottom',
+                duration: 2000
+              });
             }
-          },
+        },
         BackInfo(){
             this.$router.push("/my_info");
         }

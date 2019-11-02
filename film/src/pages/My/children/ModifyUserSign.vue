@@ -6,13 +6,7 @@
             <span class="sure-btn" @click="modifyUserSign">确定</span>
         </div>
         <div class="container">
-            <el-input
-                class="input"
-                placeholder="20个字以内"
-                v-model="input"
-                spellcheck="false"
-                clearable>
-            </el-input>
+            <input class="input" placeholder="内容仅限20字哦" v-model="input" spellcheck="false" clearable>
             <p>添加签名，了解有趣的你</p>
         </div>
     </div>
@@ -20,7 +14,6 @@
 
 <script>
 import {Input} from 'element-ui'
-import {updateUserSign} from '../../../api/index'
 export default {
     name:"ModifyUserSign",
     components:{
@@ -28,12 +21,12 @@ export default {
     },
     data(){
         return{
-            input:null
+            input:"",
+            sign:"年轻人谁不看个电影!!!"
         }
     },
     created(){
-        this.input=this.$route.params.sign;
-        console.log(this.input)
+        this.input=this.sign;
     },
     watch:{
         input:{
@@ -46,13 +39,8 @@ export default {
         },
     },
     methods:{
-        async modifyUserSign(){
-          if(this.$cookies.get('user_id')){
-            let json = await updateUserSign(this.$cookies.get('user_id'),this.input);
-            if (json.success_code==200){
-              this.$router.go(-1);
-            }
-          }
+        modifyUserSign(){
+            this.sign=this.input;
         },
         IsBack(){
             this.$router.push("/my_info")

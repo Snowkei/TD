@@ -8,26 +8,28 @@
     </div>
     <!-- 支付时间 -->
     <div class="order-info">
-      <div class="time-down">
-          <div class="title">支付剩余时间</div>
-          <div class="time">
-            <div class="minute">
-              <span>{{countdown_m_b}}</span>
-              <span>{{countdown_m_s}}</span>
-            </div>
-            <p>:</p>
-            <div class="second">
-              <span>{{countdown_s_b}}</span>
-              <span>{{countdown_s_s}}</span>
-            </div>
+      <div class="time-dowm">
+        <div class="title">支付剩余时间</div>
+        <!-- 剩余分钟 -->
+        <div class="time">
+          <div class="minute">
+            <span>{{countdown_m_b}}</span>
+            <span>{{countdown_m_s}}</span>
+          </div>
+          <p>:</p>
+          <!-- 剩余秒 -->
+          <div class="second">
+            <span>{{countdown_s_b}}</span>
+            <span>{{countdown_s_s}}</span>
           </div>
         </div>
-      <!-- order-num -->
-      <div class="order-num">
-        <span class="left icon-shop"></span>
-        <div class="right">
-          <div class="total">￥19</div>
-          <div class="num">订单编号:10086</div>
+        <!-- order-num -->
+        <div class="order-num">
+          <span class="left icon-shop"></span>
+          <div class="reight">
+            <div class="total">￥1988</div>
+            <div class="num">订单编号:10086</div>
+          </div>
         </div>
       </div>
     </div>
@@ -37,13 +39,13 @@
       <div class="wechat type">
         <span class="icon icon-wechat"></span>
         <p>微信支付</p>
-        <span :class="[{'icon-circle-selected-fill':selectPayType},{'icon-circle-unselect':!selectPayType}]" @click="selectPayType?selectPayType:selectPayType=!selectPayType"></span>
+        <span></span>
       </div>
       <!-- 支付宝支付 -->
       <div class="alipay type">
         <span class="icon icon-alipay"></span>
         <p>支付宝</p>
-        <span :class="[{'icon-circle-selected-fill':!selectPayType},{'icon-circle-unselect':selectPayType}]" @click="!selectPayType?selectPayType:selectPayType=!selectPayType"></span>
+        <span></span>
       </div>
       <div class="bottom">
         <div class="pay-btn" @click="handlePay">确认支付</div>
@@ -53,7 +55,6 @@
 </template>
 
 <script>
-import {order,getScheduleById,updateScheduleSeat} from '../../api/index'
 import {Indicator,MessageBox,Toast} from 'mint-ui'
 export default {
   name:"Pay",
@@ -70,71 +71,19 @@ export default {
     }
   },
   // 加载
-  created(){
-    Indicator.open('Loading...');
-    this.loadInfo();
-    if (this.$cookies.get('countdown_m')&&this.$cookies.get('countdown_m')){
-      if (!this.$cookies.get('countdown_m')[1]) {
-        this.countdown_m_s = Number(this.$cookies.get('countdown_m')[0]);
-        this.countdown_m_b = 0;
-      }
-      if (!this.$cookies.get('countdown_s')[1]) {
-        this.countdown_s_s = Number(this.$cookies.get('countdown_s')[0]);
-        this.countdown_s_b = 0;
-      }
-      this.countdown_m_s = Number(this.$cookies.get('countdown_m')[1]);
-      this.countdown_m_b = Number(this.$cookies.get('countdown_m')[0]);
-      this.countdown_s_s = Number(this.$cookies.get('countdown_s')[1]);
-      this.countdown_s_b = Number(this.$cookies.get('countdown_s')[0]);
-    }
-    this.timer = setInterval(()=>{
-      if (this.countdown_s_s!==0){
-        this.countdown_s_s-=1;
-      } else{
-        if (this.countdown_s_b!==0){
-          this.countdown_s_b -=1;
-          this.countdown_s_s-=1;
-          this.countdown_s_s = 9;
-        } else{
-          if (this.countdown_m_s!==0){
-            this.countdown_m_s-=1;
-            this.countdown_s_b=5;
-            this.countdown_s_s-=1;
-            this.countdown_s_s = 9;
-          } else{
-            if (this.countdown_m_b!==0) {
-              this.countdown_m_b-=1;
-              this.countdown_m_s=1;
-              this.countdown_s_b=5;
-              this.countdown_s_s-=1;
-              this.countdown_s_s = 9;
-            } else{
-              clearInterval(this.timer);
-              this.back();
-            }
-          }
-        }
-      }
-    },1000);
+  created () {
+    // Indicator.open('Loading...');
+    // this.loadInfo();
   },
   methods: {
-    async loadInfo(){
-      let json = await getScheduleById(this.$route.query.schedule_id);
-      if (json.success_code===200){
-        this.scheduleInfo = json.data;
-        this.seatInfo = this.scheduleInfo.seat_info;
-        this.seatInfo = JSON.parse(this.seatInfo);
-      }
-      Indicator.close();
-    },
     back(){
       // 返回订单页面
-      this.$router.go(-1)
+      this.$router.push('/submit_order')
     },
     // 确认支付
     handlePay(){
       alert("支付成功")
-      this.$router.push('/home')
+      this.$router.go(-1)
     }
   }
 }
@@ -148,7 +97,7 @@ export default {
     font-size .3125rem
     .top
       width 100%
-      height 1rem
+      height 3rem
       display flex
       justify-content center
       align-items center
@@ -167,7 +116,8 @@ export default {
         text-align center
     .order-info
       margin-top 1rem
-      height 3rem
+      height 8rem
+      margin-bottom 2rem
       border-bottom .04rem dashed #f1f1f1
       .time-down
         display flex
@@ -225,12 +175,13 @@ export default {
       position fixed
       width 100%
       left 0
-      top 4rem
+      top 15rem
       bottom 0
       background-color #f1f1f1
       .type
         padding .25rem .3rem
         display flex
+        height 4rem
         justify-content space-between
         align-items center
         position relative
@@ -245,8 +196,9 @@ export default {
       border-top .02rem solid #f1f1f1
       position fixed
       width 100%
+      height 3rem
       left 0
-      bottom 0
+      bottom 40
       display flex
       justify-content center
       align-items center
