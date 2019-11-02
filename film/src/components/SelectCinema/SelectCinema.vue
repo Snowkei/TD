@@ -130,6 +130,7 @@ export default {
       position fixed
       top 1rem
       left 0
+      width 2rem
     .select
       position fixed
       left 0

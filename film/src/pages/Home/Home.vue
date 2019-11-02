@@ -12,7 +12,7 @@
       <span class="date">
         <span class="calender">
           <!-- 获取当前日期 -->
-          <span class="day">{{new Date().getDate()<10?'0'+new Date().getDate():new Date().getDate()}}</span>
+          <span class="day">{{new Date().getDate()<10?+'0'+new Date().getDate():new Date().getDate()}}</span>
         </span>
       </span>
     </div>
@@ -135,7 +135,7 @@ export default {
   },
   created () {
     // 等待加载
-    Indicator.open("Loading...");
+    //Indicator.open("Loading...");
     this.loadMovieList()
   },
   mounted () {

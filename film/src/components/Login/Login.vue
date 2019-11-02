@@ -58,8 +58,8 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
+
 <script>
 //  获取手机验证码   手机登录     密码登录
 import {getPhoneCode,phoneLogin,pwdLogin} from '../../api/index'

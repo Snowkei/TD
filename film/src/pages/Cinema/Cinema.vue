@@ -1,11 +1,11 @@
 <template>
-  <div id="cinema">
-    <!-- 头部 -->
-    <div class="header">
-      <div class="nav">
-        <span class="location">郑州</span>
-        <span class="title">影院</span>
-        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
+    <div id="cinema">
+      <div class="header">
+        <div class="nav">
+          <span class="location">郑州</span>
+          <span class="title">影院</span>
+          <span class=" icon-search" @click="$router.push('search_cinema')"></span>
+        </div>
       </div>
     </div>
     
@@ -23,16 +23,12 @@
             <span>巨幕厅</span>
             <span>杜比全景声厅</span>
           </div>
-        </div>
-        <!-- 右侧价钱 -->
-        <div class="right">
-          <div class="price-block">
-            <span class="price">23元起</span>
+          <div class="right">
+            <div class="price-block"><span class="price">23</span>元起</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -57,8 +53,6 @@ export default {
       }
       Indicator.close();
     }
-  }
-}
 </script>
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
