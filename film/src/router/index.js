@@ -10,6 +10,7 @@ import Pay from '../components/Pay/Pay.vue'
 import CommentPanel from '../components/MovieDetail/children/CommentPanel.vue'
 import SubmitOrder from '../components/SubmitOrder/SubmitOrder.vue'
 import SelectSeat from '../components/SelectSeat/SelectSeat.vue'
+
 import SearchAll from "../pages/Home/chidren/SearchAll.vue"
 import SearchMovie from '../pages/Movie/children/SearchMovie.vue'
 import My from '../pages/My/My.vue'
@@ -51,5 +52,6 @@ export default new Router({
     { path: '/submit_order', component: SubmitOrder },
     { path: '/cinema_detail', component: CinemaDetail },
     { path: '/select_seat', component: SelectSeat },
+    { path:'/select_cinema', component:SelectCinema },
   ]
 })
