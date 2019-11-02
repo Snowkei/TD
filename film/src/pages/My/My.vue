@@ -5,10 +5,10 @@
         <div class="avatar">
           <img  @click="$router.push('/login')" src="./images/userIcon.png" alt="">
         </div>
-        <span class="go-login" v-if="login2==false">登陆/注册</span>
+        <span @click="$router.push('login')" class="go-login" v-if="login2==false">登陆/注册</span>
         <div v-else class="user-info">
-          <span class="ellipsis" style="font-size:.375rem;line-height:.6rem;margin-bottom:.12rem">123123</span>
-          <span class="ellipsis">同学有点懒，还没写下签名</span>
+          <span class="ellipsis" style="font-size:.375rem;line-height:.6rem;margin-bottom:.12rem">{{jsonData.user_name}}</span>
+          <span class="ellipsis">{{jsonData.sign? jsonData.sign:'同学有点懒，还没写下签名'}}</span>
         </div>
       </div>
       <div class="right" v-if="!login2==false">

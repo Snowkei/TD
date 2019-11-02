@@ -8,22 +8,22 @@
         </div>
       </div>
       <div class="content">
-        <div class="item" @click="$router.push('cinema_cinema')"> 
+        <div class="item" v-for="(item,index) in jsonData" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
           <div class="left">
             <div class="name ellipsis">糖豆影院</div>
-            <div class="address ellipsis">金水区666号糖豆广场</div>
+            <div class="address ellipsis">金水区566号糖豆广场</div>
             <div class="label-block"><span>小吃</span><span>4D厅</span><span>巨幕厅</span><span>杜比全景声厅</span></div>
           </div>
-          <!--<div class="right">-->
-            <!--<div class="price-block"><span class="price">23</span>元起</div>-->
-          <!--</div>-->
+          <div class="right">
+            <div class="price-block"><span class="price">23</span>元起</div>
+          </div>
         </div>
       </div>
     </div>
 </template>
 
 <script>
-    // import {getCinemaList} from '../../api/index'
+    import {getCinemaList} from '../../api/index'
     import {Indicator} from 'mint-ui'
     export default {
         name: "Cinema",
@@ -33,7 +33,7 @@
           }
         },
         created() {
-          //Indicator.open('Loading...');
+          Indicator.open('Loading...');
           this.loadCinemaList();
         },
         methods:{   

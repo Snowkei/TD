@@ -4,16 +4,16 @@
         <span class="icon-back" @click="$router.go(-1)"></span>
         <span class="name ellipsis">哪吒 魔童降世</span>
       </div>
-      <!-- <ly-tab
+      <ly-tab
         v-model="selectedId"
         :items="items"
         :options="options"
         class="ly-tab"
         v-if="hackReset"
         @change="changeLyTabItem"
-      /> -->
+      />
       <div class="content">
-        <div class="item" @click="$router.push('/cinema_detail')">
+        <div class="item" @click="$router.push({path:'/cinema_detail',query:{movie_id:$route.query.movie_id,cinema_id:item.cinema_id}})">
           <div class="left">
             <div class="name ellipsis">糖豆影院</div>
             <div class="address ellipsis">金水区666号</div>
@@ -28,8 +28,8 @@
 </template>
 
 <script>
-    // import {getMovieDetail,getCurrentMovieSchedule} from '../../api/index'
-    // import {formatDate} from '../../common/util/util'
+    import {getMovieDetail,getCurrentMovieSchedule} from '../../api/index'
+    import {formatDate} from '../../common/util/util'
     import {Indicator} from 'mint-ui'
     import Vue from 'vue'
     import LyTab from 'ly-tab'
@@ -51,8 +51,8 @@
           }
         },
         created() {
-          // Indicator.open('Loading...');
-          // this.loadInfo();
+          //Indicator.open('Loading...');
+          this.loadInfo();
         },
         methods:{
           async loadInfo(){
@@ -182,6 +182,7 @@
         margin-top -1rem
         .left
           width 100%
+          margin-top .8rem
           .name
             font-size .345rem
             line-height .36rem

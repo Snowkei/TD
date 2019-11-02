@@ -1,64 +1,89 @@
 <template>
-  <div id="login">
-    <div class="top">
-      <span class="icon-close" @click="$router.go(-1)"></span>
-    </div>
-    <div class="login-container">
-      <div class="login-header logo">
-        <img class="icon icon-film-logo" src="./images/login.png" alt="">
-        <p class="title">糖豆电影</p>
-        <i class="eng-title">TangDou Movie</i>
+    <div id="login">
+      <div class="top">
+        <span class="icon-close" @click="$router.go(-1)"></span>
       </div>
-      <div class="login-content">
-        <div class="login-type">
-          <span :class="{active:loginType}" @click="changeLoginType">验证码登录</span>
-          <span :class="{active:!loginType}" @click="changeLoginType">密码登录</span>
+      <div class="login-container">
+        <div class="login-header logo">
+          <span class="icon icon-film-logo"></span>
+          <p class="title">糖豆电影</p>
+          <i class="eng-title">TangDou Movie</i>
         </div>
-        <div class="login-main">
-          <form>
-            <!-- 手机验证码登录部分 -->
-            <div v-show="loginType" class="login-phone">
-              <section class="login-info">
-                <input type="tel" placeholder="手机号" v-model="phone">
-                <button v-if="countDown===0"
-                :class="{phone_right:checkPhone}"
-                @click.prevent="getValidateCode">获取验证码</button>
-                <button v-else class="phone_right">重新获取({{countDown}}s)</button>
-              </section>
-              <section class="login-info login-verification">
-                <input type="tel" placeholder="验证码" v-model="phoneCode">
-              </section>
-              <section class="login-info login-hint">温馨提示：未注册的手机号，验证后将自动注册账号，且代表已同意
-                <a href="javascript:;">《服务协议与隐私政策》</a>
-              </section>
-            </div>
-            <!-- 账号登录部分 -->
-            <div v-show="!loginType" class="login-password">
-              <section class="login-info">
-                <input type="text" placeholder="用户名" v-model="userName">
-              </section>
-              <section class="login-info login-verification">
-                <input type="password" placeholder="密码" v-show="!isShowPassword" v-model="password">
-                <input type="text" placeholder="密码" v-show="isShowPassword" v-model="password">
-                <div class="switch-show">
-                    <span class="icon-eye-close-fill" v-show="!isShowPassword" @click="changePwdShow"></span>
-                    <span class="icon-eye-open-fill" v-show="isShowPassword"
-                    @click="changePwdShow"></span>
-                </div>
-              </section>
-              <section class="login-info">
-                <input type="text" placeholder="验证码" v-model="captcha">
-                <img class="captcha" :src="captchaSrc" alt="" @click="refreshCaptcha">
-              </section>
-            </div>
-            <button class="login-submit" @click.prevent="login">登录</button>
-          </form>
+        <div class="login-content">
+          <div class="login-type">
+            <span :class="{active:loginType}" @click="changeLoginType">验证码登录</span>
+            <span :class="{active:!loginType}" @click="changeLoginType">密码登录</span>
+          </div>
+          <div class="login-main">
+            <form>
+              <!--手机验证码登录部分-->
+              <div v-show="loginType " class="login-phone">
+                <section class="login-info">
+                  <input type="tel" placeholder="手机号" v-model="phone">
+                  <button
+                    v-if="countDown===0"
+                    :class="{phone_right:checkPhone}"
+                    @click.prevent="getValidateCode"
+                  >
+                    获取验证码
+                  </button>
+                  <button v-else class="phone_right">
+                    重新获取({{countDown}}s)
+                  </button>
+                </section>
+                <section class="login-info login-verification">
+                  <input type="tel" placeholder="验证码" v-model="phoneCode">
+                </section>
+                <section class="login-info login-hint">
+                  温馨提示：未注册的手机号，验证后将自动注册账户，且代表已同意
+                  <a href="javascript:;">《服务协议与隐私政策》</a>
+                </section>
+              </div>
+              <!--账号登录部分-->
+              <div v-show="!loginType" class="login-password">
+                <section class="login-info">
+                  <input type="text" placeholder="用户名" v-model="userName">
+                </section>
+                <section class="login-info login-verification">
+                  <input type="password" placeholder="密码" v-show="!isShowPassword" v-model="password">
+                  <input type="text" placeholder="密码" v-show="isShowPassword" v-model="password">
+                  <div class="switch-show">
+                    <span
+                      class="icon-eye-close-fill"
+                      v-show="!isShowPassword"
+                      @click="changePwdShow"
+                    >
+                    </span>
+                    <span
+                      class="icon-eye-open-fill"
+                      v-show="isShowPassword"
+                      @click="changePwdShow"
+                    >
+                    </span>
+                  </div>
+                </section>
+                <section class="login-info">
+                  <input type="text" placeholder="验证码" v-model="captcha">
+                  <img
+                    class="captcha"
+                    :src="captchaSrc"
+                    alt="captcha"
+                    @click="refreshCaptcha"
+                  >
+                </section>
+              </div>
+              <button
+                class="login-submit"
+                @click.prevent="login"
+              >
+                登录
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
-
 
 <script>
     import {getPhoneCode,phoneLogin,pwdLogin} from '../../api/index'
@@ -233,7 +258,6 @@
             padding-bottom .25rem
             box-sizing border-box
           .active
-            height .5rem
             color #dd2727
             border-bottom .04rem solid #dd2727
         .login-main

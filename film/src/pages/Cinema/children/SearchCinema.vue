@@ -2,17 +2,17 @@
   <div class="search-cinema">
     <div class="header">
       <div class="search">
-        <span class="icon-search" @click="$router.push('/search_cinema')"></span>
+        <span class="icon-search"></span>
         <input type="text" placeholder="搜影院" v-model="name">
       </div>
       <span class="cancel-btn" @click="$router.go(-1)">取消</span>
     </div>
     <div class="content">
       <div class="cinema-container" v-if="cinemaInfo.length">
-        <div class="item" @click="$router.push('/cinema_detail')">
+        <div class="item" v-for="(item,index) in cinemaInfo" :key="index" @click="$router.push({path:'/cinema_datail',query:{cinema_id:item.cinema_id}})">
           <div class="left">
-            <div class="name ellipsis">糖豆影院</div>
-            <div class="address ellipsis">金水区666号糖豆广场</div>
+            <div class="name ellipsis">{{item.cinema_name}}</div>
+            <div class="address ellipsis">{{item.specified_address}}</div>
             <div class="label-block">
               <span>小吃</span>
               <span>4D厅</span>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-// import {matchCinemaByName} from '../../../api'
+import {matchCinemaByName} from '../../../api'
 export default {
   name:"SearchCinema",
   data(){

@@ -133,7 +133,7 @@ export default {
     // 确认支付
     handlePay(){
       alert("支付成功")
-      this.$router.push('/cinema_detail')
+      this.$router.push('/home')
     }
   }
 }
