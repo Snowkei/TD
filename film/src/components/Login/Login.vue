@@ -5,7 +5,7 @@
     </div>
     <div class="login-container">
       <div class="login-header logo">
-        <img class="icon icon-film-logo" alt="">
+        <span class="icon icon-film-logo"></span>
         <p class="title">糖豆电影</p>
         <i class="eng-title">TangDou Movie</i>
       </div>

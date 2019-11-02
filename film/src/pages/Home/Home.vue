@@ -80,9 +80,10 @@
         <!-- 即将上映主体 -->
         <div class="body">
           <!-- 列表 -->
-          <div class="item">
+          <div class="item" v-for="(item,index) in notShowMovieList.slice(0,6)" :key="index">
             <!-- 循环生成 -->
-            <img src="./images/hot-movie/hot1.jpg" alt="">
+            <img :src="server+item.poster" alt
+              @click="$router.push({path:'/movie_detail',query:{movie_id:item.movie_id}})"/>
             <!-- 观影人数 -->
             <div style="postion:relative">
               <div class="peopleNumber">
