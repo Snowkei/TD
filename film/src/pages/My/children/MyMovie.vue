@@ -9,81 +9,29 @@
           <span :class="{active:!isWatched}" @click="isWatched=false;">想看</span>
           <span :class="{active:isWatched}" @click="isWatched=true;">看过</span>
         </div>
-        <div v-show="!isWatched" class="want">
+        <!-- <div v-show="!isWatched" class="want">
           <movie-item :movie-list="wishMovie"></movie-item>
           <div class="tips" v-if="wishMovie.length===0">
             <span class="icon icon-empty-content"></span>
             <span class="text">暂时木有内容呀</span>
           </div>
-        </div>
-        <div v-show="isWatched" class="watched">
-            <div class="item" v-for="(item,index) in isWatchedMovie" :key="index" @click="$router.push({path:'movie_detail',query:{'movie_id':item.movie_id}})">
-                <img :src="server+item.poster" alt="">
-                <div class="info">
-                    <div class="name">{{item.name}}</div>
-                    <div class="my-score">
-                        <span>我评：</span>
-                        <el-rate :v-model="item.user_score/2" allow-half :disabled="true"/>
-                    </div>
-                    <div class="my-comment ellipsis">{{item.commentContent}}</div>
-                </div>
-            </div>
-            <div class="tips">
-                <span class="icon icon-empty-content"></span>
-                <span class="text">暂时木有内容呀</span>
-            </div>
-        </div>
+        </div> -->
+    </div>
+    <div class="tips">
+        <span class="icon icon-empty-content"></span>
+        <span class="text">暂时木有内容呀</span>
     </div>
 </div>
 </template>
 
 <script>
-import {getWishMovieByUserId,getIsWatchedMovieByUserId} from '../../../api'
 import Vue from 'vue'
 import {Rate} from 'element-ui'
 import {Indicator} from 'mint-ui'
-Vue.use(Rate);
-import MovieItem from '../../../components/MovieItem/MovieItem'
 export default {
-    name:"MyMovie",
-    components:{
-        MovieItem
-    },
     data(){
         return{
             isWatched:false,
-            //服务器地址
-            server:'http://localhost:3000',
-            wishMovie:[],
-            isWatchedMovie:[],
-        }
-    },
-    created(){
-        // Indicator.open('Loading...');
-        this.loadInfo();
-    },
-    methods:{
-        async loadInfo(){
-            if(!this.$route.query.wish_movie){
-                this.isWatched=true;
-            }
-            if(this.$route.query.user_id){
-                let json =await getWishMovieByUserId(this.$route.query.user_id);
-                if(json.success_code===200){
-                    this.wishMovie=json.data;
-                    this.wishMovie.sort((a,b)=>{
-                        return new Date(a.public_date)-new Date(b.public_date);
-                    });
-                }
-                json=await getIsWatchedMovieByUserId(this.$route.query.user_id);
-                if(json.success_code===200){
-                    this.isWatchedMovie=json.data;
-                    this.isWatchedMovie.sort((a,b)=>{
-                        return new Date(b.comment_date)-new Date(a.comment_date)
-                    })
-                }
-            }
-            Indicator.close();
         }
     }
 }
@@ -112,7 +60,6 @@ export default {
     position:absolute;
     left:.3rem;
 }
-.info .name{width:60%;text-align: center;font-size:.345rem}
 .movie{margin-top:1rem;}
 .option{
     display:flex;
@@ -136,80 +83,6 @@ span{
     color:#dd2727;
     border-bottom:.04rem solid #dd2727;
 }
-.want,.watched{
-    padding:0 .3rem;
-    padding-top:1rem;
-}
-.item{
-    display:flex;
-    align-items:center;
-    padding:.2rem 0;
-}
-.item img{
-    display:inline-block;
-    width:20%;
-}
-.info{
-    width:70%;
-    display:flex;
-    flex-flow:column;
-    padding:.25rem;
-    font-size:.25rem;
-    color:#9d9d9d;
-    overflow:hidden
-}
-.info .name{
-    font-weight:700;
-    font-size:.345rem;
-    padding-bottom:.2rem;
-    color:#333;
-}
-.my-score{
-    display:flex;
-    align-items:center;
-    color:#ffb400;
-    padding-bottom:.2rem;
-    font-size:.28rem;
-}
-.my-score span{
-    margin-right:.12rem;
-}
-.my-comment{
-    padding-bottom:.3rem;
-}
-.actors{
-    padding-bottom:.2rem;
-}
-.people{
-    padding-bottom: .2rem;
-}
-.people .number{
-    color: #ffb400
-}
-.score{
-    padding-bottom:.2rem;
-}
-.score .number{
-    color:#ffb400;
-}
-.buy{
-    width:10%;
-    padding:.16rem .12rem;
-    text-align:center;
-    background-color: #dd2727;
-    border-radius: 20%;
-    font-size: .25rem;
-    color: #fff;
-}
-.presell{
-    background-color:#2d98f3;
-    width: 10%;
-    padding: .16rem .12rem;
-    text-align: center;
-    border-radius: 20%;
-    font-size: .25rem;
-    color: #fff;
-}       
 .tips{
     display:flex;
     justify-content:center;

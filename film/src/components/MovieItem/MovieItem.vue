@@ -1,24 +1,22 @@
 <template>
-<div>
-  <div class="movie-item" v-if="movieList.length" v-for="(item,index) in movieList" :key="index">
-    <img :src="server+item.poster" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:item.movie_id}})">
+  <div class="move-item">
+    <img src="../../assets/logo.png" alt="">
     <div class="info">
-      <div class="name" @click="$router.push({path:'/movie_detail',query:{movie_id:item.movie_id}})">{{item.name}}</div>
-      <div v-if="new Date()-new Date(item.public_date)>=0">
-        <div class="descInfo" v-if="item.score">评分：<span class="number">{{item.score.toFixed(1)}}</span></div>
-        <div class="descInfo" v-else>暂无评分</div>
+      <div class="name">釜山行</div>
+      <div>
+        <div class="descInfo">评分：<span class="number">1</span></div>
+        <div class="descInfo">暂无评分</div>
       </div>
-      <div v-else>
-        <div class="descInfo" v-if="item.wish_num">想看：<span class="number">{{item.wish_num}}</span>人想看</div>
-        <div class="descInfo" v-else>暂无想看</div>
+      <div>
+        <div class="descInfo">想看：<span class="number">2</span>人想看</div>
+        <div class="descInfo">暂无想看</div>
       </div>
-      <div class="descInfo">类型：{{item.type}}</div>
-      <div class="descInfo ellipsis">主演：<span>{{item.actor}}</span></div>
+      <div class="descInfo">类型：电影</div>
+      <div class="descInfo ellipsis">主演：<span>成下坡鳄梨</span></div>
+       <!-- <span class="buy" :class="{pre_sell: new Date(item.public_date)-new Date()>0}" @click="$router.push({path:'/select_cinema',query:{movie_id:item.movie_id}})">{{new Date(item.public_date)-new Date()>0?'预售':'购票'}}</span> -->
+       <span class="buy">121预售：购票</span>
     </div>
-    <!-- <span class="buy" :class="{pre_sell: new Date(item.public_date)-new Date()>0}" @click="$router.push({path:'/select_cinema',query:{movie_id:item.movie_id}})">{{new Date(item.public_date)-new Date()>0?'预售':'购票'}}</span> -->
-    <span class="buy" :class="{pre_sell: new Date(item.public_date)-new Date()>0}" @click="$router.push({path:'/cinema_detail',query:{movie_id:item.movie_id}})">{{new Date(item.public_date)-new Date()>0?'预售':'购票'}}</span>
   </div>
-</div>
 </template>
 
 <script>
@@ -30,13 +28,13 @@ export default {
       server:'http://localhost:3000',
     }
   },
-  props: {
-    movieList: {
-      type: Array,
-      require: true,
-      default: []
-    }
-  }
+  // props: {
+  //   movieList: {
+  //     type: Array,
+  //     require: true,
+  //     default: []
+  //   }
+  // }
 }
 </script>
 
@@ -79,4 +77,3 @@ export default {
     .pre_sell
       background-color #2d98f3
 </style>
-

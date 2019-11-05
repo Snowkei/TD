@@ -2,12 +2,12 @@
   <div id="select-seat">
     <div class="top">
       <span class="icon-back" @click="$router.go(-1)"></span>
-      <span class="name ellipsis">糖豆影院</span>
+      <span class="name ellipsis">怪咖影院</span>
     </div>
     <div class="movie-info">
       <div class="name">哪吒 魔童降世</div>
       <div class="intro">
-        <span class="date">2019年10月31号</span>
+        <span class="date">2019年8月19日</span>
         <span class="time">12:05</span>
         <span class="language">国语3D</span>
       </div>
@@ -24,16 +24,14 @@
         <span>5</span>
         <span>6</span>
       </div>
-      <!-- <div class="zuo">
+      <div class="zuo">
         <a href="#">
           <img src="./images/zuo.png" alt="">
         </a>
-      </div> -->
+      </div>
       <div class="seat-container">
-        <div class="row" :v-if="hackReset" v-for="(itemI,indexI) in seatIJ" :key="indexI">
-          <span class="seat" v-for="(itemJ,indexJ) in itemI"
-            :key="indexJ"
-            :class="{'icon-sold-seat':itemJ===1,'icon-empty-seat':itemJ===0,'icon-selected-seat':itemJ===2}" @click.prevent="handleSelectSeat(indexI,indexJ)"></span>
+        <div class="row">
+          <span class="seat" @click.prevent="handleSelectSeat(indexI,indexJ)"></span>
         </div>
       </div>
       <div class="seat-example">
@@ -41,27 +39,26 @@
           <span class="icon icon-empty-seat"></span>可选
         </div>
         <div class="example empty-example">
-          <span class="icon icon-sold-seat"></span>不可选
+          <span class="icon icon-empty-seat"></span>不可选
         </div>
         <div class="example empty-example">
-          <span class="icon icon-selected-seat"></span>已选
+          <span class="icon icon-empty-seat"></span>已选
         </div>
       </div>
     </div>
     <div class="bottom">
-      <div class="title" v-if="selectedSeat">已选座位</div>
-      <div class="selected-seat" v-if="selectedSeat">
-        <div class="seat-item" v-for="(item,index) in selectedSeatInfo" :key="index">
+      <div class="title">已选座位</div>
+      <div class="selected-seat">
+        <div class="seat-item">
           <div class="left">
             <span class="seat">5排9座</span>
-            <span class="price">35元</span>
+            <span class="price">56.00元</span>
           </div>
           <span class="right icon-close" @click="cancelSelectedSeat(item[0],item[1])"></span>
         </div>
       </div>
-      <span class="btn" v-if="!selectedSeat">请先选座</span>
-      <span class="btn active" v-else @click="ensureSeatBtn">确认选座</span>
-      <!-- <span class="btn active" @click="ensureSeatBtn">确认选座</span> -->
+      <span class="btn">请先选座</span>
+      <span class="btn active" @click="ensureSeatBtn">确认选座</span>
       <!-- <mt-button size="large" type="warning">确认选座</mt-button> -->
     </div>
   </div>
@@ -70,7 +67,6 @@
 
 <script>
 import {Toast,Indicator,MessageBox} from "mint-ui";
-import {getMovieDetail,getCurrentCinemaDetail,getScheduleById,updateScheduleSeat} from '../../api/index'
 export default {
   name:"SelectSeat",
   data(){
@@ -94,8 +90,8 @@ export default {
     }
   },
   created() {
-    //Indicator.open('Loading...');
-    this.loadInfo();
+    // Indicator.open('Loading...');
+    //this.loadInfo();
   },
   methods:{
     //加载信息
@@ -305,10 +301,6 @@ export default {
         color #fff
         border-radius .2rem
         font-size .25rem
-      .zuo
-        img 
-          margin-top 1.5rem
-          margin-left .9rem
       .seat-container
         padding .12rem 0
         position absolute

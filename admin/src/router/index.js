@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Login from '../pages/Login/Login'
 import Home from '../pages/Home/Home'
 import HallManage from '../pages/Home/children/HallManage'
@@ -14,25 +15,18 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    {path:'/',redirect:'/login',},
-    {
-      path:'/login',
-      name:'login',
-      component:Login
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: Home,
+    { path:'/',redirect:'/login' },
+    { path:'/login',component:Login },
+    { path: '/home',component: Home,
       children:[
-        {path:'user_manage',component:UserManage},
-        {path:'movie_manage',component:MovieManage},
-        {path:'movie_schedule',component:MovieSchedule},
-        {path:'cinema_manage',component:CinemaManage},
-        {path:'hall_manage',component:HallManage},
-        {path:'comment_manage',component:CommentManage},
-        {path:'order_manage',component:OrderManage},
-        // {path:'/home',redirect: '/home/user_manage'}//重定向 直接跳转到user_manage界面
+        { path:'user_manage',component:UserManage },
+        { path:'movie_manage',component:MovieManage },
+        { path:'movie_schedule',component:MovieSchedule },
+        { path:'cinema_manage',component:CinemaManage },
+        { path:'hall_manage',component:HallManage },
+        { path:'comment_manage',component:CommentManage },
+        { path:'order_manage',component:OrderManage },
+        {path:'/home',redirect: '/home/user_manage'}//重定向 直接跳转到user_manage界面
       ]
     }
   

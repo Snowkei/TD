@@ -1,7 +1,7 @@
 <template>
     <div id="my-order">
         <div class="top">
-            <span class="icon-back" @click="$router.go(-1)"></span>
+            <span class="icon-back" @click="IsBack"></span>
             <span class="name ellipsis">我的订单</span>
         </div>
         <div class="tips">
@@ -19,7 +19,9 @@ export default {
         }
     },
     methods:{
-        
+        IsBack(){
+            this.$router.push("/my")
+        }
     }
 }
 </script>
