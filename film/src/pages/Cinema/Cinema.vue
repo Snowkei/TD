@@ -12,7 +12,7 @@
     <!-- 主体 -->
     <div class="content">
       <!-- 每个item -->
-      <div class="item" @click="$router.push('/cinema_detail')">
+      <div class="item" v-for="(item,index) in jsonData" :key="index" @click="$router.push({path:'/cinema_detail',query:{cinema_id:item.cinema_id}})">
         <!-- 左侧消息 -->
         <div class="left">
           <div class="name ellipsis">糖豆影院</div>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import {getCinemaList} from '../../api/index'
 import {Indicator} from 'mint-ui'
 export default {
   data(){
@@ -44,8 +45,8 @@ export default {
     }
   },
   created() {
-    //  Indicator.open('Loading...');
-    // this.loadCinemaList();
+     Indicator.open('Loading...');
+    this.loadCinemaList();
   },
   methods:{
     //加载电影列表

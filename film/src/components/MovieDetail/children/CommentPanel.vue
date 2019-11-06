@@ -22,6 +22,8 @@
 </template>
 
 <script>
+// 获取当前用户评论      更新用户评论
+import {getUserComment,updateUserComment} from '../../../api/index'
 import moment from 'moment'
 import Vue from 'vue';
 import {Rate} from 'element-ui';
@@ -38,31 +40,41 @@ export default {
     }
   },
   created () {
-    // this.loadUserComment();
+    this.loadUserComment();
   },
   methods: {
+    // 改变分数
     changeScore(score){
       this.score=score*2;
     },
+    async loadUserComment(){
+      // 获取用户的评论
+      let json = await getUserComment(this.$cookies.get('user_id'),this.$route.query.movie_id);
+      if (json.success_code===200){
+        this.starValue = json.data.user_score*0.5;
+        this.score = json.data.user_score;
+        this.textarea = json.data.comment_content;
+      }
+    },
     // 发布评论
-    commentBtnHandle(){
-      MessageBox.alert('评论成功，待管理员审核！')
-    }
-  },
-  computed:{
-    handleScoreText(){
-      // if (this.score===1||this.score===2){
-      //   return '超烂啊'
-      // } else if(this.score===3||this.score===4){
-      //   return '比较差'
-      // } else if(this.score===5||this.score===6){
-      //   return '一般般'
-      // } else if(this.score===7||this.score===8){
-      //   return '还不错'
-      // } else if(this.score===9||this.score===10){
-      //   return '棒极了'
-      // }
-    }
+    async commentBtnHandle(){
+      if (this.textarea){
+        let commentDate = moment().format('YYYY-MM-DD HH:mm:ss');
+        let json = await updateUserComment(this.$cookies.get('user_id'),this.$route.query.movie_id,this.score,this.textarea,commentDate);
+        if (json.success_code===200){
+          MessageBox.alert('评论成功，待管理员审核！').then(action => {
+            this.$router.go(-1);
+          });
+        }
+      } else{
+        Toast({
+          message: '请输入评论内容',
+          position: 'bottom',
+          duration: 2000
+        });
+      }
+    },
+    
   }
 }
 </script>

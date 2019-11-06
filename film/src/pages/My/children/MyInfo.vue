@@ -28,7 +28,7 @@
                 </div>
                 <div class="item" @click="open('Picker')">
                     <span>生日</span>
-                    <mt-datetime-picker :v-if="isback==true" v-model="pickerVisible" type="date" ref="picker" year-format="{value}" month-format="{value}" date-format="{value}"></mt-datetime-picker>
+                    <!-- <mt-datetime-picker :v-if="isback==true" v-model="pickerVisible" type="date" ref="picker" year-format="{value}" month-format="{value}" date-format="{value}"></mt-datetime-picker> -->
                     <i class="icon-more"></i> 
                 </div>
                 <div class="item sign" @click="GoSign">
@@ -60,10 +60,10 @@
 </template>
 
 <script>
-// import Vue from 'vue';
+import Vue from 'vue';
 import { DatetimePicker } from 'mint-ui';
 // Vue.component(DatetimePicker.name, DatetimePicker);
-// import MintUi from 'mint-ui'
+import MintUi from 'mint-ui'
 import "mint-ui/lib/style.css"
 // import DatePicker from '../../../components/DatePicker/DatePicker.vue'
 
@@ -88,6 +88,13 @@ export default {
         cancelText(){
             this.isback=false;
         },
+        // 退出登录
+        logout() {
+            if (this.$cookies.get("user_id")) {
+                this.$cookies.remove("user_id");
+                this.$router.push("my");
+            }
+        }
     }
 }
 </script>

@@ -3,45 +3,78 @@
     <!-- 电影顶部导航 -->
     <div class="tab-header">
       <span class="location">郑州</span>
-      <span>正在热映</span>
-      <span>即将上映</span>
+      <span :class="['normal',{'active':isHotMovie}]" @click="optionMovieType(true)">正在热映</span>
+      <span :class="['normal',{'active':!isHotMovie}]" @click="optionMovieType(false)">即将上映</span>
       <span class="icon-search" @click="$router.push('/search_movie')"></span>
     </div>
 
-    <div class="tab-content">
-      <div class="panel">
-        <movie-item></movie-item>
+    <div class="tab-content" ref="container">
+      <div class="panel" v-show="isHotMovie">
+        <movie-item :movie-list="hotMovieList"></movie-item>
       </div>
-      <div class="panel">
-        <movie-item></movie-item>
+      <div class="panel" v-show="!isHotMovie">
+        <movie-item :movie-list="notShowMovieList"></movie-item>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// 加载电影列表
+import {getMovieList} from '../../api/index'
 import {Indicator} from 'mint-ui'
+import Index from "element-ui/lib/utils/popup"
 import MovieItem from '../../components/MovieItem/MovieItem'
 export default {
   name:"Movie",
   components: {
-    // Index,
+    Index,
     MovieItem
   },
   created () {
-    // Indicator.open("Loading...");
+    Indicator.open("Loading...");
     // 优化列表数据
     // if(this.$router.query.hotMovie==0){
     //   this.isHotMovie=false;
     // }
-    // this.loadMovieList();
+    this.loadMovieList();
   },
   data(){
     return{
+      //切换电影选项
       isHotMovie:true,
-      server:''
+      //服务器地址
+      server:'http://localhost:3000',
+      //热门电影列表
+      hotMovieList:[],
+      //未上映电影列表
+      notShowMovieList:[],
     }
-    
+  },
+  methods: {
+    //加载电影列表
+    async loadMovieList(){
+      let json = await getMovieList();
+      json.data.forEach((value,index)=>{
+        if (new Date()-new Date(value.public_date)>=0){
+          this.hotMovieList.push(value);
+        } else{
+          this.notShowMovieList.push(value);
+        }
+      });
+      this.hotMovieList.sort((a,b)=>{
+        return b.score-a.score;
+      });
+      this.notShowMovieList.sort((a,b)=>{
+        return b.wish_num-a.wish_num;
+      });
+      Indicator.close();
+    },
+    //改变电影类型
+    optionMovieType(flag){
+      this.isHotMovie = flag;
+      window.scroll(0, 0);
+    }
   }
 }
 </script>

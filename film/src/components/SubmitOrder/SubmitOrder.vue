@@ -43,8 +43,8 @@
       <div class="phone-container">
         <div class="phone">
           <label>手机号</label>
-          <span>14356849835</span>
-          <!-- <el-input v-model="phone" clearable>14647945675</el-input> -->
+          <!-- <span>14356849835</span> -->
+          <el-input v-model="phone" clearable></el-input>
         </div>
         <div class="text">
           提示：手机号用于生成订单，并以短信方式将取票码发送到手机上

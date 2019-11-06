@@ -2,14 +2,14 @@
     <div id="cinema-detail">
       <div class="top">
         <span class="icon-back" @click="$router.go(-1)"></span>
-        <span class="name ellipsis">怪咖影院</span>
+        <span class="name ellipsis">{{currentCinemaInfo.cinema_name}}</span>
       </div>
       <div class="cinema-info">
-        <span class="name">怪咖影院</span>
-        <span class="address"><span class="icon icon-address"></span>金水区888号怪咖广场</span>
-        <span class="tel"><span class="icon icon-tel"></span>13512344678</span>
+        <span class="name">{{currentCinemaInfo.cinema_name}}</span>
+        <span class="address"><span class="icon icon-address"></span>{{currentCinemaInfo.specified_address}}</span>
+        <span class="tel"><span class="icon icon-tel"></span>{{currentCinemaInfo.cinema_phone}}</span>
       </div>
-      <!-- <el-carousel
+      <el-carousel
         :autoplay=false
         type="card"
         height="5rem"
@@ -18,20 +18,16 @@
         :initial-index=initMovieId
         indicator-position="none"
         @change="changeCarousel"
-        v-if="carouselReset"
-      > -->
-      <div class="bei">
-        <div class="natuo">
-          <a href="#"><img src="./images/natuo.png" alt=""></a>
-        </div>
-      </div>
-        
-      <!-- </el-carousel> -->
-      <div class="movie-info">
+        v-if="carouselReset">
+        <el-carousel-item v-for="(item,index) in hasMovieInfo" :key="index">
+          <a href="#" @click.prevent="$router.push({path:'/movie_detail',query:{movie_id:item.movie_id}})"><img :src="server+item.poster" alt=""></a>
+        </el-carousel-item>
+      </el-carousel>
+      <div class="movie-info" v-for="(item,index) in hasMovieInfo" :key="index" v-show="movieIndex===Number(index)">
         <span class="arrow"></span>
-        <span class="main"><span class="name">哪吒 魔童降世</span><span class="score"><span class="num"></span><span style="font-size: .28rem">暂无评分</span></span></span>
+        <span class="main"><span class="name">{{item.name}}</span><span class="score"><span class="num" v-if="item.score">{{item.score.toFixed(1)}}分</span><span v-else style="font-size: .28rem">暂无评分</span></span></span>
         <span class="intro">
-        <span class="time">120分钟</span><span class="split">|</span><span class="type">剧情/喜剧/动画/奇幻</span><span class="split">|</span><span class="actors">吕艳婷/囧森瑟夫/瀚墨/等</span>
+        <span class="time">{{item.movie_long}}</span><span class="split">|</span><span class="type">{{item.type}}</span><span class="split">|</span><span class="actors">{{item.actor}}</span>
         </span>
       </div>
       <ly-tab
@@ -43,20 +39,20 @@
         @change="changeLyTabItem"
       />
       <div class="ticket-container">
-        <div class="item">
+        <div class="item" v-for="(item,index) in movieDaySchedule" :key="index">
           <div class="left">
-            <span class="start-date">12:05</span>
-            <span class="end-date">13:45散场</span>
+            <span class="start-date">{{item.show_time}}</span>
+            <span class="end-date">{{endDate(item)}}散场</span>
           </div>
           <div class="center">
             <div class="info">
-              <span class="language">国语3D</span>
-              <span class="hall">1号激光厅</span>
+              <span class="language">{{item.language}}3D</span>
+              <span class="hall">{{item.hall_name}}</span>
             </div>
-            <div class="price">56.00元</div>
+            <div class="price">{{item.price.toFixed(2)}}元</div>
           </div>
           <div class="right">
-            <span class="buy-btn" @click="$router.push('/select_seat')">购票</span>
+            <span class="buy-btn" @click="$router.push({path:'/select_seat',query:{cinema_id:item.cinema_id,movie_id:item.movie_id,schedule_id:item.schedule_id,}})">购票</span>
           </div>
         </div>
       </div>
@@ -64,12 +60,12 @@
 </template>
 
 <script>
-  //import {getCurrentCinemaDetail,getCurrentCinemaMovieSchedule} from '../../api/index'
+  import {getCurrentCinemaDetail,getCurrentCinemaMovieSchedule} from '../../api/index'
   import Vue from 'vue'
   import {Indicator} from 'mint-ui';
   import {Carousel,CarouselItem} from 'element-ui'
   import LyTab from 'ly-tab'
-  //import { formatDate } from '../../common/util/util';
+  import { formatDate } from '../../common/util/util';
   Vue.use(Carousel);
   Vue.use(CarouselItem);
   Vue.use(LyTab);
@@ -99,10 +95,11 @@
       }
     },
     created() {
-      //Indicator.open('Loading...');
-      //this.loadCinemaDetail();
+      Indicator.open('Loading...');
+      this.loadCinemaDetail();
     },
     methods:{
+      // 加载电影列表
       async loadCinemaDetail(){
         if (this.$route.query.cinema_id) {
           let json = await getCurrentCinemaDetail(this.$route.query.cinema_id);

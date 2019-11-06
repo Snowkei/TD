@@ -162,11 +162,10 @@ import { MessageBox, Message } from "element-ui";
 export default {
   name: "UserManage",
   data() {
-    // 使用element UI 表单验证
     let checkName = (rule, value, callback) => {
-      if (!value) {//如果value值为空
+      if (!value) {
         callback(new Error("用户名不能为空！"));
-      } else {//value值不为空
+      } else {
         callback();
       }
     };

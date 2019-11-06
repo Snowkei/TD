@@ -30,7 +30,7 @@ export default {
   name: "Login",
   data() {
     return {
-      labelPosition: "right",//标签位置  
+      labelPosition: "right",
       adminName: "",
       password: ""
     };
@@ -49,7 +49,7 @@ export default {
       } else {
         let json = await login(this.adminName, this.password);
         if (json.success_code === 200) {
-          this.$router.push({ path: "/home" });//跳转到home
+          this.$router.push({ path: "/home" });
           Message.success("登录成功!");
         } else {
           Message.error(json.message);

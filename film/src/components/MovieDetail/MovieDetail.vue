@@ -1,117 +1,132 @@
 <template>
+<!-- 电影详情 -->
   <div id="movie-detail">
+    <!-- 顶部影名 -->
     <div class="top">
       <span class="icon-back" @click="$router.go(-1)"></span>
-      <span class="name">变形金刚</span>
+      <span class="name">{{jsonData.name}}</span>
     </div>
-    <!-- 电影接口 -->
+    <!-- 电影信息 -->
     <div class="info">
-      <img src="images/hot1.png" alt="">
+      <img :src="server+jsonData.poster" alt="">
       <div class="describe">
-        <div class="name">变形金刚</div>
-        <div class="small type">类型:动作，爱情</div>
-        <div class="small ellipsis">主演:汤姆</div>
-        <div class="small play-time">片长:2.12.3</div>
-        <div class="small show-time">上映:2015.6上映</div>
+        <div class="name">{{jsonData.name}}</div>
+        <div class="small type">类型：{{jsonData.type}}</div>
+        <div class="small ellipsis">主演：{{jsonData.actor}}</div>
+        <div class="small play-time">片长：{{jsonData.movie_long}}</div>
+        <div class="small show-time">上映：{{jsonData.public_date}}上映</div>
       </div>
     </div>
-    <!-- 想看和看过 -->
+    <!-- 想看看过按钮 -->
     <div class="action">
-      <div class="btn" @click="wishBtnHandle">
-        <span class="icon-like-fill"></span>
-        <span>想看</span>
-      </div>
-      <div class="btn" @click="watchedBtnHandle">
-        <span class="icon-star-fill"></span>
-        <span>看过</span>
-      </div>
+      <div class="btn" :class="{'active':!notWishMovie}" @click="wishBtnHandle"><span class="icon-like-fill"></span><span>想看</span></div>
+      <div class="btn" @click="watchedBtnHandle"><span class="icon-star-fill"></span><span>看过</span></div>
     </div>
-    <!--  -->
+    <!-- 口碑 评分 -->
     <div class="public-praise">
-      <!-- 头部 -->
+      <!--  -->
       <div class="header">
         <div class="title">口碑</div>
-        <div class="wish">
-          <!-- if-else -->
-          <span>5人想看</span>
-          <span>暂无想看</span>
+        <div class="wish" v-if="isShowMovie">
+          <span v-if="jsonData.wish_num">{{jsonData.wish_num}}人想看</span>
+          <span v-else>暂无想看</span>
         </div>
       </div>
-      <!-- 打分 -->
-      <div class="mark">
+      <!-- 评星 -->
+      <div class="mark" v-if="isShowMovie">
         <div class="left">
-          <el-rate v-model="starValue" allow-half></el-rate>
+          <el-rate
+            v-model="starValue"
+            allow-half
+            :disabled="true"/>
         </div>
         <div class="right">
-          <div class="score">2
-            <span class="small">分</span>
-          </div>
-          <div class="score-people">
-            11.1w人评
-          </div>
+          <div class="score">{{this.averageScore?this.averageScore:0}}<span class="small">分</span></div>
+          <div class="score-people">{{commentNum?commentNum:'暂无'}}人评</div>
         </div>
       </div>
-      <!-- 想看 -->
-      <div class="wish">
+      <!-- 暂无想看、想看人数 -->
+      <div class="wish" v-else>
         <span class="wish-number">
-          <!-- if-else -->
-          <span>想看人数</span>
-          <span>暂无</span>
+          <span v-if="jsonData.wish_num" style="font-family: PingFangSC-Regular, Hiragino Sans GB, sans-serif;font-size: .6rem">{{jsonData.wish_num}}</span>
+          <span v-else>暂无</span>
         </span>人想看
       </div>
-      <!-- 简介 -->
-      <div class="intro">
-        <div class="title">简介</div>
-        <div class="content">介绍</div>
+    </div>
+    <!-- 简介 -->
+    <div class="intro">
+      <div class="title">简介</div>
+      <div class="content">
+        {{jsonData.intro}}
       </div>
-      <!-- 评论 -->
-      <div class="comment">
-        <!-- 头部 -->
-        <div class="header">
-          <span class="title">评论</span>
-          <span class="join" @click="$router.push('/comment_panel')">参与评论</span>
-        </div>
-        <!-- 内容 -->
-        <div class="content">
-          <div class="comment-container">
-            <span class="title">我的讨论</span>
-            <div class="comment-item">
-              <div class="left">
-                <img src="" alt="">
-              </div>
-              <div class="right">
-                <div class="user-name">变形金刚</div>
-                <div class="scored">给这部作品打了12分</div>
-                <div class="comment-content">评论内容</div>
-                <div class="bottom">
-                  <span class="comment-date">评论数据</span>
-                  <span class="support">
-                    <span class="icon-support"></span>
-                    <span class="number">124</span>
-                  </span>
-                </div>
+    </div>
+    <!-- 评论详情 -->
+    <div class="comment">
+      <!-- 参与评论按钮 -->
+      <div class="header">
+        <span class="title">评论</span><span class="join" @click="watchedBtnHandle">参与评论</span>
+      </div>
+      <!-- 评论详情 -->
+      <div class="content">
+        <div class="comment-container" v-if="currentUserCommentDate.length">
+          <span class="title">我的讨论</span>
+          <div class="comment-item">
+            <div class="left"><img :src="server+currentUserCommentDate[0].avatar" alt=""></div>
+            <div class="right">
+              <div class="user-name">{{currentUserCommentDate[0].user_name}}</div>
+              <div class="scored">给这部作品打了{{currentUserCommentDate[0].user_score}}分</div>
+              <div class="comment-content">{{currentUserCommentDate[0].comment_content}}</div>
+              <div class="bottom">
+                <span class="comment-date">{{formatCommentDate(currentUserCommentDate[0].comment_date)}}</span>
+                <span class="support" :class="{'active':userIsSupportComment(currentUserCommentDate[0].support_user)}" @click="supportBtnHandle(currentUserCommentDate[0].comment_id)"><span class="icon-support"></span><span class="number">{{currentUserCommentDate[0].support_num}}</span></span>
               </div>
             </div>
           </div>
         </div>
-        <!-- 特惠购票 -->
-        <div class="buy">
-          <div class="btn">特惠购票</div>
+        <div class="comment-container comment-list-container" v-if="otherUserCommentDate.length">
+          <span class="title">精选评论</span>
+          <div class="comment-item" v-for="(item,index) in otherUserCommentDate" :key="index">
+            <div class="left"><img :src="server+item.avatar" alt=""></div>
+            <div class="right">
+              <div class="user-name">{{item.user_name}}</div>
+              <div class="scored">给这部作品打了{{item.user_score}}分</div>
+              <div class="comment-content">{{item.comment_content}}</div>
+              <div class="bottom">
+                <span class="comment-date">{{formatCommentDate(item.comment_date)}}</span>
+                <span class="support" :class="{'active':userIsSupportComment(item.support_user)}" @click="supportBtnHandle(item.comment_id)"><span class="icon-support"></span><span class="number">{{item.support_num}}</span></span>
+              </div>
+            </div>
+          </div>
         </div>
+        <span class="tips" v-if="!currentUserCommentDate.length&&!otherUserCommentDate.length">暂无评论！</span>
       </div>
+    </div>
+    <div class="buy">
+      <!-- <div class="btn" @click="$router.push({path:'/select_cinema',query:{movie_id:$route.query.movie_id}})">特惠购票</div> -->
+      <div class="btn" @click="$router.push({path:'/cinema_detail',query:{movie_id:$route.query.movie_id}})">特惠购票</div>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  getMovieDetail, //加载电影详情信息
+  isWishMovie, //是否想看电影
+  wishMovie, //想看电影
+  cancelWishMovie,//取消想看电影
+  getAllUserPassComment,//获取所有用户评论
+  getCommentById,//获取当前评论
+  updateUserSupport//更新当前评论的用户点赞
+} from '../../api/index'
 import Vue from 'vue';
 import {Rate} from 'element-ui';
 
 import {Indicator} from 'mint-ui';
 import moment from 'moment';
+import {formatDate} from '../../common/util/util'
 Vue.use(Rate);
 export default {
-  name:"MovieDetail",
+  name: "MovieDetail",
   data(){
     return{
       starValue:0,
@@ -127,27 +142,167 @@ export default {
     }
   },
   created(){
-    // Indicator.open('Loading...');
-    // this.loadMovieDetail();
+    Indicator.open('Loading...');
+    this.loadMovieDetail();
   },
-  methods: {
-    // 电影详情
-    // 想看按钮
-    wishBtnHandle(){
-      alert("想看")
+  methods:{
+    //加载电影详细信息
+    async loadMovieDetail(){
+      if(this.$route.query.movie_id){
+        let json = await getMovieDetail(this.$route.query.movie_id);
+        if (json.success_code===200){
+          this.jsonData = json.data[0];
+          //判断电影是否上映
+          new Date()-new Date(this.jsonData.public_date)>=0?this.isShowMovie = true:this.isShowMovie = false;
+          if (this.isShowMovie){
+            this.starValue = this.jsonData.score*0.5.toFixed(1);
+          }
+          if(this.$cookies.get('user_id')){
+            //判断用户是否喜欢该电影
+            let json = await isWishMovie(this.$cookies.get('user_id'),this.$route.query.movie_id);
+            if (json.success_code===200){
+              this.notWishMovie = false;
+            } else{
+              this.notWishMovie = true;
+            }
+            //
+          }
+          //获取所有用户通过审核的评论
+          let commentJson = await getAllUserPassComment(this.$route.query.movie_id);
+          if (commentJson.success_code===200&&commentJson.data.length){
+            let currentIndex=-1,sum=0;
+            this.commentNum = commentJson.data.length;
+            commentJson.data.forEach((value,index)=>{
+              if (value.user_id==this.$cookies.get('user_id')){
+                currentIndex = index;
+              }
+              sum+=value.user_score;
+            });
+            this.averageScore = sum/(commentJson.data.length);
+            if (this.averageScore!==0&&this.averageScore!==10){
+              this.averageScore = this.averageScore.toFixed(1);
+            }
+            this.starValue = this.averageScore*0.5;
+            if (currentIndex===-1){
+              this.currentUserCommentDate = [];
+            } else{
+              this.currentUserCommentDate = commentJson.data.splice(currentIndex,1);
+            }
+            this.otherUserCommentDate = commentJson.data;
+            this.otherUserCommentDate.sort((a, b)=>{
+              return b.support_num-a.support_num
+            });
+          }
+        }
+      }
+      Indicator.close();
     },
-    // 看过按钮
+    //想看按钮处理
+    async wishBtnHandle(){
+      if (this.$cookies.get('user_id')){
+        //不想看
+        if (this.notWishMovie){
+          let json = await wishMovie(this.$cookies.get('user_id'),this.$route.query.movie_id);
+          if (json.success_code===200){
+            this.notWishMovie = false;
+            this.loadMovieDetail();
+          }
+        } else {
+          let json = await cancelWishMovie(this.$cookies.get('user_id'),this.$route.query.movie_id);
+          if (json.success_code===200){
+            this.notWishMovie = true;
+            this.loadMovieDetail();
+          }
+        }
+      } else{
+        this.$router.push('/login');
+      }
+    },
+    //看过按钮处理
     watchedBtnHandle(){
-      // //判断登录状态
-      // if (this.$cookies.get('user_id')){
-      //   this.$router.push({path:'/comment_panel',query:{movie_id:this.$route.query.movie_id}});
-      // } else{
-      //   this.$router.push('/login');
-      // }
-      alert("看过")
+      //用户已登录
+      if (this.$cookies.get('user_id')){
+        this.$router.push({path:'/comment_panel',query:{movie_id:this.$route.query.movie_id}});
+      } else{
+        this.$router.push('/login');
+      }
+    },
+    //点赞按钮处理
+    async supportBtnHandle(commentId){
+      if (this.$cookies.get('user_id')){
+        let json = await getCommentById(commentId);
+        let supportUser,supportNum;
+        //请求成功
+        if (json.success_code===200){
+          //有点赞数据
+          if (json.data.support_user) {
+            supportUser = JSON.parse(json.data.support_user);
+            //当前用户已点赞
+            if (supportUser.indexOf(Number(this.$cookies.get('user_id')))>-1) {
+              //取消点赞
+              supportUser.splice(supportUser.indexOf(Number(this.$cookies.get('user_id'))),1);
+              supportNum = supportUser.length;
+              if (!supportUser.length) {
+                supportUser = undefined;
+              }
+            } else {
+              //点赞
+              supportUser.push(Number(this.$cookies.get('user_id')));
+              supportNum = supportUser.length;
+            }
+          } else {
+            //无点赞数据
+            supportUser = [];
+            supportUser.push(Number(this.$cookies.get('user_id')));
+            supportNum = supportUser.length;
+          }
+          json = await updateUserSupport(commentId,supportNum,JSON.stringify(supportUser));
+          if (json.success_code===200){
+            //获取所有用户通过审核的评论
+            let commentJson = await getAllUserPassComment(this.$route.query.movie_id);
+            if (commentJson.success_code===200&&commentJson.data.length){
+              let currentIndex=-1,sum=0;
+              this.commentNum = commentJson.data.length;
+              commentJson.data.forEach((value,index)=>{
+                if (value.user_id==this.$cookies.get('user_id')){
+                  currentIndex = index;
+                }
+                sum+=value.user_score;
+              });
+              this.averageScore = sum/(commentJson.data.length);
+              if (this.averageScore!==0&&this.averageScore!==10){
+                this.averageScore = this.averageScore.toFixed(1);
+              }
+              this.starValue = this.averageScore*0.5;
+              console.log(currentIndex);
+              if (currentIndex===-1){
+                this.currentUserCommentDate = [];
+              } else{
+                this.currentUserCommentDate = commentJson.data.splice(currentIndex,1);
+              }
+              this.otherUserCommentDate = commentJson.data;
+              this.otherUserCommentDate.sort((a, b)=>{
+                return b.support_num-a.support_num
+              });
+            }
+          }
+        }
+      } else{
+        this.$router.push('/login');
+      }
+    },
+    //判断用户是否点赞
+    userIsSupportComment(supportStrArr){
+      if (supportStrArr&&JSON.parse(supportStrArr).indexOf(Number(this.$cookies.get('user_id')))>-1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    //处理评论日期
+    formatCommentDate(date){
+      return formatDate(new Date(moment(date).format('YYYY-MM-DD HH:mm:ss')),false);
     }
-    // 是否点赞
-    // 评论日期
   }
 }
 </script>
@@ -394,6 +549,7 @@ export default {
         width 90%
         height .8rem
         background-color #dd2727
+        
         display flex
         justify-content center
         align-items center

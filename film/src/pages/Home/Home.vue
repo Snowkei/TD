@@ -11,7 +11,8 @@
       <!-- 日期 -->
       <span class="date">
         <span class="calender">
-          <span class="day">10.16</span>
+          <!-- 获取当前日期 -->
+          <span class="day">{{new Date().getDate()<10?'0'+new Date().getDate():new Date().getDate()}}</span>
         </span>
       </span>
     </div>
@@ -50,11 +51,11 @@
           <!-- 电影影片列表 -->
           <div class="item" v-for="(item,index) in hotMovieList.slice(0,6)" :key="index">
             <!-- 循环生成 -->
-            <img src="" alt="" @click="$router.push('/movie_detail')">
+            <img :src="server+item.poster" alt="" @click="$router.push({path:'/movie_detail',query:{movie_id:item.movie_id}})">
             <div style="position:relative">
               <div class="describe">
-                <span class="name ellipsis"></span>
-                <span class="srore">
+                <span class="name ellipsis">{{item.name}}</span>
+                <span class="srore" v-if="item.score">
                   <!-- 月 -->
                   <i class="interger"></i>
                   <!-- 日 -->
@@ -63,7 +64,7 @@
               </div>
             </div>
             <!-- 购票 -->
-            <div class="buy" @click="$router.push('/select_cinema')">
+            <div class="buy" @click="$router.push({path:'/select_cinema',query:{movie_id:item.movie_id}})">
             </div>
           </div>
         </div>
@@ -73,15 +74,16 @@
         <!-- 即将上映头部 -->
         <div class="header">
           <span class="blue-name">即将上映</span>
-          <span class="more" @click="$router.push('/movie')">全部12部</span>
+          <span class="more" @click="$router.push({path:'/movie',query:{hotMovie:0}})">全部12部</span>
           <span class="icon-more"></span>
         </div>
         <!-- 即将上映主体 -->
         <div class="body">
           <!-- 列表 -->
-          <div class="item">
+          <div class="item" v-for="(item,index) in notShowMovieList.slice(0,6)" :key="index">
             <!-- 循环生成 -->
-            <img src="./images/hot-movie/hot1.jpg" alt="" @click="$router.push('/movie_detail')">
+            <img :src="server+item.poster" alt
+              @click="$router.push({path:'/movie_detail',query:{movie_id:item.movie_id}})"/>
             <!-- 观影人数 -->
             <div style="postion:relative">
               <div class="peopleNumber">
@@ -114,6 +116,7 @@
 </template>
 
 <script>
+import {getMovieList} from "../../api/index";
 import {Indicator} from "mint-ui";
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
@@ -133,8 +136,8 @@ export default {
   },
   created () {
     // 等待加载
-    // Indicator.open("Loading...");
-    // this.loadMovieList()
+    Indicator.open("Loading...");
+    this.loadMovieList()
   },
   mounted () {
     // 轮播
@@ -156,6 +159,24 @@ export default {
         ? (this.headerActive = true)
         : (this.headerActive = false);
     },
+    // 加载电影列表
+    async loadMovieList(){
+      let json=await getMovieList();
+      json.data.forEach((value,index)=>{
+        if(new Date()-new Date(value.public_date)>=0){
+          this.hotMovieList.push(value);
+        }else{
+          this.notShowMovieList.push(value);
+        }
+      });
+      this.hotMovieList.sort((a,b)=>{
+        return b.score-a.score;
+      });
+      this.notShowMovieList.sort((a,b)=>{
+        return b.wish_num -a.wish_num;
+      });
+      Indicator.close();
+    }
   }
 }
 </script>
