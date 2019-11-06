@@ -33,10 +33,10 @@ export default {
   },
   created () {
     Indicator.open("Loading...");
-    // 优化列表数据
-    // if(this.$router.query.hotMovie==0){
-    //   this.isHotMovie=false;
-    // }
+    优化列表数据
+    if(this.$router.query.hotMovie==0){
+      this.isHotMovie=false;
+    }
     this.loadMovieList();
   },
   data(){
