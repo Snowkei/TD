@@ -21,6 +21,7 @@ import ModifyUserSign from '../pages/My/children/ModifyUserSign.vue'
 import SearchCinema from '../pages/Cinema/children/SearchCinema.vue'
 import CinemaDetail from '../components/CinemaDetail/CinemaDetail.vue'
 import Cinema from '../pages/Cinema/Cinema.vue'
+import SelectCinema from '../components/SelectCinema/SelectCinema.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -51,5 +52,6 @@ export default new Router({
     { path: '/submit_order', component: SubmitOrder },
     { path: '/cinema_detail', component: CinemaDetail },
     { path: '/select_seat', component: SelectSeat },
+    { path: '/select_cinema', component: SelectCinema }
   ]
 })
