@@ -1,3 +1,12 @@
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+module.exports = router;
 const express = require('express');
 const router = express.Router();
 const conn = require('../db/db');
@@ -437,21 +446,21 @@ router.post('/api/cancelWishMovie',function (req,res) {
 });
 //获取当前用户评论
 router.get('/api/getUserComment',function (req,res) {
-  // ES6 对象的解构赋值,将对象的方法，赋值到某个变量
   let {
     userId,
     movieId
   } = req.query;
-  // 执行sql语句 根据电影id和用户id查找评论表的 一条内容
+  
   let sqlStr = 'SELECT * FROM t_comment WHERE user_id = ? AND movie_id= ? LIMIT 1;';
+  console.log(sqlStr)
   conn.query(sqlStr,[userId,movieId],(error,result,field)=>{
+    
     if (error){
       console.log(error);
       res.json({error_code:1,message:'操作失败'});
     } else{
-      // stringify 将一个JavaScript值(对象或者数组)转换为一个 JSON字符串
-      // parse 解析JSON字符串，构造由字符串描述的JavaScript值或对象
       result = JSON.parse(JSON.stringify(result));
+      console.log(result)
       if (result[0]){
         res.json({success_code:200,data:result[0]});
       } else{
@@ -465,8 +474,7 @@ router.get('/api/getAllUserPassComment',function (req,res) {
   let {
     movieId
   } = req.query;
-  // 多表查询 根据电影id和通过审核与否，查询用户和评论的user_id
-  let sqlStr = 'SELECT * FROM t_user user INNER JOIN t_comment comment ON user.user_id = comment.user_id WHERE comment.movie_id = ? AND comment.is_pass = ? ;'
+  let sqlStr = 'SELECT * FROM t_user user INNER JOIN t_comment comment ON user.user_id = comment.user_id WHERE comment.movie_id = ? AND comment.is_pass = ? ;';
   conn.query(sqlStr,[movieId,1],(error,result,field)=>{
     if (error){
       console.log(error);
@@ -490,7 +498,6 @@ router.post('/api/updateUserComment',function (req,res) {
     commentContent,
     commentDate
   } = req.body;
-  // 根据电影id和用户id查询某条id评论的评论
   let sqlStr = 'SELECT comment_id from t_comment WHERE user_id = ? AND movie_id = ? LIMIT 1';
   conn.query(sqlStr,[userId,movieId],(error,result,field)=>{
     if (error){
