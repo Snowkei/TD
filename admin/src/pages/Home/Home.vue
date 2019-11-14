@@ -1,5 +1,5 @@
 <template>
-  <div id="home"><!--最外层父元素-->
+  <div id="home">
     <el-row class="header">
       <div class="head-bar" v-if="adminInfo.name">
         <div class="left">
@@ -39,7 +39,7 @@
                 <span slot="title">用户管理</span>
               </el-menu-item>
               <el-menu-item index="/movie_manage" @click="handleMenuItemClick('/movie_manage')">
-                <i class="el-icon-s-kpi"></i>
+                <i class="el-icon-s-flag"></i>
                 <span slot="title">电影管理</span>
               </el-menu-item>
               <el-menu-item index="/cinema_manage" @click="handleMenuItemClick('/cinema_manage')">

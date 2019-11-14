@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {login} from "../../api";
+import { login } from "../../api";
 import Vue from "vue";
 import { Input, Button, Message, Form, FormItem } from "element-ui";
 Vue.use(Input);
@@ -40,7 +40,6 @@ export default {
       this.adminName = "";
       this.password = "";
     },
-   
     async login() {
       if (!this.adminName) {
         Message.error("请输入用户名！");
@@ -60,36 +59,34 @@ export default {
 };
 </script>
 
-
-
 <style>
-#login{
+#login {
   width: 100%;
   height: 100%;
   background: url('./images/bg_admin.png');
-  background-size: cover;/*按照图片的比例放大或者缩小至充满容器，*/
-  display: flex;/*弹性布局 水平居中 垂直居中*/
+  background-size: cover;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-flow: column;
   color: #fff;
 }
-.box{
+.box {
   width: 500px;
   height: 400px;
   background-color: rgba(255, 255, 255, .8);
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-flow: column;/*默认flex都是x轴布局，声明为column后变成y轴布局*/
+  flex-flow: column;
   border-radius: 4px;
   box-shadow: 0 0 8px 8px #ccc;
 }
-h3{
+h3 {
   margin-bottom: 40px;
   font-size: 36px;
-  letter-spacing: 2px;/*每个中文字的间隔为2px*/
+  letter-spacing: 2px;
   color: #888;
-  text-align: center;
+  text-align: center
 }
 </style>
